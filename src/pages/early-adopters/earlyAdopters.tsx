@@ -75,7 +75,7 @@ const EarlyAdopters = () => {
                 if (res.status == 201) {
                     sessionStorage.setItem("points", "90000");
                     await addPoints(Number(tId), 90000);
-                    if (!!referralCode == false) {
+                    if (!!referralCode == true) {
                         if (fullname.includes("undefined")) {
                             const newFullname = fullname.replace("undefined", "");
                             await addReferee(Number(tId), referralCode, newFullname);
