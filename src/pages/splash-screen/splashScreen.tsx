@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import bgBlurImg from "../../assets/img/bg-blur.png";
 import bgFitcoinBoyGirl from "../../assets/img/fitcoin-boy-girl.png";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { getFootPrint, getUser } from "../../api";
+// import { getFootPrint, getUser } from "../../api";
 
 const w = window as any;
 const parseTelegramInitData = (initData: string) => {
@@ -35,7 +35,7 @@ if (liveData != null) {
 
 const SplashScreen = () => {
     const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const tid = liveData == null ? (searchParams.get("tid") as unknown as number) : (sessionStorage.getItem("tid") as unknown as number);
     const username = liveData == null ? (searchParams.get("u") as unknown as string) : (sessionStorage.getItem("username") as unknown as string);
