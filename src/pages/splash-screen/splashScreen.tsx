@@ -1,8 +1,8 @@
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import bgBlurImg from "../../assets/img/bg-blur.png";
 import bgFitcoinBoyGirl from "../../assets/img/fitcoin-boy-girl.png";
 import { useSearchParams, useNavigate } from "react-router-dom";
-// import { getFootPrint, getUser } from "../../api";
+import { getFootPrint, getUser } from "../../api";
 
 const w = window as any;
 const parseTelegramInitData = (initData: string) => {
@@ -35,7 +35,7 @@ if (liveData != null) {
 
 const SplashScreen = () => {
     const [searchParams] = useSearchParams();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const tid = liveData == null ? (searchParams.get("tid") as unknown as number) : (sessionStorage.getItem("tid") as unknown as number);
     const username = liveData == null ? (searchParams.get("u") as unknown as string) : (sessionStorage.getItem("username") as unknown as string);
@@ -46,57 +46,57 @@ const SplashScreen = () => {
     sessionStorage.setItem("fullname", fullname);
     sessionStorage.setItem("tid", tid?.toString());
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         getUser(Number(tid))
-    //             .then(async (res) => {
-    //                 console.log(res);
-    //                 if (res.status == 404) {
-    //                     // hande footprint
-    //                     localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
-    //                     sessionStorage.setItem("referees", JSON.stringify([]));
-    //                     navigate(`/early-adopters`, {
-    //                         replace: true,
-    //                     });
-    //                 } else {
-    //                     const userData = res.data;
-    //                     const referralLink = import.meta.env.VITE_BOT_LINK + `?start=${userData.referralCode}`;
+    useEffect(() => {
+        setTimeout(() => {
+            getUser(Number(tid))
+                .then(async (res) => {
+                    console.log(res);
+                    if (res.status == 404) {
+                        // hande footprint
+                        localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
+                        sessionStorage.setItem("referees", JSON.stringify([]));
+                        navigate(`/early-adopters`, {
+                            replace: true,
+                        });
+                    } else {
+                        const userData = res.data;
+                        const referralLink = import.meta.env.VITE_BOT_LINK + `?start=${userData.referralCode}`;
 
-    //                     sessionStorage.setItem("level", userData.level);
-    //                     sessionStorage.setItem("referralLink", referralLink);
-    //                     sessionStorage.setItem("points", userData.points);
-    //                     sessionStorage.setItem("referees", JSON.stringify(userData.referees));
-    //                     sessionStorage.setItem("claimedTasks", JSON.stringify(userData.tasksClaimed));
-    //                     localStorage.setItem("powerOn", "false");
+                        sessionStorage.setItem("level", userData.level);
+                        sessionStorage.setItem("referralLink", referralLink);
+                        sessionStorage.setItem("points", userData.points);
+                        sessionStorage.setItem("referees", JSON.stringify(userData.referees));
+                        sessionStorage.setItem("claimedTasks", JSON.stringify(userData.tasksClaimed));
+                        localStorage.setItem("powerOn", "false");
 
-    //                     await getFootPrint(Number(tid)).then((res) => {
-    //                         const isFootPrintLoggedForToday = res.data.logged;
-    //                         if (isFootPrintLoggedForToday) {
-    //                             localStorage.setItem("footPrint", JSON.stringify({ logged: true, date: new Date().toDateString() }));
-    //                         } else {
-    //                             const previousFootPrint = JSON.parse(localStorage.getItem("footPrint") as string);
-    //                             if (previousFootPrint != null) {
-    //                                 if (previousFootPrint.date == new Date().toDateString() && previousFootPrint.point < 1500) {
-    //                                     localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: previousFootPrint.point || 0 }));
-    //                                 } else {
-    //                                     localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
-    //                                 }
-    //                             } else {
-    //                                 localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
-    //                             }
-    //                         }
-    //                     });
+                        await getFootPrint(Number(tid)).then((res) => {
+                            const isFootPrintLoggedForToday = res.data.logged;
+                            if (isFootPrintLoggedForToday) {
+                                localStorage.setItem("footPrint", JSON.stringify({ logged: true, date: new Date().toDateString() }));
+                            } else {
+                                const previousFootPrint = JSON.parse(localStorage.getItem("footPrint") as string);
+                                if (previousFootPrint != null) {
+                                    if (previousFootPrint.date == new Date().toDateString() && previousFootPrint.point < 1500) {
+                                        localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: previousFootPrint.point || 0 }));
+                                    } else {
+                                        localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
+                                    }
+                                } else {
+                                    localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
+                                }
+                            }
+                        });
 
-    //                     navigate(`/`, {
-    //                         replace: true,
-    //                     });
-    //                 }
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //             });
-    //     }, 10000);
-    // }, []);
+                        navigate(`/`, {
+                            replace: true,
+                        });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }, 10000);
+    }, []);
 
     return (
         <section className="h-screen w-full bg-[#1D2849] flex flex-col items-center py-5 gap-10 overflow-hidden relative font-OpenSans md:hidden">
