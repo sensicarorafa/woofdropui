@@ -1,14 +1,12 @@
-import bgBlurImg2 from "../../assets/img/bg-blur-2.png";
-import { NavLink } from "react-router-dom";
-import shield from "../../assets/img/shield.png";
-import yellowStar from "../../assets/img/yellow-star.png";
+
+import medal from "../../assets/img/medal.png";
 import Footer from "../../components/footer";
 import { getLeaderBoard } from "../../api";
 import { useEffect, useState } from "react";
 import { levelList } from "../power-up/powerUp";
-
 const Stats = () => {
     const [leaderboard, setLeaderboard] = useState<any[]>([]);
+    const defaultPoint= 5200
     useEffect(() => {
         getLeaderBoard().then((res) => {
             if (res.status == 200) {
@@ -21,49 +19,48 @@ const Stats = () => {
     console.log(leaderboard);
 
     return (
-        <section className="flex flex-col h-screen w-full bg-[#060c1d] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
-            <div className="absolute top-0 bottom-0 left-0 right-0 z-[-1]">
-                <img src={bgBlurImg2} className="w-full h-full" alt="" />
-            </div>
+        <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
+           
             <div className="flex flex-col w-full overflow-y-auto h-[100%]">
                 <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
                     <div className="fixed top-0 bottom-[10vh] w-full overflow-y-scroll mb-[10px]">
-                        <div className="flex flex-col items-center justify-start px-5 py-5 h-full relative z-40">
-                            <div className="flex justify-start w-full">
-                                <NavLink className="text-[#FEC95E] flex items-center gap-2 text-xl" to="/">
+                        <div className="flex flex-col items-center justify-start px-5 pt-12 py-5 h-full relative z-40">
+                            {/* <div className="flex justify-start w-full">
+                                <NavLink className="text-[#FFFFFF] flex items-center gap-2 text-xl" to="/">
                                     <i className="bx bx-arrow-back"></i> Stats
                                 </NavLink>
-                            </div>
-                            <div className="w-full flex flex-col items-center justify-center">
-                                <div className="w-[200px] mt-[-20px]">
+                            </div> */}
+                            <div className="w-full flex flex-col items-center pb-3 justify-center">
+                                {/* <div className="w-[200px] mt-[-20px]">
                                     <img className="w-full" src={shield} alt="" />
-                                </div>
+                                </div> */}
                                 {leaderboard.length > 0 && usersIndex != null && (
-                                    <p className="text-[#FEC95E] mt-[-15px] text-lg font-Rockwell">
-                                        Rank:{" "}
-                                        {!!sessionStorage.getItem("level") == false
+                                    <p className="text-[#FFFFFF] text-bold mt-[-15px] text-3xl font-Rockwell">
+                                        Wall of Fame{" "}
+                                        {/* {!!sessionStorage.getItem("level") == false
                                             ? leaderboard.length > 0
                                                 ? levelList.map((l) => {
-                                                      if (l.levelIndex == leaderboard[0].level) {
-                                                          return l.name;
-                                                      }
-                                                  })
+                                                    if (l.levelIndex == leaderboard[0].level) {
+                                                        return l.name;
+                                                    }
+                                                })
                                                 : null
-                                            : "Stepper"}
+                                            : "Stepper"} */}
                                     </p>
                                 )}
                             </div>
                             <div className=" flex justify-between items-center px-5 py-3 w-full bg-[#FFFFFF] bg-opacity-10 rounded-lg gap-5 mt-2">
-                                <div className="flex gap-3 items-center">
+                                <div className="flex gap-3 py-4 items-center">
                                     {leaderboard.length > 0 && usersIndex != null ? (
                                         <>
                                             <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full">
                                                 <p className="text-[#FFFFFF] text-lg font-bold">
-                                                    {leaderboard[usersIndex]?.firstName.charAt(0).toUpperCase() + leaderboard[usersIndex]?.lastName.charAt(0).toUpperCase()}{" "}
+                                                    {leaderboard[usersIndex]?.firstName.charAt(0).toUpperCase() + leaderboard[usersIndex]?.lastName.charAt(0).toUpperCase() || "A"}
+                                                    {leaderboard[usersIndex]?.firstName.charAt(1).toUpperCase() + leaderboard[usersIndex]?.lastName.charAt(0).toUpperCase() || "I"}{" "}
                                                 </p>
                                             </div>
                                             <div className="flex flex-col justify-center">
-                                                <p className="text-[#FFFFFF] font-bold text-sm">
+                                                <p className="text-[#FFFFFF] leading-none font-bold text-sm">
                                                     {leaderboard[usersIndex]?.firstName.charAt(0).toUpperCase() +
                                                         leaderboard[usersIndex]?.firstName.slice(1) +
                                                         " " +
@@ -72,10 +69,10 @@ const Stats = () => {
                                                             : leaderboard[usersIndex]?.lastName.charAt(0).toUpperCase() + leaderboard[usersIndex]?.lastName.slice(1))}
                                                 </p>
                                                 <div className="flex gap-2 items-center mt-[-2px]">
-                                                    <div className="w-[15px]">
+                                                    {/* <div className="w-[15px]">
                                                         <img className="w-full" src={yellowStar} alt="" />
-                                                    </div>
-                                                    <p className="text-[#FEC95E] font-bold">{leaderboard[usersIndex]?.points?.toLocaleString()}</p>
+                                                    </div> */}
+                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{leaderboard[usersIndex]?.points?.toLocaleString() || defaultPoint.toLocaleString()} AiDogs</p>
                                                 </div>
                                             </div>
                                         </>
@@ -86,7 +83,7 @@ const Stats = () => {
                                 <div className="flex-col gap-1">
                                     {leaderboard.length > 0 && usersIndex != null ? (
                                         <>
-                                            <p className="text-[#FEC95E] font-normal font-OpenSans text-sm">Ranking</p>
+                                            {/* <p className="text-[#FEC95E] font-normal font-OpenSans text-sm">Ranking</p> */}
                                             <p className="text-[#FFFFFF] font-bold font-OpenSans text-xl">{"#" + (Number(usersIndex) + 1)}</p>
                                         </>
                                     ) : (
@@ -94,17 +91,37 @@ const Stats = () => {
                                     )}
                                 </div>
                             </div>
-                            <h1 className="text-[#FFFFFF] font-bold text-xl my-7">{leaderboard.length > 0 && usersIndex != null && "Leaderboard"}</h1>
+                            <h1 className="text-[#FFFFFF] w-full text-left font-bold text-xl my-7">{leaderboard.length > 0 && usersIndex != null && "Leaderboard"}</h1>
                             <div className="flex flex-col items-center justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
                                 <div className="h-full w-full">
                                     {leaderboard.length > 0
                                         ? leaderboard.slice(0, 100).map((item, idx) => (
-                                              <div key={idx.toString()} className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">
-                                                  <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{item.firstName.charAt(0).toUpperCase() + item.firstName.slice(1)}</p>
-                                                  <p className="text-[#FFFFFF] w-[80px] text-left font-Rockwell">{item.points?.toLocaleString()}</p>
-                                                  <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>
-                                              </div>
-                                          ))
+                                            <div key={idx.toString()} className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">
+                                                <div className="flex">
+                                                    <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full">
+                                                        <p className="text-[#FFFFFF] text-lg font-bold">
+                                                            {item.firstName.charAt(0).toUpperCase() + item?.lastName.charAt(0).toUpperCase()}
+                                                            {item.firstName.charAt(1).toUpperCase() + item?.lastName.charAt(0).toUpperCase()}{" "}
+                                                        </p>
+                                                    </div>
+                                                    <div className="pl-3">
+                                                        <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{item.firstName.charAt(0).toUpperCase() + item.firstName.slice(1)}</p>
+                                                        <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{item.points?.toLocaleString() } AiDogs</p>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div className=" flex justify-end items-center">
+                                                    {idx === 0 || idx === 1 || idx === 2 ? <>
+                                                        <div className=" flex w-full justify-end small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
+                        <img className="" src={medal} alt="" />
+                    </div>
+                                                    </> :   <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>}
+                                                    
+                                                </div>
+                                            </div>
+                                        ))
                                         : null}
                                     {leaderboard.length > 0 && leaderboard.findIndex((item) => item.telegramId == localStorage.getItem("telegramId")) > 10 ? (
                                         <div className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">

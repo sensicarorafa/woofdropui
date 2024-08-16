@@ -1,84 +1,69 @@
 import { NavLink } from "react-router-dom";
-import earn from "../assets/img/earn.png";
-import earnActive from "../assets/img/earn-active.png";
-import referralActive from "../assets/img/referral-active.png";
-import referral from "../assets/img/referral.png";
+
+import home from "../assets/img/home.png";
+import homeActive from "../assets/img/home-active.png";
+import handShakeActive from "../assets/img/handshake-active.png";
+import handShake from "../assets/img/handshake.png";
 import powerup from "../assets/img/power-up.png";
 import powerupActive from "../assets/img/power-up-active.png";
-import stats from "../assets/img/stats.png";
-import statsActive from "../assets/img/stats-active.png";
+import podium from "../assets/img/podium.png";
+import podiumActive from "../assets/img/podium-active.png";
 
 const Footer = () => {
     return (
-        <footer className="flex items-center justify-between h-[10vh] px-5 border-t-[1px] border-t-[#FFFFFF] w-full">
+        <footer className="flex items-center justify-between h-[10vh] px-5  w-full">
             <NavLink
-                to="/earn"
+                to="/"
                 className={({ isActive }) =>
                     isActive
-                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 border-t-4 border-t-[#FEC95E] text-[#FEC95E]"
-                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 border-t-4 border-t-transparent text-[#FFFFFF]"
+                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"
+                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#A6A6A6]"
                 }
             >
                 {({ isActive }) => (
                     <>
                         <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? earnActive : earn} alt="" />
+                            <img className="w-full" src={isActive ? homeActive : home} alt="" />
                         </div>
-                        <p className="text-[2.2vh]">Earn</p>
+                        <p className="text-[2.2vh]">Home</p>
                     </>
                 )}
             </NavLink>
             <NavLink
-                to="/referral"
+                to="/leaderboard"
                 className={({ isActive }) =>
                     isActive
-                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 border-t-4 border-t-[#FEC95E] text-[#FEC95E]"
-                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 border-t-4 border-t-transparent text-[#FFFFFF]"
+                    ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"
+                    : "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#A6A6A6]"
                 }
             >
                 {({ isActive }) => (
                     <>
                         <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? referralActive : referral} alt="" />
+                            <img className="w-full" src={isActive ? handShakeActive : handShake} alt="" />
                         </div>
-                        <p className="text-[2.2vh]">Referral</p>
+                        <p className="text-[2.2vh]">Leaderboard</p>
                     </>
                 )}
             </NavLink>
             <NavLink
-                to="/power-up"
+                to="/invites"
                 className={({ isActive }) =>
                     isActive
-                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 border-t-4 border-t-[#FEC95E] text-[#FEC95E]"
-                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 border-t-4 border-t-transparent text-[#FFFFFF]"
+                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"
+                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#A6A6A6]"
                 }
             >
                 {({ isActive }) => (
                     <>
                         <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? powerupActive : powerup} alt="" />
+                            <img className="w-full" src={isActive ? podiumActive : podium} alt="" />
                         </div>
-                        <p className="text-[2.2vh]">Power up</p>
+                        <p className="text-[2.2vh]">Frends</p>
                     </>
                 )}
             </NavLink>
-            <NavLink
-                to="/stats"
-                className={({ isActive }) =>
-                    isActive
-                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 border-t-4 border-t-[#FEC95E] text-[#FEC95E]"
-                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 border-t-4 border-t-transparent text-[#FFFFFF]"
-                }
-            >
-                {({ isActive }) => (
-                    <>
-                        <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? statsActive : stats} alt="" />
-                        </div>
-                        <p className="text-[2.2vh]">Stats</p>
-                    </>
-                )}
-            </NavLink>
+          
         </footer>
     );
 };

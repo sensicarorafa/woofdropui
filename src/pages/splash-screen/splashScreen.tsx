@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import bgBlurImg from "../../assets/img/bg-blur.png";
+import welcome from "../../assets/img/welcome.png";
 import bgFitcoinBoyGirl from "../../assets/img/fitcoin-boy-girl.png";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { getFootPrint, getUser } from "../../api";
@@ -46,9 +46,13 @@ const SplashScreen = () => {
     sessionStorage.setItem("fullname", fullname);
     sessionStorage.setItem("tid", tid?.toString());
 
+    console.log("referralCode", referralCode )
+   
+
+    // http://localhost:5173/splash-screen?r=7ify3
     useEffect(() => {
         setTimeout(() => {
-            getUser(Number(tid))
+            getUser(Number(6489531324))
                 .then(async (res) => {
                     console.log(res);
                     if (res.status == 404) {
@@ -69,23 +73,27 @@ const SplashScreen = () => {
                         sessionStorage.setItem("claimedTasks", JSON.stringify(userData.tasksClaimed));
                         localStorage.setItem("powerOn", "false");
 
-                        await getFootPrint(Number(tid)).then((res) => {
-                            const isFootPrintLoggedForToday = res.data.logged;
-                            if (isFootPrintLoggedForToday) {
-                                localStorage.setItem("footPrint", JSON.stringify({ logged: true, date: new Date().toDateString() }));
-                            } else {
-                                const previousFootPrint = JSON.parse(localStorage.getItem("footPrint") as string);
-                                if (previousFootPrint != null) {
-                                    if (previousFootPrint.date == new Date().toDateString() && previousFootPrint.point < 1500) {
-                                        localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: previousFootPrint.point || 0 }));
-                                    } else {
-                                        localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
-                                    }
-                                } else {
-                                    localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
-                                }
-                            }
-                        });
+                        // g9jx1 
+                        // referral code
+
+
+                        // await getFootPrint(Number(tid)).then((res) => {
+                        //     const isFootPrintLoggedForToday = res.data.logged;
+                        //     if (isFootPrintLoggedForToday) {
+                        //         localStorage.setItem("footPrint", JSON.stringify({ logged: true, date: new Date().toDateString() }));
+                        //     } else {
+                        //         const previousFootPrint = JSON.parse(localStorage.getItem("footPrint") as string);
+                        //         if (previousFootPrint != null) {
+                        //             if (previousFootPrint.date == new Date().toDateString() && previousFootPrint.point < 1500) {
+                        //                 localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: previousFootPrint.point || 0 }));
+                        //             } else {
+                        //                 localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
+                        //             }
+                        //         } else {
+                        //             localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
+                        //         }
+                        //     }
+                        // });
 
                         navigate(`/`, {
                             replace: true,
@@ -99,15 +107,16 @@ const SplashScreen = () => {
     }, []);
 
     return (
-        <section className="h-screen w-full bg-[#1D2849] flex flex-col items-center py-5 gap-10 overflow-hidden relative font-OpenSans md:hidden">
+        <section className="h-screen w-full bg-[#1D2849] flex flex-col items-center justify-center py-5 gap-10 overflow-hidden relative font-OpenSans md:hidden">
             <div className="absolute top-0 bottom-0 left-0 right-0">
-                <img src={bgBlurImg} className="w-full h-full" alt="" />
+                {/* <img src={welcome} className="w-full h-full" alt="" /> */}
             </div>
-            <div className="w-[90%]">
-                <img src={bgFitcoinBoyGirl} className="w-full" alt="" />
+            <div className="w-[100%]">
+                <img src={welcome} className="w-full" alt="" />
             </div>
             <div className="flex flex-col items-center justify-center gap-3">
-                <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider">LOADING...</h1>
+                <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider font-bold">AiDogs</h1>
+                {/* <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider">LOADING...</h1> */}
                 <p className="text-[#6888AF] text-lg">PLEASE WAIT A BIT</p>
             </div>
         </section>

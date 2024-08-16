@@ -1,186 +1,328 @@
-import dollarCoin from "../../assets/img/dollar-coin.png";
-import powerBtn from "../../assets/img/power-btn.png";
-import girlPlatform from "../../assets/img/girl-walk.png";
-import boyPlatform from "../../assets/img/boy-walk.png";
-import feet from "../../assets/img/feet.png";
-import flame from "../../assets/img/flame.png";
-import sneaker from "../../assets/img/sneakers.png";
-import { NavLink } from "react-router-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+// import 'swiper/modules/navigation.scss'; // Navigation module
+
+// import required modules
+import { Pagination } from 'swiper/modules';
+import { claimTask, getTasks, getUser } from "../../api";
+import logoBig from "../../assets/img/logobig.png";
+import logoSm from "../../assets/img/logosm.svg";
+
 import Footer from "../footer";
 import { useEffect, useState } from "react";
-import useCountdown from "../../hooks/countdown";
-import { levelList } from "../../pages/power-up/powerUp";
-import { addPoints } from "../../api";
-import { debounce } from "lodash";
+
 
 const HomeTab = () => {
-    const gender = sessionStorage.getItem("gender");
-    const character = gender == "male" ? boyPlatform : girlPlatform;
 
-    const [powerOn, setPowerOn] = useState(localStorage.getItem("powerOn") === "false" ? false : true);
 
-    const getRemainingTime = () => {
-        const endTime = localStorage.getItem("endTime");
-        if (endTime) {
-            return Math.max(Math.floor((Number(endTime) - Date.now()) / 1000), 0);
-        } else {
-            return 7200;
-        }
-    };
-
-    const suffix = sessionStorage.getItem("tid") as string;
-    const { displayTime, start, resetTimer, isFinished, timeLeft } = useCountdown(getRemainingTime(), suffix);
-
-    if (isFinished == true) {
-        resetTimer();
-        setPowerOn(false);
-    }
-
-    useEffect(() => {
-        if (powerOn) {
-            start();
-            localStorage.setItem("endTime", (Date.now() + timeLeft * 1000).toString());
-        }
-    }, [powerOn]);
-
-    const handlePower = () => {
-        if (!powerOn) {
-            start();
-        }
-        setPowerOn(true);
-        localStorage.setItem("powerOn", "true");
-        startTracking();
-    };
-
-    const startTracking = () => {
-        setStepCount(0); // Reset step count when tracking starts
-        setIsTracking(true);
-    };
-
-    const [stepCount, setStepCount] = useState(0);
-    const [isTracking, setIsTracking] = useState(false);
-
-    const tId = sessionStorage.getItem("tid");
 
     const [points, setPoints] = useState(Number(sessionStorage.getItem("points")));
+    const [referees, setReferees] = useState<any>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
+    const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
+    const [isLoading, setIsLoading] = useState<Boolean>(false)
 
-    const level = Number(sessionStorage.getItem("level"));
-    const pointsPerStep = level != 0 ? Number(levelList[level].steps) : 1;
-    const pointLevel = level != 0 ? levelList[level].name : "Stepper";
-    let pointStepCount = pointsPerStep * stepCount;
 
-    const debouncedAddPoints = debounce(async (tId: number, pointStepCount: number) => {
-        await addPoints(tId, pointStepCount);
-    }, 1000);
+    const tasks: { id: number; name: string; reward: number; to: string }[] = [
+        {
+            id: 1,
+            name: "Join Channel",
+            reward: 40000,
+            to: "https://t.me/FitCoinEarn",
+        },
+        {
+            id: 2,
+            name: "Follow Twitter",
+            reward: 10000,
+            to: "https://twitter.com/FitcoinEarn",
+        },
+        
+        {
+            id: 3,
+            name: "Follow Twitter",
+            reward: 10000,
+            to: "https://twitter.com/FitcoinEarn",
+        },
+        
+        {
+            id: 4,
+            name: "Follow Twitter",
+            reward: 10000,
+            to: "https://twitter.com/FitcoinEarn",
+        },
+        
+        {
+            id: 5,
+            name: "Follow Twitter",
+            reward: 10000,
+            to: "https://twitter.com/FitcoinEarn",
+        },
+    ];
+
+
+
+
+    const handleFocus = () => {
+        let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
+
+    //     const testId: Number = 6489531324;
+    //     const testCid = 1;
+    //     const testCpoint = 40000
+    //     if (!!taskToClaim.taskId) {
+    //     claimTask(Number(testId),  taskToClaim.taskId, taskToClaim.points).then(async () => {
+    //         await getUser(Number(testId)).then((res) => {
+    //             if (res.status == 200) {
+    //                 console.log("res","points", res)
+    //                 sessionStorage.setItem("points", res.data.points);
+    //             }
+    //         });
+    //         await getTasks(Number(testId)).then((res) => {
+    //             if (res.status == 200) {
+    //                 console.log("getTask", res.data)
+    //                 setTasks(res.data);
+    //             }
+                
+    //         });
+    //         sessionStorage.removeItem("taskToClaim");
+    //     });
+    // }
+        if (!!taskToClaim.taskId) {
+            claimTask(Number(sessionStorage.getItem("tid")), taskToClaim.taskId, taskToClaim.points).then(async () => {
+                await getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
+                    if (res.status == 200) {
+                        sessionStorage.setItem("points", res.data.points);
+                    }
+                });
+                await getTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
+                    if (res.status == 200) {
+                        setTasks(res.data);
+                    }
+                });
+                sessionStorage.removeItem("taskToClaim");
+            });
+        }
+    };
 
     useEffect(() => {
-        if (isTracking) {
-            let newPoints = Number(sessionStorage.getItem("points")) + pointsPerStep * stepCount;
-            sessionStorage.setItem("points", newPoints.toString());
-            setPoints(newPoints);
-            let footPrint = JSON.parse(localStorage.getItem("footPrint") as string);
-            if (footPrint?.logged == false && footPrint?.point < 1500) {
-                let newPoint = footPrint.point + pointStepCount;
-                localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: newPoint }));
+        // const testId: Number = 6489531324;
+        // getTasks(Number(testId)).then((res) => {
+        //     if (res.status == 200) {
+        //         console.log("resTask", res.data)
+        //         sessionStorage.setItem("claimedTasks", JSON.stringify(res.data));
+        //         setTasks(res.data);
+        //     }
+        // });
+
+        // window.addEventListener("focus", handleFocus);
+
+        // return () => {
+        //     window.removeEventListener("focus", handleFocus);
+        // };
+
+
+        getTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
+            if (res.status == 200) {
+                sessionStorage.setItem("claimedTasks", JSON.stringify(res.data));
+                setTasks(res.data);
             }
-            debouncedAddPoints(Number(tId), pointStepCount);
-        }
-    }, [stepCount]);
+        });
 
-    useEffect(() => {
-        let lastAcceleration = null as any;
-        let stepThreshold = 1.6;
-
-        const handleMotionEvent = (event: DeviceMotionEvent) => {
-            const { x, y, z } = event.acceleration as DeviceMotionEventAcceleration;
-            if (lastAcceleration) {
-                const deltaX = (x as number) - lastAcceleration.x;
-                const deltaY = (y as number) - lastAcceleration.y;
-                const deltaZ = (z as number) - lastAcceleration.z;
-
-                const magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-
-                if (magnitude > stepThreshold) {
-                    setStepCount((prevStepCount) => prevStepCount + 1);
-                }
-            }
-            lastAcceleration = { x, y, z };
-        };
-
-        if (isTracking) {
-            window.addEventListener("devicemotion", handleMotionEvent);
-        } else {
-            window.removeEventListener("devicemotion", handleMotionEvent);
-        }
+        window.addEventListener("focus", handleFocus);
 
         return () => {
-            window.removeEventListener("devicemotion", handleMotionEvent);
+            window.removeEventListener("focus", handleFocus);
         };
-    }, [isTracking]);
+    }, []);
+
+
+    const claim = (e: React.MouseEvent, taskId: number, points: number) => {
+        e.preventDefault();
+        setIsLoading(true)
+        sessionStorage.setItem("taskToClaim", JSON.stringify({ taskId, points }));
+        let task = tasks.find((t: any) => t.id === taskId);
+        let taskLink = task ? task.to : "";
+        if (taskLink) {
+            window.open(taskLink, "_blank");
+        }
+    };
+
+
+ 
+
+ 
+
+  
+
+ 
+
+  
 
     return (
-        <div className="flex flex-col items-center justify-end  w-full h-[100%] overflow-hidden">
+        <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
             <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
-                <div className="flex flex-col items-center px-10 w-full flex-1">
-                    <div className="flex justify-between items-center w-full">
-                        <div className="flex items-center justify-center gap-2">
-                            <div className="w-[40px]">
-                                <img className="w-full" src={dollarCoin} alt="" />
-                            </div>
-                            <p className="text-3xl text-[#FEC95E] font-bold mb-[10px]">{points.toLocaleString()}</p>
-                        </div>
-                        <div className="flex flex-col">
-                            <div className="w-[40px] mt-3" onClick={handlePower}>
-                                <img className={`w-full ${powerOn && "filter grayscale"}`} src={powerBtn} alt="" />
-                            </div>
-                            <p className="text-[10px] text-[#FFFFFF] font-normal">{displayTime}</p>
-                        </div>
-                    </div>
-                    <div className=" w-[50%] small-mobile:w-[52%] mobile:w-[65%]">
-                        <img className="w-full" src={character} alt="" />
+                <div className="flex flex-col items-center pt-5 px-10 w-full flex-1">
+
+                    <div className=" w-[50%] small-mobile:w-[32%] mobile:w-[36%]">
+                        <img className="w-full" src={logoBig} alt="" />
                     </div>
                 </div>
-                <div className="w-full rounded-tr-[40px] rounded-tl-[40px] bg-[#1D2849] bg-opacity-[69%] flex flex-col relative z-10">
-                    <div className="border-b-[1px] border-opacity-20 border-b-[#FFFFFF] flex justify-between items-center px-[25px] py-3">
-                        <div className="flex flex-col text-[#FEC95E] text-lg font-medium">
-                            History
-                            <p className="text-[#FFE2A7] text-sm font-OpenSans font-light">Today</p>
-                        </div>
-                        <NavLink to="/history" className="text-[#FEC95E] text-lg font-medium">
-                            <i className="bx bx-dots-vertical-rounded text-xl text-[#FFE2A7]"></i>
-                        </NavLink>
-                    </div>
-                    <div className="border-b-[1px] border-opacity-20 border-b-[#FFFFFF] flex justify-between items-center px-[25px] py-3">
-                        <div className="flex">
-                            <div className="w-[30px]">
-                                <img className="" src={feet} alt="" />
+                <div className="flex flex-col rounded-lg bg-white/20 py-5 my-4  justify-center align-center m-auto items-center w-80">
+
+
+
+                    <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{points.toLocaleString() || 0}</p>
+                    <p className="text-[#A6A6A6] text-2xl font-OpenSans font-light">AiDogs</p>
+
+
+                </div>
+                <div>
+                    <Swiper
+                        slidesPerView={2}
+                        spaceBetween={25}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        modules={[Pagination]}
+                        className="mySwiper"
+                    >
+                        <SwiperSlide>
+                            <div className='flex flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
+                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
+                                    <img className="w-full" src={logoSm} alt="" />
+
+                                </div>
+                                <div className='flex flex-col justify-center align-center items-center py-4'>
+                                    <p className='text-[12px]'> FOLLOW US ON X</p>
+                                    <p className='text-xs'> Stay updated</p>
+                                </div>
+                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center m-auto items-center">
+
+
+                                    <button
+                                        className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
+                                    >
+                                        Follow
+                                    </button>
+
+
+                                </div>
+
                             </div>
-                            <div className="flex flex-col ml-[4px]">
-                                <p className="font-Rockwell text-[#FEC95E] text-2xl leading-[24px] pb-[4px]">{stepCount.toLocaleString()}</p>
-                                <p className="font-Ravie text-[#FFE2A7] text-xs">Steps</p>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <div className='flex flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
+                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
+                                    <img className="w-full" src={logoSm} alt="" />
+
+                                </div>
+                                <div className='flex flex-col justify-center align-center items-center py-4'>
+                                    <p className='text-sm'> FOLLOW US ON X</p>
+                                    <p className='text-xs'> Stay updated</p>
+                                </div>
+                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center m-auto items-center">
+
+
+                                    <button
+                                        className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
+                                    >
+                                        Follow
+                                    </button>
+
+
+                                </div>
+
                             </div>
-                        </div>
-                        <div className="flex">
-                            <div className="w-[18px] mb-[20px]">
-                                <img className="" src={flame} alt="" />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <div className='flex flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
+                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
+                                    <img className="w-full" src={logoSm} alt="" />
+
+                                </div>
+                                <div className='flex flex-col justify-center align-center items-center py-4'>
+                                    <p className='text-sm'> FOLLOW US ON X</p>
+                                    <p className='text-xs'> Stay updated</p>
+                                </div>
+                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center m-auto items-center">
+
+
+                                    <button
+                                        className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
+                                    >
+                                        Follow
+                                    </button>
+                                </div>
+
                             </div>
-                            <div className="flex flex-col ml-[4px]">
-                                <p className="font-Rockwell text-[#FEC95E] text-2xl leading-[24px]">{(26.3 * stepCount).toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
-                                <p className="font-Ravie text-[#FFE2A7] text-[10px]">Calories Burnt</p>
+                        </SwiperSlide>
+
+                    </Swiper>
+                </div>
+
+
+                <div className="w-full  flex flex-col pt-3 px-4 relative z-10">
+                    <p className='text-white text-xl'>Tasks</p>
+                    {tasks.map((task) => {
+                        let isTaskClaimed = taskList.find((t) => t.taskId == task.id);
+        let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
+
+                        return (
+
+                            <div key={task.id} className='flex justify-between py-2 w-full items-center'>
+                                <div className='flex items-center'>
+                                    <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                        <img className="w-full" src={logoSm} alt="" />
+
+                                    </div>
+                                    <div className='flex flex-col pl-3'>
+                                        <p className='text-white text-bold'>{task.name}</p>
+                                        <span className='text-[#A6A6A6]'>+{task.reward.toLocaleString()} AiDogs</span>
+                                    </div>
+                                </div>
+                                <div className="">
+
+
+                                    <button
+                                        className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
+                                            }`}
+                                        onClick={(e) => claim(e, task.id, Number(task.reward))}
+                                        disabled={isTaskClaimed}
+                                    >
+
+                                        {isTaskClaimed ? "Done": <>{isLoading && task.id == taskToClaim.taskId  ? <>
+                                            <span className="loader"></span>
+                                        </>: "Follow"  }</>}
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="flex justify-between items-center px-[25px] py-3">
-                        <div className="flex gap-2">
-                            <div className="w-[20%]">
-                                <img className="w-full" src={sneaker} alt="" />
+
+
+                        );
+                    })}
+                      <div className='flex justify-between py-2 w-full items-center'>
+                                <div className='flex items-center'>
+                                    <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                        <img className="w-full" src={logoSm} alt="" />
+
+                                    </div>
+                                    <div className='flex flex-col pl-3'>
+                                        <p className='text-white text-bold'>Your Referrals</p>
+                                        <span className='text-[#A6A6A6]'>+750 AiDogs</span>
+                                    </div>
+                                </div>
+                                <div className="">
+
+
+                                    <p className='text-white pr-5'>
+                                        {referees?.length || 0}
+                                    </p>
+
+                                     
+                                </div>
                             </div>
-                            <div className="flex flex-col font-OpenSans justify-center">
-                                <p className="font-OpenSans text-[#FEC95E] text-sm">{pointLevel}</p>
-                                <p className="text-[#FFE2A7] font-OpenSans text-xs">Earning Rate - {pointsPerStep} points per step</p>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <Footer />
