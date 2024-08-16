@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import welcome from "../../assets/img/welcome.png";
-import bgFitcoinBoyGirl from "../../assets/img/fitcoin-boy-girl.png";
+
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { getFootPrint, getUser } from "../../api";
+import {  getUser } from "../../api";
 
 const w = window as any;
 const parseTelegramInitData = (initData: string) => {
