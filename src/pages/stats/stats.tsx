@@ -55,8 +55,8 @@ const Stats = () => {
                                         <>
                                             <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full">
                                                 <p className="text-[#FFFFFF] text-lg font-bold">
-                                                    {leaderboard[usersIndex]?.firstName.charAt(0).toUpperCase() + leaderboard[usersIndex]?.lastName.charAt(0).toUpperCase() || "A"}
-                                                    {leaderboard[usersIndex]?.firstName.charAt(1).toUpperCase() + leaderboard[usersIndex]?.lastName.charAt(0).toUpperCase() || "I"}{" "}
+                                                    {leaderboard[usersIndex]?.firstName.charAt(0).toUpperCase() + leaderboard[usersIndex]?.firstName.charAt(1).toUpperCase() }
+                                                 
                                                 </p>
                                             </div>
                                             <div className="flex flex-col justify-center">
@@ -100,8 +100,8 @@ const Stats = () => {
                                                 <div className="flex">
                                                     <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full">
                                                         <p className="text-[#FFFFFF] text-lg font-bold">
-                                                            {item.firstName.charAt(0).toUpperCase() + item?.lastName.charAt(0).toUpperCase()}
-                                                            {item.firstName.charAt(1).toUpperCase() + item?.lastName.charAt(0).toUpperCase()}{" "}
+                                                            {item.firstName.charAt(0).toUpperCase() + item?.firstName.charAt(1).toUpperCase()}
+                                                            {/* {item.firstName.charAt(1).toUpperCase() + item?.lastName.charAt(0).toUpperCase()}{" "} */}
                                                         </p>
                                                     </div>
                                                     <div className="pl-3">
