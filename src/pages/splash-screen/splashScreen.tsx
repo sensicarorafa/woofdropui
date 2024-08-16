@@ -115,6 +115,8 @@ const SplashScreen = () => {
                 <img src={welcome} className="w-full" alt="" />
             </div>
             <div className="flex flex-col items-center justify-center gap-3">
+            <p className="text-[#A6A6A6] text-lg">Got $DOGS</p>
+
                 <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider font-bold">AiDogs</h1>
                 {/* <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider">LOADING...</h1> */}
                 <p className="text-[#6888AF] text-lg">PLEASE WAIT A BIT</p>

@@ -70,7 +70,7 @@ const EarlyAdopters = () => {
                         Hey!
                     </p>
                     <p className="text-[#FFFFFF] pt-10 text-center text-bold mt-[-15px] text-lg font-Rockwell">
-                        You were eligible for the DOGS Airdrop,<br /> It's time to get rewarded some AiDog
+                        We heard you qualified for the $DOGS Airdrop,<br /> It's time to claim your $AIDOGS reward!
                     </p>
                 </div>
 

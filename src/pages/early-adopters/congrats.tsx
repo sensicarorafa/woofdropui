@@ -40,7 +40,7 @@ const Congrats = () => {
                 </div>
                 <div className="flex pt-10 flex-col items-center">
                             <p className="text-[#A6A6A6] text-lg">You've successfully claimed</p>
-                            <h1 className="text-[#FFFFFF] text-4xl font-bold">75,000 $AiDogs</h1>
+                            <h1 className="text-[#FFFFFF] text-4xl font-bold">75,000 $AIDOGS</h1>
                             <p className="text-[#A6A6A6] text-lg">Welcome Bonus </p>
                         </div>
                 </div>

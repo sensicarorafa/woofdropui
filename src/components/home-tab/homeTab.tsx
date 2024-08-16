@@ -172,8 +172,8 @@ const HomeTab = () => {
 
 
 
-                    <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{Number(points).toLocaleString()}</p>
-                    <p className="text-[#A6A6A6] text-2xl font-OpenSans font-light">AiDogs</p>
+                    <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{Number(points)}</p>
+                    <p className="text-[#A6A6A6] text-2xl font-OpenSans font-light">$AIDOGS</p>
 
 
                 </div>
@@ -309,7 +309,7 @@ const HomeTab = () => {
                                     </div>
                                     <div className='flex flex-col pl-3'>
                                         <p className='text-white text-bold'>Your Referrals</p>
-                                        <span className='text-[#A6A6A6]'>+750 AiDogs</span>
+                                        <span className='text-[#A6A6A6]'>+750 $AIDOGS</span>
                                     </div>
                                 </div>
                                 <div className="">
