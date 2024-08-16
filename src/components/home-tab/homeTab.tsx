@@ -1,3 +1,4 @@
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -19,8 +20,8 @@ const HomeTab = () => {
 
 
 
-    const points = useState(Number(sessionStorage.getItem("points")));
-    const referees = useState<any[]>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
+    const [points] = useState(Number(sessionStorage.getItem("points")));
+    const [referees] = useState<any[]>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
     const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
     const [isLoading, setIsLoading] = useState<Boolean>(false)
 
@@ -172,7 +173,7 @@ const HomeTab = () => {
 
 
 
-                    <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{Number(points)}</p>
+                    <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{points.toLocaleString()}</p>
                     <p className="text-[#A6A6A6] text-2xl font-OpenSans font-light">$AIDOGS</p>
 
 
