@@ -16,23 +16,23 @@ function formatName(fullname: string) {
 }
 
 const Referral = () => {
-    const [referrals, setReferrals] = useState<ReferralData[]>([]);
+  
 
-    useEffect(() => {
-        const refereeData = JSON.parse(sessionStorage.getItem("referees") as string);
-        if (!!refereeData) {
-            const refData = refereeData.map((data: any) => {
-                return {
-                    id: data.username,
-                    nameAbbr:
-                        data.fullname.split(" ").length > 1 ? (data.fullname.split(" ")[0].charAt(0) + data.fullname.split(" ")[1].charAt(0)).toUpperCase() : data.fullname.charAt(0).toUpperCase(),
-                    name: formatName(data.fullname),
-                    reward: data.points,
-                };
-            });
-            setReferrals(refData);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const refereeData = JSON.parse(sessionStorage.getItem("referees") as string);
+    //     if (!!refereeData) {
+    //         const refData = refereeData.map((data: any) => {
+    //             return {
+    //                 id: data.username,
+    //                 nameAbbr:
+    //                     data.fullname.split(" ").length > 1 ? (data.fullname.split(" ")[0].charAt(0) + data.fullname.split(" ")[1].charAt(0)).toUpperCase() : data.fullname.charAt(0).toUpperCase(),
+    //                 name: formatName(data.fullname),
+    //                 reward: data.points,
+    //             };
+    //         });
+    //         setReferrals(refData);
+    //     }
+    // }, []);
 
     const copyToClipboard = (e: React.MouseEvent) => {
         e.preventDefault();

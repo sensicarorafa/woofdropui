@@ -4,8 +4,6 @@ import home from "../assets/img/home.png";
 import homeActive from "../assets/img/home-active.png";
 import handShakeActive from "../assets/img/handshake-active.png";
 import handShake from "../assets/img/handshake.png";
-import powerup from "../assets/img/power-up.png";
-import powerupActive from "../assets/img/power-up-active.png";
 import podium from "../assets/img/podium.png";
 import podiumActive from "../assets/img/podium-active.png";
 

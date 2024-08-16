@@ -3,7 +3,7 @@ import medal from "../../assets/img/medal.png";
 import Footer from "../../components/footer";
 import { getLeaderBoard } from "../../api";
 import { useEffect, useState } from "react";
-import { levelList } from "../power-up/powerUp";
+
 const Stats = () => {
     const [leaderboard, setLeaderboard] = useState<any[]>([]);
     const defaultPoint= 5200
