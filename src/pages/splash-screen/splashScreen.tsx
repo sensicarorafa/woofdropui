@@ -69,7 +69,7 @@ const SplashScreen = () => {
                         sessionStorage.setItem("level", userData.level);
                         sessionStorage.setItem("referralLink", referralLink);
                         sessionStorage.setItem("points", userData.points);
-                        sessionStorage.setItem("referees", JSON.stringify(userData.referrals));
+                        sessionStorage.setItem("referees", JSON.stringify(userData.referees));
                         sessionStorage.setItem("claimedTasks", JSON.stringify(userData.tasksClaimed));
                         localStorage.setItem("powerOn", "false");
 
