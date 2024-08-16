@@ -19,8 +19,8 @@ const HomeTab = () => {
 
 
 
-    const [points, setPoints] = useState(Number(sessionStorage.getItem("points")));
-    const [referees, setReferees] = useState<any>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
+    const points = useState(Number(sessionStorage.getItem("points")));
+    const referees = useState<any>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
     const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
     const [isLoading, setIsLoading] = useState<Boolean>(false)
 
