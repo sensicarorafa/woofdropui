@@ -172,7 +172,7 @@ const HomeTab = () => {
 
 
 
-                    <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{points.toLocaleString()}</p>
+                    <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{Number(points).toLocaleString()}</p>
                     <p className="text-[#A6A6A6] text-2xl font-OpenSans font-light">AiDogs</p>
 
 
