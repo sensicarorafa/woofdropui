@@ -52,7 +52,7 @@ const SplashScreen = () => {
     // http://localhost:5173/splash-screen?r=7ify3
     useEffect(() => {
         setTimeout(() => {
-            getUser(Number(6489531324))
+            getUser(Number(tid))
                 .then(async (res) => {
                     console.log(res);
                     if (res.status == 404) {
