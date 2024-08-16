@@ -1,38 +1,14 @@
 
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
-import { useEffect, useState } from "react";
 
-interface ReferralData {
-    id: number;
-    nameAbbr: string;
-    name: string;
-    reward: string;
-}
 
-function formatName(fullname: string) {
-    const parts = fullname.split(" ");
-    return parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" ");
-}
+
 
 const Referral = () => {
   
 
-    // useEffect(() => {
-    //     const refereeData = JSON.parse(sessionStorage.getItem("referees") as string);
-    //     if (!!refereeData) {
-    //         const refData = refereeData.map((data: any) => {
-    //             return {
-    //                 id: data.username,
-    //                 nameAbbr:
-    //                     data.fullname.split(" ").length > 1 ? (data.fullname.split(" ")[0].charAt(0) + data.fullname.split(" ")[1].charAt(0)).toUpperCase() : data.fullname.charAt(0).toUpperCase(),
-    //                 name: formatName(data.fullname),
-    //                 reward: data.points,
-    //             };
-    //         });
-    //         setReferrals(refData);
-    //     }
-    // }, []);
+  
 
     const copyToClipboard = (e: React.MouseEvent) => {
         e.preventDefault();
