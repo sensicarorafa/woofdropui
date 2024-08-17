@@ -72,7 +72,7 @@ const Stats = () => {
                                                     {/* <div className="w-[15px]">
                                                         <img className="w-full" src={yellowStar} alt="" />
                                                     </div> */}
-                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{leaderboard[usersIndex]?.points?.toLocaleString() || defaultPoint.toLocaleString()} AiDogs</p>
+                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{leaderboard[usersIndex]?.totalSum?.toLocaleString() || defaultPoint.toLocaleString()} $AIDOGS</p>
                                                 </div>
                                             </div>
                                         </>
@@ -100,13 +100,13 @@ const Stats = () => {
                                                 <div className="flex">
                                                     <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full">
                                                         <p className="text-[#FFFFFF] text-lg font-bold">
-                                                            {item.firstName.charAt(0).toUpperCase() + item?.firstName.charAt(1).toUpperCase()}
+                                                            {item?.firstName.charAt(0).toUpperCase() + item?.firstName.charAt(1).toUpperCase()}
                                                             {/* {item.firstName.charAt(1).toUpperCase() + item?.lastName.charAt(0).toUpperCase()}{" "} */}
                                                         </p>
                                                     </div>
                                                     <div className="pl-3">
-                                                        <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{item.firstName.charAt(0).toUpperCase() + item.firstName.slice(1)}</p>
-                                                        <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{item.points?.toLocaleString() } AiDogs</p>
+                                                        <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{item?.firstName.charAt(0).toUpperCase() + item.firstName.slice(1)}</p>
+                                                        <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{`${item.points + item.bonus}`?.toLocaleString() } $AIDOGS</p>
                                                     </div>
                                                 </div>
 

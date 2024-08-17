@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import welcome from "../../assets/img/welcome.png";
+import AiDog from "../../assets/img/doggy.png";
 
 import { useSearchParams, useNavigate } from "react-router-dom";
 import {  getUser } from "../../api";
@@ -107,19 +108,20 @@ const SplashScreen = () => {
     }, []);
 
     return (
-        <section className="h-screen w-full bg-[#1D2849] flex flex-col items-center justify-center py-5 gap-10 overflow-hidden relative font-OpenSans md:hidden">
+        <section className="h-screen w-full bg-[#000000] flex flex-col items-center justify-center py-5 gap-10 overflow-hidden relative font-OpenSans md:hidden">
             <div className="absolute top-0 bottom-0 left-0 right-0">
                 {/* <img src={welcome} className="w-full h-full" alt="" /> */}
             </div>
-            <div className="w-[100%]">
-                <img src={welcome} className="w-full" alt="" />
+            <div className="w-[100%] relative">
+                <img src={AiDog} className="w-full" alt="" />
+            <p className="text-[#A6A6A6] absolute right-[30%] top-[80%] text-3xl">Got $DOGS??</p>
+
             </div>
             <div className="flex flex-col items-center justify-center gap-3">
-            <p className="text-[#A6A6A6] text-lg">Got $DOGS</p>
 
-                <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider font-bold">AiDogs</h1>
+                {/* <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider font-bold">AiDogs</h1> */}
                 {/* <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider">LOADING...</h1> */}
-                <p className="text-[#6888AF] text-lg">PLEASE WAIT A BIT</p>
+                <p className="text-[#A6A6A6] text-lg">YOUR $AIDOGS AIRDROP AWAIT...</p>
             </div>
         </section>
     );

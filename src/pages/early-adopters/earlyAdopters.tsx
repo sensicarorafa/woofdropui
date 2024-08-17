@@ -1,5 +1,5 @@
 
-import aiDog from "../../assets/img/Aidog.png";
+import aiDog from "../../assets/img/doggy.png";
 import { addPoints, addReferee, createUser } from "../../api";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -57,18 +57,19 @@ const EarlyAdopters = () => {
     };
 
     return (
-        <section className="h-screen w-full bg-[#000000] flex flex-col justify-center items-center gap-28 px-3 overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
+        <section className="h-screen w-full bg-[#000000] flex flex-col justify-center items-center gap-28 px-3 overflow-hidden  font-ZillaSlab text-xs small-mobile:text-base md:hidden">
 
 
             <div className="flex flex-col justify-between py-10 gap-5 h-[100%]">
-                <div className="flex flex-col items-center w-full">
+                <div className="flex flex-col  items-center w-full">
 
-                    <div className=" w-[50%] pt-10 small-mobile:w-[32%] mobile:w-[36%]">
+                    <div className=" w-[90%] pt-10 small-mobile:w-[52%] relative mobile:w-[80%]">
                         <img className="w-full" src={aiDog} alt="" />
-                    </div>
-                    <p className="text-[#FFFFFF] pt-20 text-center text-bold mt-[-15px] text-3xl font-Rockwell">
+                        <p className="text-[#A6A6A6] absolute right-[40%] top-[80%] text-center text-bold mt-[-15px] text-3xl font-Rockwell">
                         Hey!
                     </p>
+                    </div>
+                  
                     <p className="text-[#FFFFFF] pt-10 text-center text-bold mt-[-15px] text-lg font-Rockwell">
                         We heard you qualified for the $DOGS Airdrop,<br /> It's time to claim your $AIDOGS 
                     </p>
