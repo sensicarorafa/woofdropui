@@ -97,7 +97,7 @@ const Referral = () => {
                                 ))
                                 : null}
                         </div>
-                    </div> : <div className="text-[#A6A6A6] flex justify-center items-center"> Your referrals show here</div>
+                    </div> : <div className="text-[#A6A6A6] flex justify-center items-center"> Your referrals will appear here</div>
                         }
                 </div>
             </div>
