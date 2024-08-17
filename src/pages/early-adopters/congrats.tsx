@@ -31,6 +31,10 @@ const Congrats = () => {
         navigator.clipboard.writeText(referralLink as string);
     };
 
+    const goHome = () => {
+        navigate("/")
+    }
+
     return (
         <section {...handlers} className="h-screen w-full bg-[#000000] flex flex-col items-center overflow-hidden relative font-ZillaSlab md:hidden">
  <Confetti
@@ -70,10 +74,16 @@ const Congrats = () => {
                             </button> */}
                         </div>
                         <div className="flex justify-center gap-2">
-                            <button className="w-[25px]">
-                                <img className="w-full" src={fingerSwipe} alt="" />
-                            </button>
-                            <p className="text-base text-[#FFFFFF]">Swipe left to continue</p>
+                           
+                        <button
+                            className="bg-white font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2   rounded-[1px] w-full"
+                            onClick={goHome} 
+
+
+                        >
+                           Continue
+                        </button>
+                         
                         </div>
                     </div>
                 </div>

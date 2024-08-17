@@ -65,11 +65,11 @@ const Referral = () => {
                         </div>
                     </div>
                     <div className="flex px-10 py-5 justify-between">
-                       {referraLLeaderboard[0]?.users.length > 0 && <p className="text-white font-bold text-lg">{referraLLeaderboard[0]?.totalUsers[0].count} frens</p>}
-                       {referraLLeaderboard[0]?.users.length > 0 && <p className="text-white">(Top 100)</p>}
+                    {referraLLeaderboard[0]?.users.length > 0 && <p className="text-white font-bold text-lg">{referraLLeaderboard[0]?.totalUsers[0].count || 0} frens</p>}
+                    {referraLLeaderboard[0]?.users.length > 0 && <p className="text-white">(Top 100)</p>}
                       
                     </div>
-                    <div className="flex flex-col items-center pb-10 px-5 justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
+                    {referraLLeaderboard[0]?.users.length > 0 ? <div className="flex flex-col items-center pb-10 px-5 justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
                         <div className="h-full w-full">
                             {referraLLeaderboard[0]?.users.length > 0
                                 ? referraLLeaderboard[0].users.slice(0, 100).map((item:any, idx:any) => (
@@ -97,7 +97,8 @@ const Referral = () => {
                                 ))
                                 : null}
                         </div>
-                    </div>
+                    </div> : <div className="text-[#A6A6A6] flex justify-center items-center"> Your referrals show here</div>
+                        }
                 </div>
             </div>
             <Footer />

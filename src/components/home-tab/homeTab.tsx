@@ -39,28 +39,7 @@ const HomeTab = () => {
             name: "Follow Twitter",
             reward: 150,
             to: "https://twitter.com/FitcoinEarn",
-        },
-
-        {
-            id: 3,
-            name: "Follow Twitter",
-            reward: 150,
-            to: "https://twitter.com/FitcoinEarn",
-        },
-
-        {
-            id: 4,
-            name: "Follow Twitter",
-            reward: 150,
-            to: "https://twitter.com/FitcoinEarn",
-        },
-
-        {
-            id: 5,
-            name: "Follow Twitter",
-            reward: 150,
-            to: "https://twitter.com/FitcoinEarn",
-        },
+        }
     ];
 
 
