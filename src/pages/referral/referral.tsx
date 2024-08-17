@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
-import { getReferralLeaderBoard, getUser } from "../../api";
+import { getReferralLeaderBoard } from "../../api";
 
 
 
@@ -11,14 +11,14 @@ const Referral = () => {
 
 
     useEffect(() => {
-        getReferralLeaderBoard(String(sessionStorage.getItem("referralCode"))).then( async() => {
-            await getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
+        getReferralLeaderBoard(String(sessionStorage.getItem("referralCode"))).then( async(res) => {
+        
 
                 if (res.status == 200) {
                     setReferraLLeaderboard(res.data);
                 }
                 console.log("referallleaderboard", res.data)
-            })
+        
           
         });
     }, []);
