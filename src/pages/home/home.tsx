@@ -1,9 +1,22 @@
 
+import { useEffect } from "react";
 import HomeTab from "../../components/home-tab/homeTab";
+import { getUser } from "../../api";
 
 
 const Home = () => {
     // State to manage the active tab
+useEffect(() => {
+
+     getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
+        if (res.status == 200) {
+            sessionStorage.setItem("points", res.data.points);
+            sessionStorage.setItem("totalPoints", res.data.totalPoints);
+        }
+    });
+
+}, [])
+
 
     return (
         <section className="h-screen w-full bg-[#000000] flex flex-col items-center gap-0 relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
