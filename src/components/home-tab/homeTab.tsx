@@ -20,7 +20,8 @@ const HomeTab = () => {
 
 
 
-    // const [points] = useState(Number(sessionStorage.getItem("points")));
+    const [bonus] = useState(Number(sessionStorage.getItem("bonus")));
+    const [points] = useState(Number(sessionStorage.getItem("points")));
     const [totalPoints] = useState(Number(sessionStorage.getItem("totalPoints")));
     const [referees] = useState<any[]>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
     const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
@@ -106,6 +107,8 @@ const HomeTab = () => {
         getTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
             if (res.status == 200) {
                 sessionStorage.setItem("claimedTasks", JSON.stringify(res.data));
+                    sessionStorage.setItem("bonus", res.data.bonus);
+
                 setTasks(res.data);
             }
         });
@@ -152,12 +155,6 @@ const HomeTab = () => {
 
 
 
-
-
-
-
-
-
         return (
             <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
                 <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
@@ -171,7 +168,7 @@ const HomeTab = () => {
 
 
 
-                        <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{totalPoints.toLocaleString()}</p>
+                        <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{totalPoints.toLocaleString() || `${points + bonus}`.toLocaleString()}</p>
                         <p className="text-[#A6A6A6] text-2xl font-OpenSans font-light">$AIDOGS</p>
 
 
