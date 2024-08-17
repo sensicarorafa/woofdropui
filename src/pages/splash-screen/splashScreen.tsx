@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import welcome from "../../assets/img/welcome.png";
+// import welcome from "../../assets/img/welcome.png";
 import AiDog from "../../assets/img/doggy.png";
 
 import { useSearchParams, useNavigate } from "react-router-dom";

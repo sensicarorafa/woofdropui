@@ -72,7 +72,7 @@ const Referral = () => {
                     <div className="flex flex-col items-center pb-10 px-5 justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
                         <div className="h-full w-full">
                             {referraLLeaderboard[0]?.users.length > 0
-                                ? referraLLeaderboard[0].users.slice(0, 100).map((item, idx) => (
+                                ? referraLLeaderboard[0].users.slice(0, 100).map((item:any, idx:any) => (
                                     <div key={idx.toString()} className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">
                                         <div className="flex items-center">
                                             <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full">

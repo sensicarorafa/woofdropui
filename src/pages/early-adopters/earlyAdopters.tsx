@@ -31,8 +31,8 @@ const EarlyAdopters = () => {
         await createUser({ telegramId: Number(tId), username, fullname })
             .then(async (res) => {
                 if (res.status == 201) {
-                    sessionStorage.setItem("points", "75000");
-                    await addPoints(Number(tId), 75000);
+                    sessionStorage.setItem("points", "1000");
+                    await addPoints(Number(tId), 1000);
                     if (!!referralCode == true) {
                         if (fullname.includes("undefined")) {
                             const newFullname = fullname.replace("undefined", "");

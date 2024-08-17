@@ -1,5 +1,5 @@
 import logoBig from "../../assets/img/logobig.png";
-import link from "../../assets/img/copy.png";
+// import link from "../../assets/img/copy.png";
 import fingerSwipe from "../../assets/img/finger-swipe.png";
 import { useSwipeable } from "react-swipeable";
 import { useNavigate } from "react-router-dom";
@@ -17,13 +17,13 @@ const Congrats = () => {
         },
     });
 
-    const shareToTwitter = async (e: React.MouseEvent) => {
-        e.preventDefault();
-        const referralLink = sessionStorage.getItem("referralLink");
-        const text = encodeURIComponent("Join me on AiDog and be a part of the dog revolution.. Earn 75.000 $AiDog when you join via this link " + referralLink);
-        const url = `https://twitter.com/intent/tweet?text=${text}`;
-        window.open(url, "_blank");
-    };
+    // const shareToTwitter = async (e: React.MouseEvent) => {
+    //     e.preventDefault();
+    //     const referralLink = sessionStorage.getItem("referralLink");
+    //     const text = encodeURIComponent("Join me on AiDog and be a part of the dog revolution.. Earn 75.000 $AiDog when you join via this link " + referralLink);
+    //     const url = `https://twitter.com/intent/tweet?text=${text}`;
+    //     window.open(url, "_blank");
+    // };
 
     const copyLink = async (e: React.MouseEvent) => {
         e.preventDefault();
@@ -45,7 +45,7 @@ const Congrats = () => {
                 </div>
                 <div className="flex pt-10 flex-col items-center">
                             <p className="text-[#A6A6A6] text-lg">You've successfully claimed</p>
-                            <h1 className="text-[#FFFFFF] text-4xl font-bold">75,000 $AIDOGS</h1>
+                            <h1 className="text-[#FFFFFF] text-4xl font-bold">1,000 $AIDOGS</h1>
                             <p className="text-[#A6A6A6] text-lg">Welcome Bonus </p>
                         </div>
                 </div>
@@ -58,7 +58,7 @@ const Congrats = () => {
                             <p className="text-center">Invite to get 10% of your frens rewards.</p>
                             <p className="text-center"></p>
                         </div>
-                        <div className="flex items-center justify-center ">
+                        <div className="flex items-center justify-center " onClick={copyLink}>
                             <p className="text-[#A6A6A6] text-2xl underline">Copy invite link
                             </p>
                             <span className="flex" >

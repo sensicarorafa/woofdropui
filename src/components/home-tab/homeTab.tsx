@@ -20,7 +20,7 @@ const HomeTab = () => {
 
 
 
-    const [points] = useState(Number(sessionStorage.getItem("points")));
+    // const [points] = useState(Number(sessionStorage.getItem("points")));
     const [totalPoints] = useState(Number(sessionStorage.getItem("totalPoints")));
     const [referees] = useState<any[]>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
     const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
@@ -31,34 +31,34 @@ const HomeTab = () => {
         {
             id: 1,
             name: "Join Channel",
-            reward: 40000,
+            reward: 150,
             to: "https://t.me/FitCoinEarn",
         },
         {
             id: 2,
             name: "Follow Twitter",
-            reward: 10000,
+            reward: 150,
             to: "https://twitter.com/FitcoinEarn",
         },
 
         {
             id: 3,
             name: "Follow Twitter",
-            reward: 10000,
+            reward: 150,
             to: "https://twitter.com/FitcoinEarn",
         },
 
         {
             id: 4,
             name: "Follow Twitter",
-            reward: 10000,
+            reward: 150,
             to: "https://twitter.com/FitcoinEarn",
         },
 
         {
             id: 5,
             name: "Follow Twitter",
-            reward: 10000,
+            reward: 150,
             to: "https://twitter.com/FitcoinEarn",
         },
     ];
