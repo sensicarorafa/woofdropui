@@ -305,7 +305,7 @@ const HomeTab = () => {
                                 </div>
                                 <div className='flex flex-col pl-3'>
                                     <p className='text-white text-bold'>Your Referrals</p>
-                                    <span className='text-[#A6A6A6]'>+750 $AIDOGS</span>
+                                    <span className='text-[#A6A6A6]'></span>
                                 </div>
                             </div>
                             <div className="">
