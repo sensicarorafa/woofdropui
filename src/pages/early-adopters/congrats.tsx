@@ -73,7 +73,7 @@ const Congrats = () => {
                             <button className="w-[25px]">
                                 <img className="w-full" src={fingerSwipe} alt="" />
                             </button>
-                            <p className="text-base text-[#FFFFFF]">Swipe left to start walking</p>
+                            <p className="text-base text-[#FFFFFF]">Swipe left to continue</p>
                         </div>
                     </div>
                 </div>
