@@ -1,6 +1,6 @@
 import logoBig from "../../assets/img/logobig.png";
 // import link from "../../assets/img/copy.png";
-import fingerSwipe from "../../assets/img/finger-swipe.png";
+// import fingerSwipe from "../../assets/img/finger-swipe.png";
 import { useSwipeable } from "react-swipeable";
 import { useNavigate } from "react-router-dom";
 import useWindowDimensions from '../../utils/useWindowSize'
