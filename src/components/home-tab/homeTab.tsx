@@ -118,6 +118,7 @@ const HomeTab = () => {
                     sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
                     setTotalPoints(res.data.totalPoints)
                     setReferees(res.data.referees)
+                    console.log("user", res.data)
     
                 }
             });

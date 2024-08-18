@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import AiDog from "../../assets/img/doggy.png";
 
 import { useSearchParams, useNavigate } from "react-router-dom";
-import {  getUser } from "../../api";
+import {  getRefereesPoints, getUser } from "../../api";
 
 const w = window as any;
 const parseTelegramInitData = (initData: string) => {
@@ -74,6 +74,18 @@ const SplashScreen = () => {
                         sessionStorage.setItem("referees", JSON.stringify(userData.referees));
                         sessionStorage.setItem("claimedTasks", JSON.stringify(userData.tasksClaimed));
                         sessionStorage.setItem("userId", JSON.stringify(userData.userId));
+
+                        getRefereesPoints(String(sessionStorage.getItem("referralCode"))).then(() => {
+                            getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
+                                if (res.status == 200) {
+                                    sessionStorage.setItem("totalPoints", res.data.totalPoints);
+                                    sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
+            
+                                    console.log("user", res.data)
+                    
+                                }
+                            });
+                        });
                        
     
 
