@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const Stats = () => {
     const [leaderboard, setLeaderboard] = useState<any[]>([]);
     const [totalPoints] = useState(Number(sessionStorage.getItem("totalPoints")));
+    const [userId] = useState(String(sessionStorage.getItem("totalPoints")));
 
   
     useEffect(() => {
@@ -17,7 +18,7 @@ const Stats = () => {
         });
     }, []);
 
-    let usersIndex = leaderboard ? leaderboard.findIndex((item) => item.userId == sessionStorage.getItem("userId")) : null;
+    let usersIndex = leaderboard ? leaderboard.findIndex((item) => item.userId == userId) : null;
     console.log(leaderboard, usersIndex);
 
     return (
