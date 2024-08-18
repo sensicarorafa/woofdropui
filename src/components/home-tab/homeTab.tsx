@@ -110,22 +110,17 @@ const HomeTab = () => {
             }
         });
 
-        getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
-            if (res.status == 200) {
-                sessionStorage.setItem("totalPoints", res.data.totalPoints);
-                sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
-                setTotalPoints(res.data.totalPoints)
-                setReferees(res.data.referees)
-
-            }
-        });
-        getRefereesPoints(String(sessionStorage.getItem("referralCode"))).then((res) => {
-            if (res.status == 200) {
-                sessionStorage.setItem("totalPoints", res.data.totalPoints);
-                setTotalPoints(res.data.totalPoints)
-              
-
-            }
+      
+        getRefereesPoints(String(sessionStorage.getItem("referralCode"))).then(() => {
+            getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
+                if (res.status == 200) {
+                    sessionStorage.setItem("totalPoints", res.data.totalPoints);
+                    sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
+                    setTotalPoints(res.data.totalPoints)
+                    setReferees(res.data.referees)
+    
+                }
+            });
         });
 
         window.addEventListener("focus", handleFocus);
