@@ -73,6 +73,7 @@ const SplashScreen = () => {
                         sessionStorage.setItem("totalPoints", userData.totalPoints);
                         sessionStorage.setItem("referees", JSON.stringify(userData.referees));
                         sessionStorage.setItem("claimedTasks", JSON.stringify(userData.tasksClaimed));
+                        sessionStorage.setItem("userId", JSON.stringify(userData.userId));
                        
     
 

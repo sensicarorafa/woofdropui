@@ -15,8 +15,8 @@ const Stats = () => {
         });
     }, []);
 
-    let usersIndex = leaderboard ? leaderboard.findIndex((item) => item.telegramId == sessionStorage.getItem("tid")) : null;
-    console.log(leaderboard);
+    let usersIndex = leaderboard ? leaderboard.findIndex((item) => item.userId == sessionStorage.getItem("userId")) : null;
+    console.log(leaderboard, usersIndex);
 
     return (
         <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
@@ -72,7 +72,7 @@ const Stats = () => {
                                                     {/* <div className="w-[15px]">
                                                         <img className="w-full" src={yellowStar} alt="" />
                                                     </div> */}
-                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{leaderboard[usersIndex]?.totalSum?.toLocaleString() || defaultPoint.toLocaleString()} $AIDOGS</p>
+                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{leaderboard[usersIndex]?.totalPoints?.toLocaleString() || defaultPoint.toLocaleString()} $AIDOGS</p>
                                                 </div>
                                             </div>
                                         </>
@@ -106,7 +106,7 @@ const Stats = () => {
                                                     </div>
                                                     <div className="pl-3">
                                                         <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{item?.firstName.charAt(0).toUpperCase() + item.firstName.slice(1)}</p>
-                                                        <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{`${item.points + item.bonus}`?.toLocaleString() } $AIDOGS</p>
+                                                        <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{`${item.totalPoints}`?.toLocaleString() } $AIDOGS</p>
                                                     </div>
                                                 </div>
 
