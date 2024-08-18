@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
-import { claimTask, getTasks, getUser } from "../../api";
+import { claimTask, getRefereesPoints, getTasks, getUser } from "../../api";
 import logoBig from "../../assets/img/logobig.png";
 import logoSm from "../../assets/img/logosm.svg";
 
@@ -116,6 +116,14 @@ const HomeTab = () => {
                 sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
                 setTotalPoints(res.data.totalPoints)
                 setReferees(res.data.referees)
+
+            }
+        });
+        getRefereesPoints(String(sessionStorage.getItem("referralCode"))).then((res) => {
+            if (res.status == 200) {
+                sessionStorage.setItem("totalPoints", res.data.totalPoints);
+                setTotalPoints(res.data.totalPoints)
+              
 
             }
         });

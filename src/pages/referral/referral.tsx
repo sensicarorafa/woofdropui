@@ -17,7 +17,7 @@ const Referral = () => {
                 if (res.status == 200) {
                     setReferralLeaderboard(res.data);
                 }
-                console.log("referallleaderboard", res.data)
+                // console.log("referallleaderboard", res.data)
         
           
         });

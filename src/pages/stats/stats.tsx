@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const Stats = () => {
     const [leaderboard, setLeaderboard] = useState<any[]>([]);
-    const defaultPoint= 5200
+    const defaultPoint= 1000
     useEffect(() => {
         getLeaderBoard().then((res) => {
             if (res.status == 200) {
