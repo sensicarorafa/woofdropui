@@ -75,7 +75,7 @@ const Stats = () => {
                                                     {/* <div className="w-[15px]">
                                                         <img className="w-full" src={yellowStar} alt="" />
                                                     </div> */}
-                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{leaderboard[usersIndex]?.totalPoints?.toLocaleString() || totalPoints.toLocaleString()} $AIDOGS</p>
+                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{leaderboard[usersIndex]?.totalPoints?.toLocaleString() || totalPoints.toLocaleString()} <span className="text-[#A6A6A6] text-sm">$AIDOGS</span> </p>
                                                 </div>
                                             </div>
                                         </>
@@ -109,7 +109,7 @@ const Stats = () => {
                                                     </div>
                                                     <div className="pl-3">
                                                         <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{item?.firstName.charAt(0).toUpperCase() + item.firstName.slice(1)}</p>
-                                                        <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{`${item.totalPoints}`?.toLocaleString() } $AIDOGS</p>
+                                                        <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{`${item.totalPoints}`?.toLocaleString() } <span className="text-[#A6A6A6] text-sm">$AIDOGS</span></p>
                                                     </div>
                                                 </div>
 

@@ -171,8 +171,8 @@ const HomeTab = () => {
 
 
 
-                    <p className="text-[#FFFFFF] text-4xl font-OpenSans font-light">{totalPoints.toLocaleString()}</p>
-                    <p className="text-[#A6A6A6] text-2xl font-OpenSans font-light">$AIDOGS</p>
+                    <p className="text-[#FFFFFF] text-4xl font-OpenSans font-bold">{totalPoints.toLocaleString()}</p>
+                    <p className="text-[#A6A6A6] text-xl font-OpenSans font-light">$AIDOGS</p>
 
 
                 </div>
