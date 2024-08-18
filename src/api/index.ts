@@ -6,7 +6,7 @@ export const getUser = async (telegramId: Number) => await api.get(`/user/exist?
 
 export const addPoints = async (telegramId: Number, points: Number) => await api.put(`/user/add-points`, { points, telegramId });
 
-export const getRefereesPoints = async (referralCode: String) => await api.put(`/user/get-referee-point`, { referralCode });
+export const getRefereesPoints = async (referralCode: string) => await api.put(`/user/get-referee-point`, { referralCode });
 
 export const addReferee = async (telegramId: Number, referralCode: string, fullname: string) => await api.put(`/user/add-referee`, { telegramId, referralCode, fullname });
 

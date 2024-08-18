@@ -48,6 +48,7 @@ const EarlyAdopters = () => {
                     navigate("/congrats");
                 } else {
                     console.log(res);
+                    
                 }
                 setIsButtonDisabled(false);
             })
