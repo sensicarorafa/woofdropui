@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 
 const Stats = () => {
     const [leaderboard, setLeaderboard] = useState<any[]>([]);
-    const defaultPoint= 1000
+    const [totalPoints] = useState(Number(sessionStorage.getItem("totalPoints")));
+
+  
     useEffect(() => {
         getLeaderBoard().then((res) => {
             if (res.status == 200) {
@@ -72,7 +74,7 @@ const Stats = () => {
                                                     {/* <div className="w-[15px]">
                                                         <img className="w-full" src={yellowStar} alt="" />
                                                     </div> */}
-                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{leaderboard[usersIndex]?.totalPoints?.toLocaleString() || defaultPoint.toLocaleString()} $AIDOGS</p>
+                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{leaderboard[usersIndex]?.totalPoints?.toLocaleString() || totalPoints.toLocaleString()} $AIDOGS</p>
                                                 </div>
                                             </div>
                                         </>
