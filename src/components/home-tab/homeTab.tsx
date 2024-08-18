@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
-import { claimTask, getTasks, getUser, getRefereesPoints } from "../../api";
+import { claimTask, getTasks, getUser } from "../../api";
 import logoBig from "../../assets/img/logobig.png";
 import logoSm from "../../assets/img/logosm.svg";
 
