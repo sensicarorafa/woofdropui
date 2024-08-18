@@ -11,10 +11,9 @@ const Referral = () => {
 
 
     useEffect(() => {
-      
+     
         getReferees(Number(sessionStorage.getItem("tid"))).then( async(res) => {
-        
-               
+                    
                 if (res.status == 200) {
                     setReferralLeaderboard(res.data);
                 }
