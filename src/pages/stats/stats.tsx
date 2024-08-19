@@ -103,7 +103,7 @@ const Stats = () => {
                                         ? leaderboard.slice(0, 100).map((item, idx) => (
                                             <div key={idx.toString()} className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">
                                                 <div className="flex">
-                                                    <div className={`flex justify-center h-[45px] w-[45px]  items-center px-3 py-3 rounded-full`} style={{background:`${colorCodes[Math.floor(Math.random() * 10) + 1]}`}}>
+                                                    <div className={`flex justify-center h-[45px] w-[45px]  items-center px-3 py-3 rounded-full`} style={{background:`${colorCodes[Math.floor(Math.random() * 10)]}`}}>
                                                         <p className="text-[#FFFFFF] text-lg font-bold]">
                                                             {item?.firstName.charAt(0).toUpperCase() + item?.firstName.charAt(1).toUpperCase()}
                                                             {/* {item.firstName.charAt(1).toUpperCase() + item?.lastName.charAt(0).toUpperCase()}{" "} */}

@@ -14,6 +14,7 @@ import logoSm from "../../assets/img/logosm.svg";
 
 import Footer from "../footer";
 import { useEffect, useState } from "react";
+import { toast } from 'react-hot-toast';
 // import { toast } from 'react-hot-toast';
 
 
@@ -141,8 +142,14 @@ const HomeTab = () => {
                     sessionStorage.setItem("totalPoints", res.data.totalPoints);
                     sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
                     sessionStorage.setItem("userId", res.data.userId);
+                sessionStorage.setItem("pendingTasks", JSON.stringify(res.data.tasksPending));
+                sessionStorage.setItem("claimedTasks", JSON.stringify(res.data.tasksClaimed));
+
                     setTotalPoints(res.data.totalPoints)
                     setReferees(res.data.referees)
+                    setPendingTaskList(res.data.tasksPending);
+                setTasks(res.data.tasksClaimed);
+
                     console.log("user", res.data)
 
                 }
@@ -166,6 +173,19 @@ const HomeTab = () => {
         // if (taskLink) {
         //     window.open(taskLink, "_blank");
         // }
+
+        let isTaskClaimed: boolean = taskList.find((t) => t.taskId == taskId);
+        let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == taskId);
+        
+        
+        isTaskPending && !isTaskClaimed && toast("Complete Task to proceed!", {
+            className: "",
+            duration: 1000,
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+          });
     };
     const pendingTask = (e: React.MouseEvent, taskId: number, points: number) => {
         e.preventDefault();
@@ -176,6 +196,18 @@ const HomeTab = () => {
         if (taskLink) {
             window.open(taskLink, "_blank");
         }
+        let isTaskClaimed: boolean = taskList.find((t) => t.taskId == taskId);
+        let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == taskId);
+        
+        
+        isTaskPending && !isTaskClaimed && toast("Complete Task to proceed!", {
+            className: "",
+            duration: 1000,
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+          });
     };
 
     const openTg = (e: React.MouseEvent) => {
@@ -295,14 +327,15 @@ const HomeTab = () => {
                                         {task.icon}
                                     </div>
                                     <div className='flex flex-col pl-5'>
-                                        <p className='text-white text-bold'>{task.name}</p>
+                                    {(isTaskPending && !isTaskClaimed) &&  <p className='text-[#87CEEB] text-bold cursor-pointer' onClick={openTwitter}>{task.name}</p>}
+                                    {(isTaskPending && isTaskClaimed) &&   <p className='text-white text-bold'>{task.name}</p>}
                                         <span className='text-[#A6A6A6]'>+{task.reward.toLocaleString()} $AIDOGS</span>
                                     </div>
                                 </div>
                                 <div className="">
 
-
-
+                                 
+                               
                                     <button
                                         className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
                                             }`}
