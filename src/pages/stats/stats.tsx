@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const Stats = () => {
     const [leaderboard, setLeaderboard] = useState<any[]>([]);
     const [totalPoints] = useState(Number(sessionStorage.getItem("totalPoints")));
-    const [userId] = useState(String(sessionStorage.getItem("totalPoints")));
+    // const [userId] = useState(String(sessionStorage.getItem("userId")));
 
   
     useEffect(() => {
