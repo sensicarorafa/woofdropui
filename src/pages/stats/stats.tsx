@@ -18,7 +18,7 @@ const Stats = () => {
         });
     }, []);
 
-    let usersIndex = leaderboard ? leaderboard.findIndex((item) => item.userId == userId) : null;
+    let usersIndex = leaderboard ? leaderboard.findIndex((item) => item.userId == sessionStorage.getItem("userId")) : null;
     console.log(leaderboard, usersIndex);
 
     return (

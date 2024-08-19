@@ -116,6 +116,7 @@ const HomeTab = () => {
                 if (res.status == 200) {
                     sessionStorage.setItem("totalPoints", res.data.totalPoints);
                     sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
+                    sessionStorage.setItem("userId", res.data.userId);
                     setTotalPoints(res.data.totalPoints)
                     setReferees(res.data.referees)
                     console.log("user", res.data)
