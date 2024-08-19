@@ -98,19 +98,21 @@ const HomeTab = () => {
                 });
                 sessionStorage.removeItem("taskToClaim");
             });
-        }
-
-        if (!!pendingTaskToClaim.taskId) {
-            setPendingTask(Number(sessionStorage.getItem("tid")), pendingTaskToClaim.taskId, pendingTaskToClaim.points).then(async () => {
-                await getPendingTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
-                    if (res.status == 200) {
-                        setPendingTaskList(res.data);
-                    }
+        } else {
+            if (!!pendingTaskToClaim.taskId) {
+                setPendingTask(Number(sessionStorage.getItem("tid")), pendingTaskToClaim.taskId, pendingTaskToClaim.points).then(async () => {
+                    await getPendingTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
+                        if (res.status == 200) {
+                            setPendingTaskList(res.data);
+                        }
+                    });
+                    sessionStorage.removeItem("pendingTaskToClaim");
                 });
-                sessionStorage.removeItem("pendingTaskToClaim");
-            });
+            }
+    
         }
 
+    
 
     };
 
@@ -159,11 +161,11 @@ const HomeTab = () => {
         e.preventDefault();
         setIsLoading(true)
         sessionStorage.setItem("taskToClaim", JSON.stringify({ taskId, points }));
-        let task = tasks.find((t: any) => t.id === taskId);
-        let taskLink = task ? task.to : "";
-        if (taskLink) {
-            window.open(taskLink, "_blank");
-        }
+        // let task = tasks.find((t: any) => t.id === taskId);
+        // let taskLink = task ? task.to : "";
+        // if (taskLink) {
+        //     window.open(taskLink, "_blank");
+        // }
     };
     const pendingTask = (e: React.MouseEvent, taskId: number, points: number) => {
         e.preventDefault();
