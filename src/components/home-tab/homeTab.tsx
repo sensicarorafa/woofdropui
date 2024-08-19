@@ -14,6 +14,7 @@ import logoSm from "../../assets/img/logosm.svg";
 
 import Footer from "../footer";
 import { useEffect, useState } from "react";
+import { toast } from 'react-hot-toast';
 
 
 const HomeTab = () => {
@@ -25,6 +26,8 @@ const HomeTab = () => {
     const [referees, setReferees] = useState<any[]>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
     const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
     const [isLoading, setIsLoading] = useState<Boolean>(false)
+    const [isClaim, setIsClaim] = useState<Boolean>(Boolean(sessionStorage.getItem("isClaim") || false))
+    const [isChecking, setIsChecking] = useState<Boolean>(Boolean(sessionStorage.getItem("isChecking") || false))
 
 
     const tasks: { id: number; name: string; reward: number; to: string, btnText:string, icon:any }[] = [
@@ -137,11 +140,48 @@ const HomeTab = () => {
         e.preventDefault();
         setIsLoading(true)
         sessionStorage.setItem("taskToClaim", JSON.stringify({ taskId, points }));
+        // let task = tasks.find((t: any) => t.id === taskId);
+        // let taskLink = task ? task.to : "";
+        // if (taskLink) {
+        //     window.open(taskLink, "_blank");
+        // }
+    };
+    //Do task
+    const openTask = (e: React.MouseEvent, taskId: number) => {
+        e.preventDefault();
         let task = tasks.find((t: any) => t.id === taskId);
+        setIsClaim(true)
+        sessionStorage.setItem("isClaim", JSON.stringify(true));
+
         let taskLink = task ? task.to : "";
         if (taskLink) {
             window.open(taskLink, "_blank");
         }
+    };
+    //Check task
+    const checkTask = (e: React.MouseEvent, taskId: number) => {
+        e.preventDefault();
+        setIsLoading(true)
+        let task = tasks.find((t: any) => t.id === taskId);
+        setIsChecking(true)
+        sessionStorage.setItem("isChecking", JSON.stringify(true));
+
+   toast("Make sure to complete task!", {
+            className: "",
+            duration: 1500,
+            style: {
+              background: "#363636",
+              color: "orange",
+            },
+          });
+        let taskLink = task ? task.to : "";
+        setTimeout(() => {
+          
+            if (taskLink) {
+                window.open(taskLink, "_blank");
+            }
+          }, 10000);
+    
     };
     const openTg = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -246,7 +286,7 @@ const HomeTab = () => {
                 <div className="w-full  flex flex-col pt-7 px-4 relative z-10">
                     <p className='text-white text-xl pb-5'>Tasks</p>
                     {tasks.map((task) => {
-                        let isTaskClaimed = taskList.find((t) => t.taskId == task.id);
+                        let isTaskClaimed:boolean = taskList.find((t) => t.taskId == task.id);
                         let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
 
                         return (
@@ -265,7 +305,29 @@ const HomeTab = () => {
                                 <div className="">
 
 
-                                    <button
+                                 {!isTaskClaimed && !isClaim &&  <button
+                                        className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
+                                            }`}
+                                        onClick={(e) => openTask(e, task.id)}
+                                        disabled={isTaskClaimed}
+                                    >
+
+                                        {isTaskClaimed ? "Done" : <>{isLoading && task.id == taskToClaim.taskId ? <>
+                                            <span className="loader"></span>
+                                        </> : <>{task.btnText}</>}</>}
+                                    </button>}
+                                    {!isTaskClaimed && isClaim  && !isChecking &&   <button
+                                        className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
+                                            }`}
+                                        onClick={(e) => checkTask(e, task.id)}
+                                        disabled={isTaskClaimed}
+                                    >
+
+                                        {isTaskClaimed ? "Done" : <>{isLoading && task.id == taskToClaim.taskId ? <>
+                                            <span className="loader"></span>
+                                        </> : <>Claim 1</>}</>}
+                                    </button>}
+                                    { (isChecking || isTaskClaimed) &&  <button
                                         className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
                                             }`}
                                         onClick={(e) => claim(e, task.id, Number(task.reward))}
@@ -274,8 +336,8 @@ const HomeTab = () => {
 
                                         {isTaskClaimed ? "Done" : <>{isLoading && task.id == taskToClaim.taskId ? <>
                                             <span className="loader"></span>
-                                        </> : <>{task.btnText}</>}</>}
-                                    </button>
+                                        </> : <>Claim 2</>}</>}
+                                    </button>}
                                 </div>
                             </div>
 

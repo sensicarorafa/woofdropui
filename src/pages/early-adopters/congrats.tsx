@@ -5,6 +5,7 @@ import { useSwipeable } from "react-swipeable";
 import { useNavigate } from "react-router-dom";
 import useWindowDimensions from '../../utils/useWindowSize'
 import Confetti from 'react-confetti'
+import { toast } from "react-hot-toast";
 
 const Congrats = () => {
     const navigate = useNavigate();
@@ -39,6 +40,14 @@ const Congrats = () => {
         e.preventDefault();
         const referralLink = sessionStorage.getItem("referralLink");
         navigator.clipboard.writeText(referralLink as string);
+        toast("Copied!", {
+            className: "",
+            duration: 799,
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+          });
     };
 
     const goHome = () => {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 import { getReferees,  } from "../../api";
+import { toast } from "react-hot-toast";
 
 
 
@@ -28,6 +29,14 @@ const Referral = () => {
         e.preventDefault();
         const referralLink = sessionStorage.getItem("referralLink");
         navigator.clipboard.writeText(referralLink as string);
+        toast("Copied!", {
+            className: "",
+            duration: 799,
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+          });
     };
 
     return (
