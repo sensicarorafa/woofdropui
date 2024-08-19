@@ -16,7 +16,11 @@ export const levelUp = async (telegramId: Number, levelIndex: Number, points: Nu
 
 export const getTasks = async (telegramId: Number) => await api.get(`/user/tasks?tid=${telegramId}`);
 
+export const getPendingTasks = async (telegramId: Number) => await api.get(`/user/pending-tasks?tid=${telegramId}`);
+
 export const claimTask = async (telegramId: Number, taskId: Number, points: Number) => await api.put(`/user/claim-task`, { telegramId, taskId, points });
+
+export const setPendingTask = async (telegramId: Number, taskId: Number, points: Number) => await api.put(`/user/pending-task`, { telegramId, taskId, points });
 
 export const getLeaderBoard = async () => await api.get(`/user/leaderboard`);
 
