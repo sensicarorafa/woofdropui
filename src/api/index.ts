@@ -31,3 +31,6 @@ export const addGender = async (telegramId: Number, gender: string) => await api
 export const logFootPrint = async (telegramId: Number, points: Number) => await api.post(`/user/footprint`, { telegramId, points });
 
 export const getFootPrint = async (telegramId: Number) => await api.get(`/user/footprint?tid=${telegramId}`);
+
+export const claimTgReward = async (telegramId: Number) => await api.put(`/user/join-tg?tid=${telegramId}`);
+

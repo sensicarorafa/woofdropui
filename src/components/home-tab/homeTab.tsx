@@ -8,19 +8,20 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
-import { claimTask, getPendingTasks, getRefereesPoints, getTasks, getUser, setPendingTask } from "../../api";
+import { claimTask, claimTgReward, getPendingTasks, getRefereesPoints, getTasks, getUser, setPendingTask } from "../../api";
 import logoBig from "../../assets/img/logobig.png";
 import logoSm from "../../assets/img/logosm.svg";
 
 import Footer from "../footer";
 import { useEffect, useState } from "react";
 import { toast } from 'react-hot-toast';
+
 // import { toast } from 'react-hot-toast';
 
 
+
+
 const HomeTab = () => {
-
-
 
 
     const [totalPoints, setTotalPoints] = useState(Number(sessionStorage.getItem("totalPoints")));
@@ -28,39 +29,61 @@ const HomeTab = () => {
     const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
     const [pendingTaskList, setPendingTaskList] = useState<any[]>(JSON.parse(sessionStorage.getItem("pendingTasks") || "[]"));
     const [isLoading, setIsLoading] = useState<Boolean>(false)
+    const [tgTask, setTgTask] = useState<boolean>(false)
+    const storedValue = sessionStorage.getItem('isTgPending');
+    const [isTgPending, setIsTgPending] = useState<Boolean>(storedValue === "true" || false)
 
+    const referralLink = sessionStorage.getItem("referralLink");
+    const text = `Got $DOGS??\r\n\nIt's time to claim some $AIDOG..\r\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOG`;
+    const encodedText = encodeURIComponent(text);
 
+    const url = (`https://twitter.com/intent/tweet?text=${encodedText}`);
+   
+
+ 
 
     const tasks: { id: number; name: string; reward: number; to: string, btnText: string, icon: any }[] = [
-        {
-            id: 1,
-            name: "Join Channel",
-            reward: 150,
-            to: "https://t.me/aidogs_community",
-            btnText: "Join",
-            icon: <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256S111 504 248 504 496 393 496 256 385 8 248 8zM363 176.7c-3.7 39.2-19.9 134.4-28.1 178.3-3.5 18.6-10.3 24.8-16.9 25.4-14.4 1.3-25.3-9.5-39.3-18.7-21.8-14.3-34.2-23.2-55.3-37.2-24.5-16.1-8.6-25 5.3-39.5 3.7-3.8 67.1-61.5 68.3-66.7 .2-.7 .3-3.1-1.2-4.4s-3.6-.8-5.1-.5q-3.3 .7-104.6 69.1-14.8 10.2-26.9 9.9c-8.9-.2-25.9-5-38.6-9.1-15.5-5-27.9-7.7-26.8-16.3q.8-6.7 18.5-13.7 108.4-47.2 144.6-62.3c68.9-28.6 83.2-33.6 92.5-33.8 2.1 0 6.6 .5 9.6 2.9a10.5 10.5 0 0 1 3.5 6.7A43.8 43.8 0 0 1 363 176.7z" /></svg>
-
-        },
+      
         {
             id: 2,
-            name: "Follow Twitter",
+            name: "Follow us on X",
             reward: 150,
             to: "https://twitter.com/FitcoinEarn",
             btnText: "Follow",
             icon: <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
 
 
+        },
+        {
+            id: 3,
+            name: "Share on X",
+            reward: 150,
+            to: "https://twitter.com/FitcoinEarn",
+            btnText: "Share",
+            icon: <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
+
         }
+
+
     ];
 
 
+    // {
+    //     id: 3,
+    //     name: "Share on Telegram Stories",
+    //     reward: 150,
+    //     to: "https://twitter.com/FitcoinEarn",
+    //     btnText: "Share on Tg",
+    //     icon: <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256S111 504 248 504 496 393 496 256 385 8 248 8zM363 176.7c-3.7 39.2-19.9 134.4-28.1 178.3-3.5 18.6-10.3 24.8-16.9 25.4-14.4 1.3-25.3-9.5-39.3-18.7-21.8-14.3-34.2-23.2-55.3-37.2-24.5-16.1-8.6-25 5.3-39.5 3.7-3.8 67.1-61.5 68.3-66.7 .2-.7 .3-3.1-1.2-4.4s-3.6-.8-5.1-.5q-3.3 .7-104.6 69.1-14.8 10.2-26.9 9.9c-8.9-.2-25.9-5-38.6-9.1-15.5-5-27.9-7.7-26.8-16.3q.8-6.7 18.5-13.7 108.4-47.2 144.6-62.3c68.9-28.6 83.2-33.6 92.5-33.8 2.1 0 6.6 .5 9.6 2.9a10.5 10.5 0 0 1 3.5 6.7A43.8 43.8 0 0 1 363 176.7z" /></svg>
 
+
+    // }
 
     const handleFocus = () => {
         let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
         let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
 
-        //     const testId: Number = 6489531324;
+        //     const testId: Number = 111111111111;
         //     const testCid = 1;
         //     const testCpoint = 40000
         //     if (!!taskToClaim.taskId) {
@@ -110,10 +133,10 @@ const HomeTab = () => {
                     sessionStorage.removeItem("pendingTaskToClaim");
                 });
             }
-    
+
         }
 
-    
+
 
     };
 
@@ -125,8 +148,17 @@ const HomeTab = () => {
                 sessionStorage.setItem("claimedTasks", JSON.stringify(res.data));
 
                 setTasks(res.data);
+                const checkValueExists = (arr:any[], key:any, value:number) => {
+                    return arr.some(obj => obj[key] === value);
+                };
+        
+                const result = checkValueExists((res.data), 'taskId', 1)
+        
+                setTgTask(result)
             }
         });
+
+
         getPendingTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
             if (res.status == 200) {
                 sessionStorage.setItem("pendingTasks", JSON.stringify(res.data));
@@ -142,19 +174,21 @@ const HomeTab = () => {
                     sessionStorage.setItem("totalPoints", res.data.totalPoints);
                     sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
                     sessionStorage.setItem("userId", res.data.userId);
-                sessionStorage.setItem("pendingTasks", JSON.stringify(res.data.tasksPending));
-                sessionStorage.setItem("claimedTasks", JSON.stringify(res.data.tasksClaimed));
+                    sessionStorage.setItem("pendingTasks", JSON.stringify(res.data.tasksPending));
+                    sessionStorage.setItem("claimedTasks", JSON.stringify(res.data.tasksClaimed));
 
                     setTotalPoints(res.data.totalPoints)
                     setReferees(res.data.referees)
                     setPendingTaskList(res.data.tasksPending);
-                setTasks(res.data.tasksClaimed);
+                    setTasks(res.data.tasksClaimed);
 
                     console.log("user", res.data)
 
                 }
             });
         });
+
+        
 
         window.addEventListener("focus", handleFocus);
 
@@ -176,43 +210,63 @@ const HomeTab = () => {
 
         let isTaskClaimed: boolean = taskList.find((t) => t.taskId == taskId);
         let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == taskId);
-        
-        
+
+
         isTaskPending && !isTaskClaimed && toast("Complete Task to proceed!", {
             className: "",
             duration: 1000,
             style: {
-              background: "#363636",
-              color: "#fff",
+                background: "#363636",
+                color: "#fff",
             },
-          });
+        });
     };
     const pendingTask = (e: React.MouseEvent, taskId: number, points: number) => {
         e.preventDefault();
-        // setIsLoading(true)
+        setIsLoading(true)
         sessionStorage.setItem("pendingTaskToClaim", JSON.stringify({ taskId, points }));
         let task = tasks.find((t: any) => t.id === taskId);
         let taskLink = task ? task.to : "";
         if (taskLink) {
+            if(taskId == 3) {
+              
+                   window.open(url, "_blank");
+            } else
             window.open(taskLink, "_blank");
-        }
+        } 
         let isTaskClaimed: boolean = taskList.find((t) => t.taskId == taskId);
         let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == taskId);
-        
-        
+
+
         isTaskPending && !isTaskClaimed && toast("Complete Task to proceed!", {
             className: "",
             duration: 1000,
             style: {
-              background: "#363636",
-              color: "#fff",
+                background: "#363636",
+                color: "#fff",
             },
-          });
+        });
     };
 
     const openTg = (e: React.MouseEvent) => {
         e.preventDefault();
         window.open("https://t.me/aidogs_community", "_blank");
+     
+        setTimeout(() => {
+        setIsTgPending(true)
+        sessionStorage.setItem("isTgPending", JSON.stringify("true"))
+            
+        }, 5000);
+      
+    };
+    const openTask = (taskId:number) => {
+        if(taskId == 3) {
+           window.open(url, "_blank");
+        } else {
+            window.open("https://twitter.com/aidogs_community", "_blank");
+
+        }
+            
 
     };
     const openTwitter = (e: React.MouseEvent) => {
@@ -222,8 +276,31 @@ const HomeTab = () => {
     };
 
 
+  
+
+    const claimTg = () => {
+        setIsLoading(true)
+        claimTgReward(Number(sessionStorage.getItem("tid"))).then(() => {
+       
+    
+            const checkValueExists = (arr:any[], key:any, value:number) => {
+                return arr.some(obj => obj[key] === value);
+            };
+    
+            const result = checkValueExists(taskList, 'taskId', 1)
+    
+            setTgTask(result)
+        setIsLoading(false)
+
+        })
+
+    
+   
 
 
+
+
+    }
 
 
     return (
@@ -312,10 +389,62 @@ const HomeTab = () => {
 
                 <div className="w-full  flex flex-col pt-7 px-4 relative z-10">
                     <p className='text-white text-xl pb-5'>Tasks</p>
+
+                    <div className='flex justify-between py-2 w-full items-center'>
+                        <div className='flex items-center'>
+                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                              
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256S111 504 248 504 496 393 496 256 385 8 248 8zM363 176.7c-3.7 39.2-19.9 134.4-28.1 178.3-3.5 18.6-10.3 24.8-16.9 25.4-14.4 1.3-25.3-9.5-39.3-18.7-21.8-14.3-34.2-23.2-55.3-37.2-24.5-16.1-8.6-25 5.3-39.5 3.7-3.8 67.1-61.5 68.3-66.7 .2-.7 .3-3.1-1.2-4.4s-3.6-.8-5.1-.5q-3.3 .7-104.6 69.1-14.8 10.2-26.9 9.9c-8.9-.2-25.9-5-38.6-9.1-15.5-5-27.9-7.7-26.8-16.3q.8-6.7 18.5-13.7 108.4-47.2 144.6-62.3c68.9-28.6 83.2-33.6 92.5-33.8 2.1 0 6.6 .5 9.6 2.9a10.5 10.5 0 0 1 3.5 6.7A43.8 43.8 0 0 1 363 176.7z" /></svg>
+
+                            </div>
+                            <div className='flex flex-col pl-5'>
+                          <p className='text-white text-bold taskTitle' onClick={openTg}>Join AIDOG Tg Channel</p>
+                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                            </div>
+                        </div>
+                        <div className="">
+
+
+
+                            <button
+                                className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${tgTask && "opacity-50"
+                                    }`}
+                                    onClick={isTgPending ? claimTg : openTg}
+                                disabled={tgTask}
+                            >
+
+                                {tgTask ? "Done" :
+                                    <>
+                                        {isTgPending ?
+                                            <>{isLoading ?
+                                                <>
+                                                    <span className="loader"></span>
+                                                </> :
+                                                <>Claim
+                                                </>
+                                            }
+                                            </>
+                                            :
+
+                                            <>{isLoading ?
+                                                <>
+                                                    <span className="loader"></span>
+                                                </> :
+                                                <>Join
+                                                </>
+                                            }
+                                            </>
+                                        }
+                                    </>
+
+                                }
+                            </button>
+                        </div>
+                    </div>
                     {tasks.map((task) => {
                         let isTaskClaimed: boolean = taskList.find((t) => t.taskId == task.id);
                         let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == task.id);
-                        let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
+                        // let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
                         let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
 
                         return (
@@ -327,19 +456,18 @@ const HomeTab = () => {
                                         {task.icon}
                                     </div>
                                     <div className='flex flex-col pl-5'>
-                                    {(isTaskPending && !isTaskClaimed) &&  <p className='text-[#87CEEB] text-bold cursor-pointer' onClick={openTwitter}>{task.name}</p>}
-                                    {(isTaskPending && isTaskClaimed) &&   <p className='text-white text-bold'>{task.name}</p>}
+                    <p className='text-white text-bold taskTitle' onClick={() => openTask(task.id)}>{task.name}</p>
                                         <span className='text-[#A6A6A6]'>+{task.reward.toLocaleString()} $AIDOGS</span>
                                     </div>
                                 </div>
                                 <div className="">
 
-                                 
-                               
+
+
                                     <button
                                         className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
                                             }`}
-                                        onClick={isTaskPending ? (e) => claim(e, task.id, Number(task.reward)) : (e) => pendingTask(e, task.id, Number(task.reward)) }
+                                        onClick={isTaskPending ? (e) => claim(e, task.id, Number(task.reward)) : (e) => pendingTask(e, task.id, Number(task.reward))}
                                         disabled={isTaskClaimed}
                                     >
 
@@ -356,7 +484,7 @@ const HomeTab = () => {
                                                     </>
                                                     :
 
-                                                    <>{isLoading && task.id == taskToClaim.taskId ?
+                                                    <>{isLoading && task.id == pendingTaskToClaim.taskId ?
                                                         <>
                                                             <span className="loader"></span>
                                                         </> :
@@ -375,6 +503,11 @@ const HomeTab = () => {
 
                         );
                     })}
+
+                  
+
+                 
+
                     <div className='flex justify-between py-2 w-full items-center'>
                         <div className='flex items-center'>
                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">

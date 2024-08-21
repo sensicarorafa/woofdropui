@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
-import { getReferees,  } from "../../api";
+import { getReferees, } from "../../api";
 import { toast } from "react-hot-toast";
 
 
@@ -9,19 +9,20 @@ import { toast } from "react-hot-toast";
 
 const Referral = () => {
     const [referralLeaderboard, setReferralLeaderboard] = useState<any[]>([]);
-    const colorCodes:any= ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"]
+    const colorCodes: any = ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"]
+    const [open, setOpen] = useState<Boolean>()
 
 
     useEffect(() => {
-     
-        getReferees(Number(sessionStorage.getItem("tid"))).then( async(res) => {
-                    
-                if (res.status == 200) {
-                    setReferralLeaderboard(res.data);
-                }
-                // console.log("referallleaderboard", res.data)
-        
-          
+
+        getReferees(Number(sessionStorage.getItem("tid"))).then(async (res) => {
+
+            if (res.status == 200) {
+                setReferralLeaderboard(res.data);
+            }
+            // console.log("referallleaderboard", res.data)
+
+
         });
     }, []);
 
@@ -30,15 +31,26 @@ const Referral = () => {
         e.preventDefault();
         const referralLink = sessionStorage.getItem("referralLink");
         navigator.clipboard.writeText(referralLink as string);
-        toast("Copied!", {
+        toast("Copied to clipboard!", {
             className: "",
             duration: 799,
             style: {
-              background: "#363636",
-              color: "#fff",
+                background: "#363636",
+                color: "#fff",
             },
-          });
+        });
     };
+    const shareToTg = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        const referralLink = sessionStorage.getItem("referralLink");
+        const text = encodeURIComponent("GOT DOGS?? Join me on AiDogs and be a part of the dog revolution.. Earn 1.000 $AIDOG when you signup. ");
+        const urlTo = `https://t.me/share/url?url=${referralLink}&text=${text}`;
+        window.open(urlTo, "_blank");
+    };
+
+    const openOverlay = () => {
+        setOpen(!open)
+    }
 
     return (
         <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
@@ -65,7 +77,7 @@ const Referral = () => {
                                     <div className="flex justify-end items-end pt-6 border-opacity-20 border-b-[#FFFFFF] w-full px-2 mt-3 ">
                                         <button
                                             className="bg-white font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2   rounded-[1px] w-full"
-                                            onClick={copyToClipboard}
+                                            onClick={openOverlay}
 
                                         >
                                             Invite friends
@@ -79,17 +91,17 @@ const Referral = () => {
                         </div>
                     </div>
                     <div className="flex px-10 py-5 justify-between">
-                    {referralLeaderboard?.length > 0 && <p className="text-white font-bold text-lg">{referralLeaderboard?.length || 0} frens</p>}
-                    {referralLeaderboard?.length > 0 && <p className="text-white">(Top 100)</p>}
-                      
+                        {referralLeaderboard?.length > 0 && <p className="text-white font-bold text-lg">{referralLeaderboard?.length || 0} frens</p>}
+                        {referralLeaderboard?.length > 0 && <p className="text-white">(Top 100)</p>}
+
                     </div>
                     {referralLeaderboard?.length > 0 ? <div className="flex flex-col items-center pb-10 px-5 justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
                         <div className="h-full w-full">
                             {referralLeaderboard?.length > 0
-                                ? referralLeaderboard.slice(0, 100).map((item:any, idx:any) => (
+                                ? referralLeaderboard.slice(0, 100).map((item: any, idx: any) => (
                                     <div key={idx.toString()} className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">
                                         <div className="flex items-center">
-                                            <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full" style={{background:`${colorCodes[Math.floor(Math.random() * 10)]}`}}>
+                                            <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full" style={{ background: `${colorCodes[Math.floor(Math.random() * 10)]}` }}>
                                                 <p className="text-[#FFFFFF] text-lg font-bold">
                                                     {item?.fullname.charAt(0).toUpperCase() + item?.fullname.charAt(1).toUpperCase()}
                                                     {/* {item.fullname.charAt(1).toUpperCase() + item?.lastName.charAt(0).toUpperCase()}{" "} */}
@@ -103,8 +115,8 @@ const Referral = () => {
 
 
                                         <div className=" flex justify-end items-center">
-                                        <p className="text-[#A6A6A6] w-[80px] text-sm text-nowrap text-left font-Rockwell">+{`${item.points}`?.toLocaleString() } $AIDOGS</p>
-                                            
+                                            <p className="text-[#A6A6A6] w-[80px] text-sm text-nowrap text-left font-Rockwell">+{`${item.points}`?.toLocaleString()} $AIDOGS</p>
+
 
                                         </div>
                                     </div>
@@ -112,8 +124,40 @@ const Referral = () => {
                                 : null}
                         </div>
                     </div> : <div className="text-[#A6A6A6] flex justify-center items-center"> Your referrals will appear here</div>
-                        }
+                    }
                 </div>
+                {/* {open && <div 
+                    className="overlay slide__up"
+                              >
+                        <p className="text-white">Hi</p>
+                </div>} */}
+
+            
+                    {open ? (
+                        <div className="header__curtain__black header__curtain flex flex-col justify-around" > 
+                        <p className=" flex justify-center items-center text-white text-2xl">Invite frens</p>
+                        <hr/> 
+                           <button
+                                className="bg-white font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] w-full"
+                                onClick={copyToClipboard}
+
+                            >
+                                Copy invite link
+                            </button>
+                           <button
+                                className="bg-white font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] w-full"
+
+                                onClick={shareToTg}
+                            >
+                                Share invite link
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="header__curtain slide__up" >
+                         
+                        </div>
+                    )}
+              
             </div>
             <Footer />
         </section>

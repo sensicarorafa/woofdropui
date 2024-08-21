@@ -1,12 +1,16 @@
 
 
+
 import HomeTab from "../../components/home-tab/homeTab";
 
 
 
-const Home = () => {
- 
 
+const Home = () => {
+  
+
+     
+    
 
     return (
         <section className="h-screen w-full bg-[#000000] flex flex-col items-center gap-0 relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
@@ -20,6 +24,7 @@ const Home = () => {
                         Connect wallet
                     </button>
                 </div>
+            
                 <HomeTab/>
             </div>
         </section>
