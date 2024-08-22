@@ -31,9 +31,9 @@ const EarlyAdopters = () => {
         await createUser({ telegramId: Number(tId), username, fullname })
             .then(async (res) => {
                 if (res.status == 201) {
-                    sessionStorage.setItem("points", "1000");
-                    sessionStorage.setItem("totalPoints", "1000");
-                    await addPoints(Number(tId), 1000);
+                    sessionStorage.setItem("points", "2500");
+                    sessionStorage.setItem("totalPoints", "2500");
+                    await addPoints(Number(tId), 2500);
                     if (!!referralCode == true) {
                         if (fullname.includes("undefined")) {
                             const newFullname = fullname.replace("undefined", "");
@@ -48,7 +48,7 @@ const EarlyAdopters = () => {
                     navigate("/congrats");
                 } else {
                     console.log(res);
-                    
+
                 }
                 setIsButtonDisabled(false);
             })
