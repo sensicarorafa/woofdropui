@@ -423,7 +423,30 @@ const HomeTab = () => {
                     >
 
                         <SwiperSlide>
-                            <div className='flex flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
+                            <div className='flex h-[180px] flex-col rounded-lg justify-between items-center text-white bg-white/15 py-3'>
+                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
+                                    <img className="w-full" src={logoSm} alt="" />
+
+                                </div>
+                              
+                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center">
+
+
+                                    <button
+                                        className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
+                                        onClick={(e) => openTg(e)}
+
+                                    >
+                                        View Reward Structure
+                                    </button>
+
+
+                                </div>
+
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <div className='flex h-[180px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
                                 <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
                                     <img className="w-full" src={logoSm} alt="" />
 
@@ -449,7 +472,7 @@ const HomeTab = () => {
                             </div>
                         </SwiperSlide>
                         <SwiperSlide>
-                            <div className='flex flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
+                            <div className='flex h-[180px] -col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
                                 <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
                                     <img className="w-full" src={logoSm} alt="" />
 
