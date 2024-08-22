@@ -565,7 +565,7 @@ const HomeTab = () => {
                             <div key={task.id} className='flex justify-between py-2 w-full items-center'>
                                 <div className='flex items-center'>
                                     <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                        {/* <img className="w-full" src={logoSm} alt="" /> */}
+                                     
                                         {task.icon}
                                     </div>
                                     <div className='flex flex-col pl-5'>
@@ -618,8 +618,7 @@ const HomeTab = () => {
                     })}
                     {referralTasks.map((task) => {
                         let isTaskClaimed: boolean = taskList.find((t) => t.taskId == task.id);
-                        let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == task.id);
-                        let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
+                
                         let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
 
                         return (
@@ -628,9 +627,10 @@ const HomeTab = () => {
                                 <div className='flex items-center'>
                                     <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
 
-                                        {task.icon}
+                                <img className="w-full" src={logoSm} alt="" />
+                                      
                                     </div>
-                                    <div className='flex flex-col pl-5'>
+                                    <div className='flex flex-col pl-3'>
                                         <p className='text-white text-bold'>{task.name}</p>
                                         <span className='text-[#A6A6A6]'>+{task.reward.toLocaleString()} $AIDOGS</span>
                                     </div>
