@@ -420,7 +420,7 @@ const HomeTab = () => {
                         </p>
 
                     </div>
-                    <div className='mt-4 py-2  flex justify-between bg-[#00000040]'>
+                    <div className='mt-6 py-2  flex justify-between bg-[#00000040]'>
                         <div className='flex items-center basis-1/3 justify-center '>
                             <p className='text-center text-white text-xs'>Eligible Users</p>
                         </div>
