@@ -32,12 +32,13 @@ const HomeTab = () => {
     const [isLoading, setIsLoading] = useState<Boolean>(false)
     const [tgIsLoading, setTgIsLoading] = useState<Boolean>(false)
     const [tgTask, setTgTask] = useState<boolean>(false)
+    const [open, setOpenModal] = useState<boolean>(false)
     const [isReferralCompleteId, setIsReferralCompleteId] = useState<Number>()
     const storedValue = sessionStorage.getItem('isTgPending');
     const [isTgPending, setIsTgPending] = useState<Boolean>(storedValue === "true" || false)
 
     const referralLink = sessionStorage.getItem("referralLink");
-    const text = `Got $DOGS??\r\n\nIt's time to claim some $AIDOG..\r\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOG`;
+    const text = `Got $DOGS??\r\n\nJoin me on AIDOGS and be a part of the dog revolution.\r\n\nEarn 2,500 $AIDOGS when you signup.\r\n\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOGS`;
     const encodedText = encodeURIComponent(text);
 
     const url = (`https://twitter.com/intent/tweet?text=${encodedText}`);
@@ -246,52 +247,52 @@ const HomeTab = () => {
         // setIsLoading(true)
         sessionStorage.setItem("pendingTaskToClaim", JSON.stringify({ taskId, points }));
 
-      switch (taskId) {
-        case 4: if(referees?.length >= 2 ){
-            setIsReferralCompleteId(taskId)
-        } else {
-            toast("Complete Task and try again", {
-                className: "",
-                duration: 1000,
-                style: {
-                    background: "#363636",
-                    color: "#fff",
-                },
-            });
-        }
-            
-            break;
-        case 5: if(referees?.length >= 5 ){
-            setIsReferralCompleteId(taskId)
-        } else {
-            toast("Complete Task and try again", {
-                className: "",
-                duration: 1000,
-                style: {
-                    background: "#363636",
-                    color: "#fff",
-                },
-            });
-        }
-            
-            break;
-    
-            
-           
-      
-        default:
-            break;
-      }
+        switch (taskId) {
+            case 4: if (referees?.length >= 2) {
+                setIsReferralCompleteId(taskId)
+            } else {
+                toast("Complete Task and try again", {
+                    className: "",
+                    duration: 1000,
+                    style: {
+                        background: "#363636",
+                        color: "#fff",
+                    },
+                });
+            }
 
-   
+                break;
+            case 5: if (referees?.length >= 5) {
+                setIsReferralCompleteId(taskId)
+            } else {
+                toast("Complete Task and try again", {
+                    className: "",
+                    duration: 1000,
+                    style: {
+                        background: "#363636",
+                        color: "#fff",
+                    },
+                });
+            }
 
-   
+                break;
+
+
+
+
+            default:
+                break;
+        }
+
+
+
+
     };
     const switchReferralState = (e: React.MouseEvent, taskId: number, points: number) => {
         e.preventDefault();
         sessionStorage.setItem("pendingTaskToClaim", JSON.stringify({ taskId, points }));
         setActiveReferral(taskId)
-       
+
 
 
     };
@@ -392,9 +393,95 @@ const HomeTab = () => {
 
     }
 
+    const openModal = () => {
+   
+        console.log("open1", open)
+     
+        setOpenModal(!open)
+    }
+    const closeModal = () => {
+        setOpenModal(false)
+
+    }
+    console.log("open2", open)
+
 
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
+           {open && 
+           <div className='absolute m-auto bg-[#000000] bg-opacity-95 flex items-center bg-[#000000 h-[100%] w-full top-0  z-[100]'  onClick={closeModal}>
+                <div className='flex relative m-auto flex-col justify-center bg-[#80808059] h-[370px] w-[90%] rounded-lg '>
+                    <div className='absolute top-2 right-3 rounded-full px-2 py-1 bg-[#9ca3af54]' onClick={closeModal}>
+                        <p className='text-white text-sm'>X</p>
+                    </div>
+                    <div className='flex items-center px-5'>
+                        <p className='text-white text-center px-5'>
+                            Every User can claim a base amount of 1,000 $AIDOGS
+                        </p>
+
+                    </div>
+                    <div className='mt-4 py-2  flex justify-between bg-[#00000040]'>
+                        <div className='flex items-center basis-1/3 justify-center '>
+                            <p className='text-center text-white text-xs'>Eligible Users</p>
+                        </div>
+                        <div className='flex items-center basis-1/3 justify-center '>
+                            <p className='text-center text-white text-xs'>Bonus Reward</p>
+                        </div>
+                        <div className='flex items-center  basis-1/3  justify-center'>
+                            <p className='text-center text-white text-xs'>Claim Amount</p>
+                        </div>
+
+                    </div>
+                    <div className='mt-4 py-2   flex justify-between'>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>First 100k</p>
+                        </div>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>150%</p>
+                        </div>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>2,500 $AIDOGS</p>
+                        </div>
+
+                    </div>
+                    <div className='mt-4 py-2   flex justify-between'>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>Next 500k</p>
+                        </div>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>100%</p>
+                        </div>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>2,000 $AIDOGS</p>
+                        </div>
+
+                    </div>
+                    <div className='mt-4 py-2  flex justify-between'>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>Next 1.5M</p>
+                        </div>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>50%</p>
+                        </div>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>1,500 $AIDOGS</p>
+                        </div>
+
+                    </div>
+                    <div className='mt-4 py-2   flex justify-between'>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>Next 5M</p>
+                        </div>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>25%</p>
+                        </div>
+                        <div className='flex items-center basis-1/3 justify-center'>
+                            <p className='text-center text-white text-xs'>1,250 $AIDOGS</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>}
             <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
                 <div className="flex flex-col items-center pt-5 px-10 w-full flex-1">
 
@@ -428,13 +515,17 @@ const HomeTab = () => {
                                     <img className="w-full" src={logoSm} alt="" />
 
                                 </div>
-                              
-                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center">
+                                <div className='flex flex-col justify-center align-center text-center items-center py-4 px-4'>
+                                    <p className='text-sm'> 150% bonus for early claimers</p>
+
+                                </div>
+
+                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center" >
 
 
                                     <button
                                         className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
-                                        onClick={(e) => openTg(e)}
+                                        onClick={openModal}
 
                                     >
                                         View Reward Structure
@@ -565,7 +656,7 @@ const HomeTab = () => {
                             <div key={task.id} className='flex justify-between py-2 w-full items-center'>
                                 <div className='flex items-center'>
                                     <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                     
+
                                         {task.icon}
                                     </div>
                                     <div className='flex flex-col pl-5'>
@@ -618,7 +709,7 @@ const HomeTab = () => {
                     })}
                     {referralTasks.map((task) => {
                         let isTaskClaimed: boolean = taskList.find((t) => t.taskId == task.id);
-                
+
                         let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
 
                         return (
@@ -627,8 +718,8 @@ const HomeTab = () => {
                                 <div className='flex items-center'>
                                     <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
 
-                                <img className="w-full" src={logoSm} alt="" />
-                                      
+                                        <img className="w-full" src={logoSm} alt="" />
+
                                     </div>
                                     <div className='flex flex-col pl-3'>
                                         <p className='text-white text-bold'>{task.name}</p>
@@ -642,15 +733,15 @@ const HomeTab = () => {
                                         <button
                                             className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
                                                 }`}
-                                            onClick={task.id == isReferralCompleteId ? (e) => claim(e, task.id, Number(task.reward)) :  (e) => checkReferralTask(e, task.id, Number(task.reward))}
+                                            onClick={task.id == isReferralCompleteId ? (e) => claim(e, task.id, Number(task.reward)) : (e) => checkReferralTask(e, task.id, Number(task.reward))}
                                             disabled={isTaskClaimed}
                                         >
 
                                             {isTaskClaimed ? "Done" :
                                                 <>
                                                     {task.id == isReferralCompleteId ?
-                                                      
-                                                        
+
+
 
                                                         <>{isLoading && task.id == pendingTaskToClaim.taskId ?
                                                             <>

@@ -17,7 +17,15 @@
   font-family: "Ravie";
   src: url("./assets/font/ravie.ttf");
 }
-
+@font-face {
+  font-family: 'Segoe UI Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Segoe UI Regular'), url('Segoe UI.woff') format('woff');
+  }
+  * {
+    font-family: 'Segoe UI italic';
+  }
 .carousel-container {
   display: flex;
   flex-direction: column;
@@ -172,4 +180,7 @@
   }
   .taskTitle:hover {
     color:lightblue
+  }
+  .swiper-pagination {
+    pointer-events: none !important;
   }
