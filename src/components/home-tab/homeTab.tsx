@@ -337,6 +337,7 @@ const HomeTab = () => {
             window.open("https://twitter.com/aidogs_community", "_blank");
 
         }
+        handleFocus()
 
 
     };
