@@ -231,6 +231,8 @@ const HomeTab = () => {
                 color: "#fff",
             },
         });
+
+        handleFocus()
     };
     const checkReferralTask = (e: React.MouseEvent, taskId: number, points: number) => {
         e.preventDefault();
@@ -744,13 +746,11 @@ const HomeTab = () => {
                                                         }
                                                         </>
                                                         :
-                                                        <>{isLoading && task.id == pendingTaskToClaim.taskId ?
-                                                            <>
-                                                                <span className="loader"></span>
-                                                            </> :
+                                                        <>
+                                                        
                                                             <>Check
                                                             </>
-                                                        }
+                                                     
                                                         </>
                                                     }
                                                 </>
