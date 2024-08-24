@@ -4,9 +4,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-// import 'swiper/modules/navigation.scss'; // Navigation module
-
-// import required modules
 import { Pagination } from 'swiper/modules';
 import { claimTask, claimTgReward, getRefereesPoints, getTasks, getUser,  } from "../../api";
 import logoBig from "../../assets/img/logobig.png";
@@ -16,7 +13,7 @@ import Footer from "../footer";
 import { useEffect, useState } from "react";
 import { toast } from 'react-hot-toast';
 
-// import { toast } from 'react-hot-toast';
+
 
 
 
@@ -28,7 +25,7 @@ const HomeTab = () => {
     const [activeReferral, setActiveReferral] = useState<Number>();
     const [referees, setReferees] = useState<any[]>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
     const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
-    // const [pendingTaskList, setPendingTaskList] = useState<any[]>(JSON.parse(sessionStorage.getItem("pendingTasks") || "[]"));
+
     const [isLoading, setIsLoading] = useState<Boolean>(false)
     const [tgIsLoading, setTgIsLoading] = useState<Boolean>(false)
     const [tgTask, setTgTask] = useState<boolean>(false)
@@ -92,29 +89,7 @@ const HomeTab = () => {
 
     const handleFocus = () => {
         let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
-        // let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
-
-        //     const testId: Number = 111111111111;
-        //     const testCid = 1;
-        //     const testCpoint = 40000
-        //     if (!!taskToClaim.taskId) {
-        //     claimTask(Number(testId),  taskToClaim.taskId, taskToClaim.points).then(async () => {
-        //         await getUser(Number(testId)).then((res) => {
-        //             if (res.status == 200) {
-        //                 console.log("res","points", res)
-        //                 sessionStorage.setItem("points", res.data.points);
-        //             }
-        //         });
-        //         await getTasks(Number(testId)).then((res) => {
-        //             if (res.status == 200) {
-        //                 console.log("getTask", res.data)
-        //                 setTasks(res.data);
-        //             }
-
-        //         });
-        //         sessionStorage.removeItem("taskToClaim");
-        //     });
-        // }
+    
         if (!!taskToClaim.taskId) {
             claimTask(Number(sessionStorage.getItem("tid")), taskToClaim.taskId, taskToClaim.points).then(async () => {
                 await getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
@@ -133,19 +108,10 @@ const HomeTab = () => {
                 });
                 sessionStorage.removeItem("taskToClaim");
             });
-        } else {
-            // if (!!pendingTaskToClaim.taskId) {
-            //     setPendingTask(Number(sessionStorage.getItem("tid")), pendingTaskToClaim.taskId, pendingTaskToClaim.points).then(async () => {
-            //         await getPendingTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
-            //             if (res.status == 200) {
-            //                 setPendingTaskList(res.data);
-            //             }
-            //         });
-            //         // sessionStorage.removeItem("pendingTaskToClaim");
-            //     });
-            // }
+        } 
+         
 
-        }
+        
         setIsLoading(false)
 
 
@@ -180,12 +146,12 @@ const HomeTab = () => {
                     sessionStorage.setItem("totalPoints", res.data.totalPoints);
                     sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
                     sessionStorage.setItem("userId", res.data.userId);
-                    // sessionStorage.setItem("pendingTasks", JSON.stringify(res.data.tasksPending));
+                 
                     sessionStorage.setItem("claimedTasks", JSON.stringify(res.data.tasksClaimed));
 
                     setTotalPoints(res.data.totalPoints)
                     setReferees(res.data.referees)
-                    // setPendingTaskList(res.data.tasksPending);
+                  
                     setTasks(res.data.tasksClaimed);
 
                     console.log("user", res.data)
@@ -208,30 +174,13 @@ const HomeTab = () => {
         e.preventDefault();
         setIsLoading(true)
         sessionStorage.setItem("taskToClaim", JSON.stringify({ taskId, points }));
-        // let task = tasks.find((t: any) => t.id === taskId);
-        // let taskLink = task ? task.to : "";
-        // if (taskLink) {
-        //     window.open(taskLink, "_blank");
-        // }
-
-        // let isTaskClaimed: boolean = taskList.find((t) => t.taskId == taskId);
-        // let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == taskId);
-
-
-        // isTaskPending && !isTaskClaimed && toast("Complete Task and try again!", {
-        //     className: "",
-        //     duration: 1000,
-        //     style: {
-        //         background: "#363636",
-        //         color: "#fff",
-        //     },
-        // });
+    
 
         handleFocus()
     };
     const checkReferralTask = (e: React.MouseEvent, taskId: number, points: number) => {
         e.preventDefault();
-        // setIsLoading(true)
+  
         sessionStorage.setItem("pendingTaskToClaim", JSON.stringify({ taskId, points }));
 
         switch (taskId) {
@@ -263,10 +212,6 @@ const HomeTab = () => {
             }
 
                 break;
-
-
-
-
             default:
                 break;
         }
@@ -286,7 +231,7 @@ const HomeTab = () => {
 
     const pendingTask = (e: React.MouseEvent, taskId: number) => {
         e.preventDefault();
-        // setIsLoading(true)
+  
  
         let task = tasks.find((t: any) => t.id === taskId);
         let taskLink = task ? task.to : "";
@@ -629,10 +574,7 @@ console.log("isTaskIdPending", isTaskIdPending)
                     </div>
                     {tasks.map((task) => {
                         let isTaskClaimed: boolean = taskList.find((t) => t.taskId == task.id);
-                        // let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == task.id);
-                        // let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
-                        // let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
-
+                
                         return (
 
                             <div key={task.id} className='flex justify-between py-2 w-full items-center'>
