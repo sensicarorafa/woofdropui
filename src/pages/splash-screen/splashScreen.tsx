@@ -58,7 +58,7 @@ const SplashScreen = () => {
                     console.log(res);
                     if (res.status == 404) {
                         // hande footprint
-                        localStorage.setItem("footPrint", JSON.stringify({ logged: false, date: new Date().toDateString(), point: 0 }));
+                        
                         sessionStorage.setItem("referees", JSON.stringify([]));
                         navigate(`/early-adopters`, {
                             replace: true,
