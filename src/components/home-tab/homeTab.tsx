@@ -25,6 +25,7 @@ const HomeTab = () => {
     const [activeReferral, setActiveReferral] = useState<Number>();
     const [referees, setReferees] = useState<any[]>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
     const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
+    const [taskToClaimLocal, setTaskToClaimLocal] = useState<any>(JSON.parse(sessionStorage.getItem("taskToClaim") || "{}"));
 
     const [isLoading, setIsLoading] = useState<Boolean>(false)
     const [tgIsLoading, setTgIsLoading] = useState<Boolean>(false)
@@ -90,15 +91,15 @@ const HomeTab = () => {
     const handleFocus = () => {
         let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
     
-        if (!!taskToClaim.taskId) {
-            claimTask(Number(sessionStorage.getItem("tid")), taskToClaim.taskId, taskToClaim.points).then(async () => {
+        if (!!taskToClaim.taskId || !!taskToClaimLocal.taskId ) {
+            claimTask(Number(sessionStorage.getItem("tid")), taskToClaimLocal.taskId, taskToClaimLocal.points).then(async () => {
                 await getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
                     if (res.status == 200) {
                         sessionStorage.setItem("totalPoints", res.data.totalPoints);
                         sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
                         setTotalPoints(res.data.totalPoints)
                         setReferees(res.data.referees)
-
+                        window.location.reload();
                     }
                 });
                 await getTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
@@ -110,7 +111,7 @@ const HomeTab = () => {
             });
         } 
          
-
+  
         
         setIsLoading(false)
 
@@ -174,9 +175,37 @@ const HomeTab = () => {
         e.preventDefault();
         setIsLoading(true)
         sessionStorage.setItem("taskToClaim", JSON.stringify({ taskId, points }));
-    
+        setTaskToClaimLocal({ taskId, points })
 
-        handleFocus()
+        if (!!taskId ) {
+            claimTask(Number(sessionStorage.getItem("tid")), taskId, points).then(async () => {
+                await getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
+                    if (res.status == 200) {
+                        sessionStorage.setItem("totalPoints", res.data.totalPoints);
+                        sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
+                        setTotalPoints(res.data.totalPoints)
+                        setReferees(res.data.referees)
+                        setTasks(res.data.claimedTasks);
+                        window.location.reload();
+                    } else {
+                        toast("Server busy", {
+                            className: "",
+                            duration: 1000,
+                            style: {
+                                background: "#363636",
+                                color: "#fff",
+                            },
+                        });
+                    }
+                });
+              
+                sessionStorage.removeItem("taskToClaim");
+            });
+        } 
+         
+  
+        
+        setIsLoading(false)
     };
     const checkReferralTask = (e: React.MouseEvent, taskId: number, points: number) => {
         e.preventDefault();
@@ -297,7 +326,7 @@ const HomeTab = () => {
 
                 setTgTask(result)
                 setTgIsLoading(false)
-
+                window.location.reload();
             } else {
                 toast("Complete Task and try again!", {
                     className: "",
@@ -602,7 +631,9 @@ console.log("isTaskIdPending", isTaskIdPending)
                                         {isTaskClaimed ? "Done" :
                                             <>
                                                 {isTaskIdPending == task.id ?
-                                                    <>{
+                                                    <>{isLoading ? <>
+                                                      <span className="loader"></span>
+                                                    </>:
                                                         <>Claim
                                                         </>
                                                     }
@@ -614,7 +645,7 @@ console.log("isTaskIdPending", isTaskIdPending)
                                                             <span className="loader"></span>
                                                         </> :
                                                         <>{task.btnText}
-                                                        </>
+                                                        </> 
                                                     }
                                                     </>
                                                 }
