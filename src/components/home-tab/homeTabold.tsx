@@ -34,8 +34,7 @@ const HomeTab = () => {
     const [tgTask, setTgTask] = useState<boolean>(false)
     const [open, setOpenModal] = useState<boolean>(false)
     const [isReferralCompleteId, setIsReferralCompleteId] = useState<Number>()
-    const [isTaskIdPending, setIsTaskIdPending] = useState<Number>(Number(sessionStorage.getItem("isTaskIdPending")))
-    const storedValue = sessionStorage.getItem('isTgPending')
+    const storedValue = sessionStorage.getItem('isTgPending');
     const [isTgPending, setIsTgPending] = useState<Boolean>(storedValue === "true" || false)
 
     const referralLink = sessionStorage.getItem("referralLink");
@@ -293,8 +292,8 @@ const HomeTab = () => {
 
     const pendingTask = (e: React.MouseEvent, taskId: number, points: number) => {
         e.preventDefault();
-        // setIsLoading(true)
- 
+        setIsLoading(true)
+        sessionStorage.setItem("pendingTaskToClaim", JSON.stringify({ taskId, points }));
         let task = tasks.find((t: any) => t.id === taskId);
         let taskLink = task ? task.to : "";
         if (taskLink) {
@@ -304,24 +303,31 @@ const HomeTab = () => {
             } else
                 window.open(taskLink, "_blank");
         }
-        
-        sessionStorage.removeItem("isTaskIdPending")
 
-        sessionStorage.setItem("isTaskIdPending", JSON.stringify(taskId ));
-        setIsTaskIdPending(taskId)
+        // let isTaskClaimed: boolean = taskList.find((t) => t.taskId == taskId);
+        // let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == taskId);
 
+
+        // isTaskPending && !isTaskClaimed && toast("Complete Task to proceed!", {
+        //     className: "",
+        //     duration: 1000,
+        //     style: {
+        //         background: "#363636",
+        //         color: "#fff",
+        //     },
+        // });
     };
 
     const openTg = (e: React.MouseEvent) => {
         e.preventDefault();
         window.open("https://t.me/aidogs_community", "_blank");
 
-
+        setTimeout(() => {
             setIsTgPending(true)
 
             sessionStorage.setItem("isTgPending", JSON.stringify("true"))
 
-
+        }, 5000);
 
     };
     const openTask = (taskId: number) => {
@@ -393,7 +399,7 @@ const HomeTab = () => {
     console.log("open2", open)
    
 
-console.log("isTaskIdPending", isTaskIdPending)
+
 
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
@@ -636,9 +642,9 @@ console.log("isTaskIdPending", isTaskIdPending)
                     </div>
                     {tasks.map((task) => {
                         let isTaskClaimed: boolean = taskList.find((t) => t.taskId == task.id);
-                        // let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == task.id);
-                        // let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
-                        // let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
+                        let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == task.id);
+                        let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
+                        let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
 
                         return (
 
@@ -660,21 +666,24 @@ console.log("isTaskIdPending", isTaskIdPending)
                                     <button
                                         className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
                                             }`}
-                                        onClick={isTaskIdPending == task.id ? (e) => claim(e, task.id, Number(task.reward)) : (e) => pendingTask(e, task.id, Number(task.reward))}
+                                        onClick={isTaskPending ? (e) => claim(e, task.id, Number(task.reward)) : (e) => pendingTask(e, task.id, Number(task.reward))}
                                         disabled={isTaskClaimed}
                                     >
 
                                         {isTaskClaimed ? "Done" :
                                             <>
-                                                {isTaskIdPending == task.id ?
-                                                    <>{
+                                                {isTaskPending ?
+                                                    <>{isLoading && task.id == taskToClaim.taskId ?
+                                                        <>
+                                                            <span className="loader"></span>
+                                                        </> :
                                                         <>Claim
                                                         </>
                                                     }
                                                     </>
                                                     :
 
-                                                    <>{isLoading && task.id == isTaskIdPending ?
+                                                    <>{isLoading && task.id == pendingTaskToClaim.taskId ?
                                                         <>
                                                             <span className="loader"></span>
                                                         </> :
