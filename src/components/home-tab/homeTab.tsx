@@ -52,7 +52,7 @@ const HomeTab = () => {
             id: 2,
             name: "Follow on X",
             reward: 150,
-            to: "https://twitter.com/FitcoinEarn",
+            to: "https://x.com/aidogscomm",
             btnText: "Follow",
             icon: <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
 
@@ -62,7 +62,7 @@ const HomeTab = () => {
             id: 3,
             name: "Share on X",
             reward: 150,
-            to: "https://twitter.com/FitcoinEarn",
+            to: "https://x.com/aidogscomm",
             btnText: "Share",
             icon: <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
 
@@ -340,7 +340,7 @@ const HomeTab = () => {
     };
     const openTwitter = (e: React.MouseEvent) => {
         e.preventDefault();
-        window.open("https://t.me/aidogs_community", "_blank");
+        window.open("https://x.com/aidogscomm", "_blank");
 
     };
 
