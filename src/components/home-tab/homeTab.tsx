@@ -28,7 +28,7 @@ const HomeTab = () => {
     const [activeReferral, setActiveReferral] = useState<Number>();
     const [referees, setReferees] = useState<any[]>(JSON.parse(sessionStorage.getItem("referees") || "[]"));
     const [taskList, setTasks] = useState<any[]>(JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"));
-    const [pendingTaskList, setPendingTaskList] = useState<any[]>(JSON.parse(sessionStorage.getItem("pendingTasks") || "[]"));
+    // const [pendingTaskList, setPendingTaskList] = useState<any[]>(JSON.parse(sessionStorage.getItem("pendingTasks") || "[]"));
     const [isLoading, setIsLoading] = useState<Boolean>(false)
     const [tgIsLoading, setTgIsLoading] = useState<Boolean>(false)
     const [tgTask, setTgTask] = useState<boolean>(false)
@@ -92,7 +92,7 @@ const HomeTab = () => {
 
     const handleFocus = () => {
         let taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
-        let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
+        // let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
 
         //     const testId: Number = 111111111111;
         //     const testCid = 1;
@@ -134,16 +134,16 @@ const HomeTab = () => {
                 sessionStorage.removeItem("taskToClaim");
             });
         } else {
-            if (!!pendingTaskToClaim.taskId) {
-                setPendingTask(Number(sessionStorage.getItem("tid")), pendingTaskToClaim.taskId, pendingTaskToClaim.points).then(async () => {
-                    await getPendingTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
-                        if (res.status == 200) {
-                            setPendingTaskList(res.data);
-                        }
-                    });
-                    // sessionStorage.removeItem("pendingTaskToClaim");
-                });
-            }
+            // if (!!pendingTaskToClaim.taskId) {
+            //     setPendingTask(Number(sessionStorage.getItem("tid")), pendingTaskToClaim.taskId, pendingTaskToClaim.points).then(async () => {
+            //         await getPendingTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
+            //             if (res.status == 200) {
+            //                 setPendingTaskList(res.data);
+            //             }
+            //         });
+            //         // sessionStorage.removeItem("pendingTaskToClaim");
+            //     });
+            // }
 
         }
         setIsLoading(false)
@@ -171,13 +171,7 @@ const HomeTab = () => {
         });
 
 
-        getPendingTasks(Number(sessionStorage.getItem("tid"))).then((res) => {
-            if (res.status == 200) {
-                sessionStorage.setItem("pendingTasks", JSON.stringify(res.data));
-
-                setPendingTaskList(res.data);
-            }
-        });
+   
 
 
         getRefereesPoints(String(sessionStorage.getItem("referralCode"))).then(() => {
@@ -281,9 +275,8 @@ const HomeTab = () => {
 
 
     };
-    const switchReferralState = (e: React.MouseEvent, taskId: number, points: number) => {
+    const switchReferralState = (e: React.MouseEvent, taskId: number) => {
         e.preventDefault();
-        sessionStorage.setItem("pendingTaskToClaim", JSON.stringify({ taskId, points }));
         setActiveReferral(taskId)
 
 
@@ -696,8 +689,6 @@ console.log("isTaskIdPending", isTaskIdPending)
                     {referralTasks.map((task) => {
                         let isTaskClaimed: boolean = taskList.find((t) => t.taskId == task.id);
 
-                        let pendingTaskToClaim = JSON.parse(sessionStorage.getItem("pendingTaskToClaim") || "{}");
-
                         return (
 
                             <div key={task.id} className='flex justify-between py-2 w-full items-center'>
@@ -729,7 +720,7 @@ console.log("isTaskIdPending", isTaskIdPending)
 
 
 
-                                                        <>{isLoading && task.id == pendingTaskToClaim.taskId ?
+                                                        <>{isLoading ?
                                                             <>
                                                                 <span className="loader"></span>
                                                             </> :
@@ -752,7 +743,7 @@ console.log("isTaskIdPending", isTaskIdPending)
                                         <button
                                             className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
                                                 }`}
-                                            onClick={(e) => switchReferralState(e, task.id, Number(task.reward))}
+                                            onClick={(e) => switchReferralState(e, task.id)}
                                             disabled={isTaskClaimed}
                                         >
 
