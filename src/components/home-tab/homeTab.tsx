@@ -186,12 +186,12 @@ const HomeTab = () => {
                     sessionStorage.setItem("totalPoints", res.data.totalPoints);
                     sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
                     sessionStorage.setItem("userId", res.data.userId);
-                    sessionStorage.setItem("pendingTasks", JSON.stringify(res.data.tasksPending));
+                    // sessionStorage.setItem("pendingTasks", JSON.stringify(res.data.tasksPending));
                     sessionStorage.setItem("claimedTasks", JSON.stringify(res.data.tasksClaimed));
 
                     setTotalPoints(res.data.totalPoints)
                     setReferees(res.data.referees)
-                    setPendingTaskList(res.data.tasksPending);
+                    // setPendingTaskList(res.data.tasksPending);
                     setTasks(res.data.tasksClaimed);
 
                     console.log("user", res.data)
@@ -220,18 +220,18 @@ const HomeTab = () => {
         //     window.open(taskLink, "_blank");
         // }
 
-        let isTaskClaimed: boolean = taskList.find((t) => t.taskId == taskId);
-        let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == taskId);
+        // let isTaskClaimed: boolean = taskList.find((t) => t.taskId == taskId);
+        // let isTaskPending: boolean = pendingTaskList.find((t) => t.taskId == taskId);
 
 
-        isTaskPending && !isTaskClaimed && toast("Complete Task and try again!", {
-            className: "",
-            duration: 1000,
-            style: {
-                background: "#363636",
-                color: "#fff",
-            },
-        });
+        // isTaskPending && !isTaskClaimed && toast("Complete Task and try again!", {
+        //     className: "",
+        //     duration: 1000,
+        //     style: {
+        //         background: "#363636",
+        //         color: "#fff",
+        //     },
+        // });
 
         handleFocus()
     };
@@ -291,7 +291,7 @@ const HomeTab = () => {
     };
 
 
-    const pendingTask = (e: React.MouseEvent, taskId: number, points: number) => {
+    const pendingTask = (e: React.MouseEvent, taskId: number) => {
         e.preventDefault();
         // setIsLoading(true)
  
@@ -660,7 +660,7 @@ console.log("isTaskIdPending", isTaskIdPending)
                                     <button
                                         className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
                                             }`}
-                                        onClick={isTaskIdPending == task.id ? (e) => claim(e, task.id, Number(task.reward)) : (e) => pendingTask(e, task.id, Number(task.reward))}
+                                        onClick={isTaskIdPending == task.id ? (e) => claim(e, task.id, Number(task.reward)) : (e) => pendingTask(e, task.id)}
                                         disabled={isTaskClaimed}
                                     >
 
