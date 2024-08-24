@@ -199,7 +199,7 @@ const HomeTab = () => {
             });
         });
 
-
+   
 
         window.addEventListener("focus", handleFocus);
 
@@ -394,6 +394,8 @@ const HomeTab = () => {
 
     }
     console.log("open2", open)
+   
+
 
 
     return (
