@@ -168,7 +168,7 @@ const HomeTab = () => {
                     setTasks(claimedTasks);
                     window.location.reload();
                 } else {
-                    showToast("Server busy");
+                    showToast("Complete task and try again");
                   
                 }
             } catch (error) {
@@ -249,7 +249,7 @@ const HomeTab = () => {
                 setTgTask(taskList.some(task => task.taskId === 1));
                 window.location.reload();
             } else {
-                showToast("Complete Task and try again!");
+                showToast("Sever Busy!");
             }
         } catch (error) {
             console.error("Error claiming TG reward:", error);
