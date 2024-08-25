@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
-import { getReferees, } from "../../api";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
@@ -9,24 +8,9 @@ import axios from "axios";
 
 
 const Referral = () => {
-    const [referralLeaderboard, setReferralLeaderboard] = useState<any[]>([]);
-    const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
+    //const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
 
     const [open, setOpen] = useState<Boolean>()
-
-
-    useEffect(() => {
-
-        getReferees(Number(sessionStorage.getItem("tid"))).then(async (res) => {
-
-            if (res.status == 200) {
-                setReferralLeaderboard(res.data);
-            }
-            // console.log("referallleaderboard", res.data)
-
-
-        });
-    }, []);
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
 

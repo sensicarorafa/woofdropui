@@ -1,11 +1,10 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
-import { claimTask, claimTgReward, getRefereesPoints, getTasks, getUser  } from "../../api";
 import logoBig from "../../assets/img/logobig.png";
 import logoSm from "../../assets/img/logosm.svg";
 
@@ -15,19 +14,9 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 
 
-interface Task {
-    taskId: number;
-  
-  }
-
-
 
 const HomeTab = () => {
     // Cache sessionStorage values
-    const tid = useMemo(() => Number(sessionStorage.getItem("tid")), []);
-    const initialClaimedTasks = useMemo(() => JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"), []);
-    const taskToClaimLocal = useMemo(() => JSON.parse(sessionStorage.getItem("taskToClaim") || "{}"), []);
-    const referralLink = sessionStorage.getItem("referralLink");
 
     const [totalPoints, setTotalPoints] = useState(0);
     const [socialTasks, setSocialTasks] = useState<any>([]);
@@ -37,204 +26,12 @@ const HomeTab = () => {
     const [engageTelegram, setEngageTelegram] = useState(false);
     const [engageFollow, setEngageFollow] = useState(false);
 
-    const [activeReferral, setActiveReferral] = useState<number | undefined>();
     const [referees, setReferees] = useState<any[]>();
-    const [taskList, setTasks] = useState<any[]>(initialClaimedTasks);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [tgIsLoading, setTgIsLoading] = useState<boolean>(false);
-    const [tgTask, setTgTask] = useState<boolean>(false);
     const [open, setOpenModal] = useState<boolean>(false);
-    const [isReferralCompleteId, setIsReferralCompleteId] = useState<number | undefined>();
-    const isTaskIdPending = useMemo(() => Number(sessionStorage.getItem("isTaskIdPending")), []);
-    const [isTaskIdPendingLocal,setIsTaskIdPendingLocal ] = useState(Number(sessionStorage.getItem("isTaskIdPending")));
-    const [isTgPending, setIsTgPending] = useState<boolean>(sessionStorage.getItem("isTgPending") === "true");
-
-
-    const encodedText = useMemo(() => {
-        const text = `Got $DOGS??\r\n\nJoin me on AIDOGS and be a part of the dog revolution.\r\n\nEarn 2,500 $AIDOGS when you signup.\r\n\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOGS`;
-        return encodeURIComponent(text);
-    }, [referralLink]);
-
-    const url = `https://twitter.com/intent/tweet?text=${encodedText}`;
-
-
-
-    const tasks = useMemo(() => [
-        {
-            id: 2,
-            name: "Follow on X",
-            reward: 150,
-            to: "https://x.com/aidogscomm",
-            btnText: "Follow",
-            icon: <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
-        },
-        {
-            id: 3,
-            name: "Share on X",
-            reward: 150,
-            to: "https://x.com/aidogscomm",
-            btnText: "Share",
-            icon: <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
-        }
-    ], []);
-
-    const referralTasks = useMemo(() => [
-        {
-            id: 4,
-            name: "Invite 2 frens",
-            reward: 2000,
-            to: "https://twitter.com/FitcoinEarn",
-            btnText: "Start",
-            icon: <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
-        }
-    ], []);
-
-
-    const handleFocus = useCallback(async () => {
-        const taskToClaim = JSON.parse(sessionStorage.getItem("taskToClaim") || "{}");
-        if (taskToClaim.taskId || taskToClaimLocal.taskId) {
-            try {
-                await claimTask(tid, taskToClaimLocal.taskId, taskToClaimLocal.points);
-                const userResponse = await getUser(tid);
-                if (userResponse.status === 200) {
-                    const { totalPoints, referees } = userResponse.data;
-                    sessionStorage.setItem("totalPoints", totalPoints);
-                    sessionStorage.setItem("referees", JSON.stringify(referees));
-                    setTotalPoints(totalPoints);
-                    window.location.reload();
-                }
-                const tasksResponse = await getTasks(tid);
-                if (tasksResponse.status === 200) {
-                    setTasks(tasksResponse.data);
-                }
-                sessionStorage.removeItem("taskToClaim");
-            } catch (error) {
-                console.error("Error claiming task:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-    }, [tid, taskToClaimLocal]);
-
-    function isTask(task: any): task is Task {
-        return 'taskId' in task;
-    }
-
-    useEffect(() => {
-        const fetchInitialData = async () => {
-            try {
-                const tasksResponse = await getTasks(tid);
-                if (tasksResponse.status === 200) {
-                    const claimedTasks:Task[] = tasksResponse.data;
-                    sessionStorage.setItem("claimedTasks", JSON.stringify(claimedTasks));
-                    setTasks(claimedTasks);
-                    // setTgTask(claimedTasks.some(task => task.taskId == 1));
-                    setTgTask(claimedTasks.some(task => isTask(task) && task.taskId === 1));
-                }
-
-                await getRefereesPoints(String(sessionStorage.getItem("referralCode")));
-                const userResponse = await getUser(tid);
-                if (userResponse.status === 200) {
-                    const { totalPoints, referees, tasksClaimed } = userResponse.data;
-                    sessionStorage.setItem("totalPoints", totalPoints);
-                    sessionStorage.setItem("referees", JSON.stringify(referees));
-                    setTotalPoints(totalPoints);
-                    setTasks(tasksClaimed);
-                }
-            } catch (error) {
-                console.error("Error fetching initial data:", error);
-            }
-        };
-
-        fetchInitialData();
-        window.addEventListener("focus", handleFocus);
-
-        return () => {
-            window.removeEventListener("focus", handleFocus);
-        };
-    }, [handleFocus]);
-
-
-    const claim = useCallback(async (e: React.MouseEvent, taskId: number, points: number) => {
-        e.preventDefault();
-        setIsLoading(true);
-        sessionStorage.setItem("taskToClaim", JSON.stringify({ taskId, points }));
-    
-
-        try {
-            await claimTask(tid, taskId, points);
-            const userResponse = await getUser(tid);
-            if (userResponse.status === 200) {
-                const { totalPoints, referees, claimedTasks } = userResponse.data;
-                sessionStorage.setItem("totalPoints", totalPoints);
-                sessionStorage.setItem("referees", JSON.stringify(referees));
-                setTotalPoints(totalPoints);
-                setTasks(claimedTasks);
-                window.location.reload();
-            } else {
-                showToast("Complete task and try again");
-                
-            }
-        } catch (error) {
-            console.error("Error claiming task:", error);
-        } finally {
-            setIsLoading(false);
-            sessionStorage.removeItem("taskToClaim");
-        }
-    }, [tid]);
-
-    const checkReferralTask = useCallback((e: React.MouseEvent, taskId: number, points: number) => {
-        e.preventDefault();
-        sessionStorage.setItem("pendingTaskToClaim", JSON.stringify({ taskId, points }));
-        const refereesCount = referees?.length || 0;
-
-        if (taskId === 4 && refereesCount >= 2) {
-            setIsReferralCompleteId(taskId);
-        } else if (taskId === 5 && refereesCount >= 5) {
-            setIsReferralCompleteId(taskId);
-        } else {
-            showToast("Complete Task and try again");
-        }
-    }, [referees]);
-    
-    const switchReferralState = (e: React.MouseEvent, taskId: number) => {
-        e.preventDefault();
-        setActiveReferral(taskId)
-
-
-
-    };
-
-    const pendingTask = useCallback((e: React.MouseEvent, taskId: number) => {
-        e.preventDefault();
-        const task = tasks.find(t => t.id === taskId);
-        const taskLink = task ? task.to : "";
-
-        if (taskLink) {
-            if (taskId === 3) {
-                window.open(url, "_blank");
-            } else {
-                window.open(taskLink, "_blank");
-            }
-        }
-        sessionStorage.setItem("isTaskIdPending", JSON.stringify(taskId));
-        setIsTaskIdPendingLocal(taskId)
-    
-    }, [tasks, url]);
 
     const openTg = () => {
         window.open("https://t.me/aidogs_community", "_blank");
     };
-    
-    const openTask = useCallback((taskId: number) => {
-        if (taskId === 3) {
-            window.open(url, "_blank");
-        } else {
-            window.open("https://twitter.com/aidogs_community", "_blank");
-        }
-        handleFocus();
-    }, [handleFocus, url]);
-
 
     const openTwitter = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -370,18 +167,6 @@ const HomeTab = () => {
 
     const closeModal = useCallback(() => {
         setOpenModal(prev => !prev);
-    }, []);
-
-
-    const showToast = useCallback((message: string) => {
-        toast(message, {
-            className: "",
-            duration: 1000,
-            style: {
-                background: "#363636",
-                color: "#fff",
-            },
-        });
     }, []);
 
 
