@@ -14,7 +14,10 @@ import { useEffect, useState } from "react";
 import { toast } from 'react-hot-toast';
 
 
-
+interface Task {
+    taskId: number;
+  
+  }
 
 
 
@@ -108,15 +111,19 @@ const HomeTab = () => {
             }
         }, [tid, taskToClaimLocal]);
 
+        function isTask(task: any): task is Task {
+            return 'taskId' in task;
+          }
         useEffect(() => {
             const fetchInitialData = async () => {
                 try {
                     const tasksResponse = await getTasks(tid);
                     if (tasksResponse.status === 200) {
-                        const claimedTasks = tasksResponse.data;
+                        const claimedTasks:Task[] = tasksResponse.data;
                         sessionStorage.setItem("claimedTasks", JSON.stringify(claimedTasks));
                         setTasks(claimedTasks);
-                        setTgTask(claimedTasks.some(task => task.taskId === 1));
+                        // setTgTask(claimedTasks.some(task => task.taskId == 1));
+                        setTgTask(claimedTasks.some(task => isTask(task) && task.taskId === 1));
                     }
     
                     await getRefereesPoints(String(sessionStorage.getItem("referralCode")));
@@ -253,12 +260,12 @@ const HomeTab = () => {
 
 
 
-    const openModal = useCallback(() => {
+    const toggleModal = useCallback(() => {
         setOpenModal(prev => !prev);
     }, []);
 
     const closeModal = useCallback(() => {
-        setOpenModal(false);
+        setOpenModal(prev => !prev);
     }, []);
 
 
@@ -397,7 +404,7 @@ console.log("isTaskIdPending", isTaskIdPending)
 
                                     <button
                                         className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
-                                        onClick={openModal}
+                                        onClick={toggleModal}
 
                                     >
                                         View Reward Structure
