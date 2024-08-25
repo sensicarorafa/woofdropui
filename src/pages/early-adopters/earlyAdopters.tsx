@@ -1,61 +1,64 @@
 
 import aiDog from "../../assets/img/doggy.png";
-import { addPoints, addReferee, createUser } from "../../api";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 
 const EarlyAdopters = () => {
- 
-
     const navigate = useNavigate();
+    const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
+
+    useEffect(() => {
+        // Ensure the Telegram Web Apps SDK is ready
+        Telegram.WebApp.ready();
+    
+        // Access the user information
+        const userInfo = Telegram.WebApp.initDataUnsafe.user;
+    
+        // Check if the user information is available
+        if (userInfo) {
+          console.log({userInfo, url: window.location.href});
+          setUser(userInfo);
+        } else {
+          console.log('No user information available.');
+          setUser({
+            allows_write_to_pm: true,
+            first_name: "Qanda",
+            id: 1354055384,
+            language_code: "en",
+            last_name: "Sensei",
+            username: "qandasensei"
+          })
+        }
+    }, []);
 
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const claimPoints = async (e: React.MouseEvent) => {
         e.preventDefault();
-        // const username = "oscar";
-        // const tId = 66666;
-        // const fullname = "oscar"as string;
-        // const referralCode = "vuwnu"
+        const points = 2500;
+        setIsButtonDisabled(true)
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-early-adopter`, {
+            pointsNo: points,
+            user
+        })
 
-        // 185766
-        const username = sessionStorage.getItem("username");
-        const tId = sessionStorage.getItem("tid");
-        const fullname = sessionStorage.getItem("fullname") as string;
-        const referralCode = sessionStorage.getItem("referralCode") as string;
+        if (updatePoints?.data?.success)  {
+            navigate('/congrats')
+        }
 
-        console.log("referralCode Early Adopter", referralCode)
-
-        setIsButtonDisabled(true);
-        await createUser({ telegramId: Number(tId), username, fullname })
-            .then(async (res) => {
-                if (res.status == 201) {
-                    sessionStorage.setItem("points", "2500");
-                    sessionStorage.setItem("totalPoints", "2500");
-                    await addPoints(Number(tId), 2500);
-                    if (!!referralCode == true) {
-                        if (fullname.includes("undefined")) {
-                            const newFullname = fullname.replace("undefined", "");
-                            await addReferee(Number(tId), referralCode, newFullname);
-                        } else {
-                            await addReferee(Number(tId), referralCode, fullname);
-                        }
-                    }
-                    const referralLink = import.meta.env.VITE_BOT_LINK + `?start=${res.data.referralCode}`;
-                    sessionStorage.setItem("referralLink", referralLink);
-                    // sessionStorage.setItem("level", res.data.level);
-                    navigate("/congrats");
-                } else {
-                    console.log(res);
-
-                }
-                setIsButtonDisabled(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                setIsButtonDisabled(false);
+        if (!updatePoints?.data?.success)  {
+            toast('Error claiming bonus', {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
             });
+        }
     };
 
     return (

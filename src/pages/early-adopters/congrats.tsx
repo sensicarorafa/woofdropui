@@ -6,14 +6,42 @@ import { useNavigate } from "react-router-dom";
 import useWindowDimensions from '../../utils/useWindowSize'
 import Confetti from 'react-confetti'
 import { toast } from "react-hot-toast";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Congrats = () => {
     const navigate = useNavigate();
     const { width, height } = useWindowDimensions()
+    const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
+
+    useEffect(() => {
+        // Ensure the Telegram Web Apps SDK is ready
+        Telegram.WebApp.ready();
+    
+        // Access the user information
+        const userInfo = Telegram.WebApp.initDataUnsafe.user;
+    
+        // Check if the user information is available
+        if (userInfo) {
+          console.log({userInfo, url: window.location.href});
+          setUser(userInfo);
+        } else {
+          console.log('No user information available.');
+          setUser({
+            allows_write_to_pm: true,
+            first_name: "Qanda",
+            id: 1354055384,
+            language_code: "en",
+            last_name: "Sensei",
+            username: "qandasensei"
+          })
+        }
+    }, []);
+    
     const handlers = useSwipeable({
         onSwiped: (eventData) => {
             if (eventData.dir === "Left") {
-                navigate("/");
+                navigate("/home");
             }
         },
     });
@@ -26,9 +54,10 @@ const Congrats = () => {
     //     window.open(url, "_blank");
     // };
 
-       const shareToTg = async (e: React.MouseEvent) => {
+    const shareToTg = async (e: React.MouseEvent) => {
         e.preventDefault();
-        const referralLink = sessionStorage.getItem("referralLink");
+        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
         const text = encodeURIComponent("GOT DOGS?? Join me on AiDogs and be a part of the dog revolution.. Earn 1.000 $AIDOG when you signup. ");
         const urlTo = `https://t.me/share/url?url=${referralLink}&text=${text}`;
         window.open(urlTo, "_blank");
@@ -38,7 +67,8 @@ const Congrats = () => {
 
     const copyLink = async (e: React.MouseEvent) => {
         e.preventDefault();
-        const referralLink = sessionStorage.getItem("referralLink");
+        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
         navigator.clipboard.writeText(referralLink as string);
         toast("Copied!", {
             className: "",
@@ -47,11 +77,11 @@ const Congrats = () => {
               background: "#363636",
               color: "#fff",
             },
-          });
+        });
     };
 
     const goHome = () => {
-        navigate("/")
+        navigate("/home")
     }
 
     return (

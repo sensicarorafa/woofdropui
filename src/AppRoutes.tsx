@@ -9,12 +9,14 @@ import Home from "./pages/home/home";
 import History from "./pages/history/history";
 import Character from "./pages/character/character";
 import Congrats from "./pages/early-adopters/congrats";
+import Starter from "./pages/starter/starter";
 
 export default function AppRoutes() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Starter />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="/leaderboard" element={<Stats />} />
                 <Route path="/invites" element={<Referral />} />
 

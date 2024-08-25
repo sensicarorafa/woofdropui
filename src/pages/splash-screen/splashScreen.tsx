@@ -1,104 +1,53 @@
-import { useEffect, useMemo } from "react";
-// import welcome from "../../assets/img/welcome.png";
 import AiDog from "../../assets/img/doggy.png";
-
-import { useSearchParams, useNavigate } from "react-router-dom";
-import {  getRefereesPoints, getUser } from "../../api";
-
-type TelegramUser = {
-    id: number;
-    username: string;
-    first_name: string;
-    last_name: string;
-};
-
-const w = window as any;
-const parseTelegramInitData = (initData: string): TelegramUser | null => {
-    const params = new URLSearchParams(initData);
-    const userEncoded = params.get("user");
-
-    if (!userEncoded) {
-        console.error("User data not found in initData");
-        return null;
-    }
-
-    const userDecoded = decodeURIComponent(userEncoded);
-
-    let user;
-    try {
-        user = JSON.parse(userDecoded);
-    } catch (error) {
-        console.error("Failed to parse user data:", error);
-        return null;
-    }
-
-    return user;
-};
-const liveData = parseTelegramInitData(w.Telegram.WebApp.initData);
-if (liveData != null) {
-    sessionStorage.setItem("tid", liveData.id.toString());
-    sessionStorage.setItem("username", liveData.username);
-    sessionStorage.setItem("fullname", liveData.first_name + " " + liveData.last_name);
-}
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SplashScreen = () => {
-    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-
-
-    const tid = useMemo(() => liveData ? liveData.id : searchParams.get("tid"), [liveData, searchParams]);
-    const username = useMemo(() => liveData ? liveData.username : searchParams.get("u"), [liveData, searchParams]);
-    const fullname = useMemo(() => liveData ? liveData.first_name + " " + liveData.last_name : searchParams.get("fn"), [liveData, searchParams]);
-    const referralCode = useMemo(() => searchParams.get("r"), [searchParams]);
-
+    const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
 
     useEffect(() => {
-        if (referralCode) {
-            sessionStorage.setItem("referralCode", referralCode);
+        // Ensure the Telegram Web Apps SDK is ready
+        Telegram.WebApp.ready();
+    
+        // Access the user information
+        const userInfo = Telegram.WebApp.initDataUnsafe.user;
+    
+        // Check if the user information is available
+        if (userInfo) {
+          console.log({userInfo, url: window.location.href});
+          setUser(userInfo);
+        } else {
+          console.log('No user information available.');
+          setUser({
+            allows_write_to_pm: true,
+            first_name: "Qanda",
+            id: 1354055384,
+            language_code: "en",
+            last_name: "Sensei",
+            username: "qandasensei"
+          })
         }
-        sessionStorage.setItem("username", username as string);
-        sessionStorage.setItem("fullname", fullname as string);
-        sessionStorage.setItem("tid", tid?.toString() as string);
-    }, [tid, username, fullname, referralCode]);
-   
+    }, []);
 
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const userResponse = await getUser(Number(tid));
-                if (userResponse.status === 404) {
-                    sessionStorage.setItem("referees", JSON.stringify([]));
-                    navigate(`/early-adopters`, { replace: true });
-                } else {
-                    const userData = userResponse.data;
-                    const referralLink = `${import.meta.env.VITE_BOT_LINK}?start=${userData.referralCode}`;
-
-                    sessionStorage.setItem("referralLink", referralLink);
-                    sessionStorage.setItem("points", userData.points);
-                    sessionStorage.setItem("totalPoints", userData.totalPoints);
-                    sessionStorage.setItem("referees", JSON.stringify(userData.referees));
-                    sessionStorage.setItem("claimedTasks", JSON.stringify(userData.tasksClaimed));
-                    sessionStorage.setItem("userId", userData.userId.toString());
-
-                    const refereesResponse = await getRefereesPoints(referralCode!);
-                    if (refereesResponse) {
-                        const updatedUserResponse = await getUser(Number(tid));
-                        if (updatedUserResponse.status === 200) {
-                            sessionStorage.setItem("totalPoints", updatedUserResponse.data.totalPoints);
-                            sessionStorage.setItem("referees", JSON.stringify(updatedUserResponse.data.referees));
-                        }
-                    }
-
-                    navigate(`/`, { replace: true });
-                }
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        };
-
-        fetchData();
-    }, [tid, navigate, referralCode]);
+    useEffect (() => {
+        const fetchUserData = async () => {
+          const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+          if (!getUserData?.data?.userData?.earlyAdopterBonusClaimed) {
+            setTimeout(() => {
+                navigate(`/early-adopters`);
+            }, 5000);
+          } else {
+            setTimeout(() => {
+                navigate(`/home`);
+            }, 5000);
+          }
+        }
+        if (user) {
+          fetchUserData();
+        }
+    }, [user])
 
     return (
         <section className="h-screen w-full bg-[#000000] flex flex-col items-center justify-center py-5 gap-10 overflow-hidden relative font-OpenSans md:hidden">
@@ -122,3 +71,6 @@ const SplashScreen = () => {
 };
 
 export default SplashScreen;
+
+
+

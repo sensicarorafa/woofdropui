@@ -3,6 +3,7 @@ import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 import { getReferees, } from "../../api";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
 
 
@@ -27,10 +28,35 @@ const Referral = () => {
         });
     }, []);
 
+    const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
 
-    const copyToClipboard = useCallback((e: React.MouseEvent) => {
-        e.preventDefault();
-        const referralLink = sessionStorage.getItem("referralLink");
+    useEffect(() => {
+        // Ensure the Telegram Web Apps SDK is ready
+        Telegram.WebApp.ready();
+    
+        // Access the user information
+        const userInfo = Telegram.WebApp.initDataUnsafe.user;
+    
+        // Check if the user information is available
+        if (userInfo) {
+          console.log({userInfo, url: window.location.href});
+          setUser(userInfo);
+        } else {
+          console.log('No user information available.');
+          setUser({
+            allows_write_to_pm: true,
+            first_name: "Qanda",
+            id: 1354055384,
+            language_code: "en",
+            last_name: "Sensei",
+            username: "qandasensei"
+          })
+        }
+    }, []);
+
+    const copyToClipboard = async () => {
+        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
         navigator.clipboard.writeText(referralLink as string);
         toast("Copied to clipboard!", {
             className: "",
@@ -40,14 +66,15 @@ const Referral = () => {
                 color: "#fff",
             },
         });
-    }, []);
-    const shareToTg = useCallback((e: React.MouseEvent) => {
-        e.preventDefault();
-        const referralLink = sessionStorage.getItem("referralLink");
+    };
+
+    const shareToTg = async () => {
+        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
         const text = encodeURIComponent("GOT DOGS?? Join me on AiDogs and be a part of the dog revolution.. Earn 1.000 $AIDOG when you signup. ");
         const urlTo = `https://t.me/share/url?url=${referralLink}&text=${text}`;
         window.open(urlTo, "_blank");
-    }, []);
+    }
 
 
     const toggleOverlay = useCallback(() => {
@@ -92,7 +119,7 @@ const Referral = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex px-10 py-5 justify-between">
+                    {/*<div className="flex px-10 py-5 justify-between">
                         {referralLeaderboard?.length > 0 && <p className="text-white font-bold text-lg">{referralLeaderboard?.length || 0} frens</p>}
                         {referralLeaderboard?.length > 0 && <p className="text-white">(Top 100)</p>}
 
@@ -126,7 +153,7 @@ const Referral = () => {
                                 : null}
                         </div>
                     </div> : <div className="text-[#A6A6A6] flex justify-center items-center"> Your referrals will appear here</div>
-                    }
+                    }*/}
                 </div>
           
             

@@ -12,7 +12,6 @@ import logoSm from "../../assets/img/logosm.svg";
 import Footer from "../footer";
 import { useEffect, useState } from "react";
 import { toast } from 'react-hot-toast';
-import axios from 'axios';
 
 
 interface Task {
@@ -25,20 +24,15 @@ interface Task {
 const HomeTab = () => {
     // Cache sessionStorage values
     const tid = useMemo(() => Number(sessionStorage.getItem("tid")), []);
+    const initialTotalPoints = useMemo(() => Number(sessionStorage.getItem("totalPoints")), []);
+    const initialReferees = useMemo(() => JSON.parse(sessionStorage.getItem("referees") || "[]"), []);
     const initialClaimedTasks = useMemo(() => JSON.parse(sessionStorage.getItem("claimedTasks") || "[]"), []);
     const taskToClaimLocal = useMemo(() => JSON.parse(sessionStorage.getItem("taskToClaim") || "{}"), []);
     const referralLink = sessionStorage.getItem("referralLink");
 
-    const [totalPoints, setTotalPoints] = useState(0);
-    const [socialTasks, setSocialTasks] = useState<any>([]);
-
-    const [engageTwoFrens, setEngageTwoFrens] = useState(false);
-    const [engageRepost, setEngageRepost] = useState(false);
-    const [engageTelegram, setEngageTelegram] = useState(false);
-    const [engageFollow, setEngageFollow] = useState(false);
-
+    const [totalPoints, setTotalPoints] = useState(initialTotalPoints);
     const [activeReferral, setActiveReferral] = useState<number | undefined>();
-    const [referees, setReferees] = useState<any[]>();
+    const [referees, setReferees] = useState<any[]>(initialReferees);
     const [taskList, setTasks] = useState<any[]>(initialClaimedTasks);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [tgIsLoading, setTgIsLoading] = useState<boolean>(false);
@@ -101,6 +95,7 @@ const HomeTab = () => {
                     sessionStorage.setItem("totalPoints", totalPoints);
                     sessionStorage.setItem("referees", JSON.stringify(referees));
                     setTotalPoints(totalPoints);
+                    setReferees(referees);
                     window.location.reload();
                 }
                 const tasksResponse = await getTasks(tid);
@@ -139,6 +134,7 @@ const HomeTab = () => {
                     sessionStorage.setItem("totalPoints", totalPoints);
                     sessionStorage.setItem("referees", JSON.stringify(referees));
                     setTotalPoints(totalPoints);
+                    setReferees(referees);
                     setTasks(tasksClaimed);
                 }
             } catch (error) {
@@ -169,6 +165,7 @@ const HomeTab = () => {
                 sessionStorage.setItem("totalPoints", totalPoints);
                 sessionStorage.setItem("referees", JSON.stringify(referees));
                 setTotalPoints(totalPoints);
+                setReferees(referees);
                 setTasks(claimedTasks);
                 window.location.reload();
             } else {
@@ -222,9 +219,12 @@ const HomeTab = () => {
     
     }, [tasks, url]);
 
-    const openTg = () => {
+    const openTg = useCallback((e: React.MouseEvent) => {
+        e.preventDefault();
         window.open("https://t.me/aidogs_community", "_blank");
-    };
+        setIsTgPending(true);
+        sessionStorage.setItem("isTgPending", "true");
+    }, []);
     
     const openTask = useCallback((taskId: number) => {
         if (taskId === 3) {
@@ -242,127 +242,22 @@ const HomeTab = () => {
 
     };
 
-    const claimTg = async () => {
-        const points = 150;
-        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
-            pointsNo: points,
-            user
-        })
-
-        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
-            claimTreshold: 'telegram',
-            user
-        })
-
-        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
-            toast("Claimed successfully", {
-                className: "",
-                duration: 799,
-                style: {
-                  background: "#363636",
-                  color: "#fff",
-                },
-            });
-            setTotalPoints(updatePoints?.data?.userData?.pointsNo)
-            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-            setReferees(updatePoints?.data?.userData?.referralPoints);
-        }
-    };
-    
-    const claimFollow = async () => {
-        const points = 150;
-        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
-            pointsNo: points,
-            user
-        })
-
-        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
-            claimTreshold: 'follow',
-            user
-        })
-
-        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
-            toast("Claimed successfully", {
-                className: "",
-                duration: 799,
-                style: {
-                  background: "#363636",
-                  color: "#fff",
-                },
-            });
-            setTotalPoints(updatePoints?.data?.userData?.pointsNo)
-            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-            setReferees(updatePoints?.data?.userData?.referralPoints);
-        }
-    };
-
-    const claimShare = async () => {
-        const points = 150;
-        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
-            pointsNo: points,
-            user
-        })
-
-        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
-            claimTreshold: 'repost',
-            user
-        })
-
-        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
-            toast("Claimed successfully", {
-                className: "",
-                duration: 799,
-                style: {
-                  background: "#363636",
-                  color: "#fff",
-                },
-            });
-            setTotalPoints(updatePoints?.data?.userData?.pointsNo)
-            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-            setReferees(updatePoints?.data?.userData?.referralPoints);
-        }
-    };
-  
-    const claimTwoFrens = async () => {
-        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user});
-        const referralPoints = getUserData?.data?.userData?.referralPoints
-
-        if (referralPoints >= 2) {
-            const points = 150;
-            const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
-                pointsNo: points,
-                user
-            })
-
-            const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
-                claimTreshold: 'repost',
-                user
-            })
-
-            if (updatePoints?.data?.success && updateSocial?.data?.success)  {
-                toast("Claimed successfully", {
-                    className: "",
-                    duration: 799,
-                    style: {
-                    background: "#363636",
-                    color: "#fff",
-                    },
-                });
-                setTotalPoints(updatePoints?.data?.userData?.pointsNo)
-                setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-                setReferees(updatePoints?.data?.userData?.referralPoints);
+    const claimTg = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const res = await claimTgReward(tid);
+            if (res.status === 200) {
+                setTgTask(taskList.some(task => task.taskId === 1));
+                window.location.reload();
+            } else {
+                showToast("Sever Busy!");
             }
-        } else {
-            toast("You need at least two referrals to claim", {
-                className: "",
-                duration: 799,
-                style: {
-                background: "#363636",
-                color: "#fff",
-                },
-            });
+        } catch (error) {
+            console.error("Error claiming TG reward:", error);
+        } finally {
+            setTgIsLoading(false);
         }
-    };
+    }, [tid, taskList]);
 
     const toggleModal = useCallback(() => {
         setOpenModal(prev => !prev);
@@ -384,66 +279,7 @@ const HomeTab = () => {
         });
     }, []);
 
-
-
-
-
-
-
-
-    const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
-
-    useEffect(() => {
-        // Ensure the Telegram Web Apps SDK is ready
-        Telegram.WebApp.ready();
     
-        // Access the user information
-        const userInfo = Telegram.WebApp.initDataUnsafe.user;
-    
-        // Check if the user information is available
-        if (userInfo) {
-          console.log({userInfo, url: window.location.href});
-          setUser(userInfo);
-        } else {
-          console.log('No user information available.');
-          setUser({
-            allows_write_to_pm: true,
-            first_name: "Qanda",
-            id: 1354055384,
-            language_code: "en",
-            last_name: "Sensei",
-            username: "qandasensei"
-          })
-        }
-    }, []);
-
-    useEffect (() => {
-        const fetchUserData = async () => {
-          const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-          console.log(getUserData?.data)
-          setTotalPoints(getUserData?.data?.userData?.pointsNo);
-          setSocialTasks(getUserData?.data?.userData?.socialRewardDeets);
-          setReferees(getUserData?.data?.userData?.referralPoints);
-        }
-        if (user) {
-          fetchUserData();
-        }
-    }, [user])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
 
     return (
@@ -530,8 +366,13 @@ const HomeTab = () => {
                     </div>
                 </div>
                 <div className="flex flex-col rounded-lg bg-white/20 py-5 my-4  justify-center align-center m-auto items-center w-80">
+
+
+
                     <p className="text-[#FFFFFF] text-4xl font-OpenSans font-bold">{totalPoints.toLocaleString()}</p>
                     <p className="text-[#A6A6A6] text-xl font-OpenSans font-light">$AIDOGS</p>
+
+
                 </div>
                 <div>
                     <Swiper
@@ -586,7 +427,7 @@ const HomeTab = () => {
 
                                     <button
                                         className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
-                                        onClick={() => {openTg()}}
+                                        onClick={(e) => openTg(e)}
 
                                     >
                                         Join
@@ -626,182 +467,61 @@ const HomeTab = () => {
                 </div>
 
 
-                <div className="w-full flex flex-col pt-7 px-4 relative z-10">
+                <div className="w-full  flex flex-col pt-7 px-4 relative z-10">
                     <p className='text-white text-xl pb-5'>Tasks</p>
 
-                    {
-                        socialTasks.map((task: any) => (
-                            <>
-                                {
-                                    task.claimTreshold === 'telegram' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
-                                        <div className='flex items-center'>
-                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                    <div className='flex justify-between py-2 w-full items-center'>
+                        <div className='flex items-center'>
+                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
 
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256S111 504 248 504 496 393 496 256 385 8 248 8zM363 176.7c-3.7 39.2-19.9 134.4-28.1 178.3-3.5 18.6-10.3 24.8-16.9 25.4-14.4 1.3-25.3-9.5-39.3-18.7-21.8-14.3-34.2-23.2-55.3-37.2-24.5-16.1-8.6-25 5.3-39.5 3.7-3.8 67.1-61.5 68.3-66.7 .2-.7 .3-3.1-1.2-4.4s-3.6-.8-5.1-.5q-3.3 .7-104.6 69.1-14.8 10.2-26.9 9.9c-8.9-.2-25.9-5-38.6-9.1-15.5-5-27.9-7.7-26.8-16.3q.8-6.7 18.5-13.7 108.4-47.2 144.6-62.3c68.9-28.6 83.2-33.6 92.5-33.8 2.1 0 6.6 .5 9.6 2.9a10.5 10.5 0 0 1 3.5 6.7A43.8 43.8 0 0 1 363 176.7z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256S111 504 248 504 496 393 496 256 385 8 248 8zM363 176.7c-3.7 39.2-19.9 134.4-28.1 178.3-3.5 18.6-10.3 24.8-16.9 25.4-14.4 1.3-25.3-9.5-39.3-18.7-21.8-14.3-34.2-23.2-55.3-37.2-24.5-16.1-8.6-25 5.3-39.5 3.7-3.8 67.1-61.5 68.3-66.7 .2-.7 .3-3.1-1.2-4.4s-3.6-.8-5.1-.5q-3.3 .7-104.6 69.1-14.8 10.2-26.9 9.9c-8.9-.2-25.9-5-38.6-9.1-15.5-5-27.9-7.7-26.8-16.3q.8-6.7 18.5-13.7 108.4-47.2 144.6-62.3c68.9-28.6 83.2-33.6 92.5-33.8 2.1 0 6.6 .5 9.6 2.9a10.5 10.5 0 0 1 3.5 6.7A43.8 43.8 0 0 1 363 176.7z" /></svg>
 
-                                            </div>
-                                            <div className='flex flex-col pl-5'>
-                                                <p className='text-white text-bold taskTitle'>Join AIDOG Tg Channel</p>
-                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
-                                            </div>
-                                        </div>
-                                        <div className="">
-                                            {
-                                                !task.rewardClaimed && !engageTelegram &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    openTg()
-                                                    setTimeout(() => {
-                                                        setEngageTelegram(true)
-                                                    }, 60000)
-                                                }}>
-                                                    Open
-                                                </button>
-                                            }
-                                            {
-                                                !task.rewardClaimed && engageTelegram &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    claimTg();
-                                                }}>
-                                                    Claim
-                                                </button>
-                                            }
-                                            {
-                                                task.rewardClaimed &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
-                                                    Done
-                                                </button>
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                                {
-                                    task.claimTreshold === 'follow' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
-                                        <div className='flex items-center'>
-                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
-                                            </div>
-                                            <div className='flex flex-col pl-5'>
-                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Follow on X</p>
-                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
-                                            </div>
-                                        </div>
-                                        <div className="">
-                                            {
-                                                !task.rewardClaimed && !engageFollow &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    window.open('https://x.com/aidogscomm', '_blank');
-                                                    setTimeout(() => {
-                                                        setEngageFollow(true)
-                                                    }, 60000)
-                                                }}>
-                                                    Follow
-                                                </button>
-                                            }
-                                            {
-                                                !task.rewardClaimed && engageFollow &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    claimFollow();
-                                                }}>
-                                                    Claim
-                                                </button>
-                                            }
-                                            {
-                                                task.rewardClaimed &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
-                                                    Done
-                                                </button>
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                                {
-                                    task.claimTreshold === 'repost' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
-                                        <div className='flex items-center'>
-                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
-                                            </div>
-                                            <div className='flex flex-col pl-5'>
-                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Share on X</p>
-                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
-                                            </div>
-                                        </div>
-                                        <div className="">
-                                            {
-                                                !task.rewardClaimed && !engageRepost &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    window.open('https://x.com/aidogscomm', '_blank');
-                                                    setTimeout(() => {
-                                                        setEngageRepost(true)
-                                                    }, 60000)
-                                                }}>
-                                                    Share
-                                                </button>
-                                            }
-                                            {
-                                                !task.rewardClaimed && engageRepost &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    claimShare();
-                                                }}>
-                                                    Claim
-                                                </button>
-                                            }
-                                            {
-                                                task.rewardClaimed &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
-                                                    Done
-                                                </button>
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                                {
-                                    task.claimTreshold === 'two-frens' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
-                                        <div className='flex items-center'>
-                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
-                                            </div>
-                                            <div className='flex flex-col pl-5'>
-                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 2 frens</p>
-                                                <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="">
-                                            {
-                                                !task.rewardClaimed && !engageTwoFrens &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    setEngageTwoFrens(true)
-                                                }}>
-                                                    Start
-                                                </button>
-                                            }
-                                            {
-                                                !task.rewardClaimed && engageTwoFrens &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    claimTwoFrens();
-                                                }}>
-                                                    Claim
-                                                </button>
-                                            }
-                                            {
-                                                task.rewardClaimed &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
-                                                    Done
-                                                </button>
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                            </>
-                        ))
-                    }
+                            </div>
+                            <div className='flex flex-col pl-5'>
+                                <p className='text-white text-bold taskTitle' onClick={openTg}>Join AIDOG Tg Channel</p>
+                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                            </div>
+                        </div>
+                        <div className="">
 
-                    
-                    {/*tasks.map((task) => {
+
+
+                            <button
+                                className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${tgTask && "opacity-50"
+                                    }`}
+                                onClick={isTgPending ? claimTg : openTg}
+                                disabled={tgTask}
+                            >
+
+                                {tgTask ? "Done" :
+                                    <>
+                                        {isTgPending ?
+                                            <>{tgIsLoading ?
+                                                <>
+                                                    <span className="loader"></span>
+                                                </> :
+                                                <>Claim
+                                                </>
+                                            }
+                                            </>
+                                            :
+
+                                            <>{tgIsLoading ?
+                                                <>
+                                                    <span className="loader"></span>
+                                                </> :
+                                                <>Join
+                                                </>
+                                            }
+                                            </>
+                                        }
+                                    </>
+
+                                }
+                            </button>
+                        </div>
+                    </div>
+                    {tasks.map((task) => {
                         let isTaskClaimed: boolean = taskList.find((t) => t.taskId == task.id);
                 
                         return (
@@ -938,7 +658,11 @@ const HomeTab = () => {
 
 
                         );
-                    })*/}
+                    })}
+
+
+
+
 
                     <div className='flex justify-between py-2 w-full items-center'>
                         <div className='flex items-center'>
@@ -952,9 +676,13 @@ const HomeTab = () => {
                             </div>
                         </div>
                         <div className="">
+
+
                             <p className='text-white pr-5'>
                                 {referees?.length || 0}
                             </p>
+
+
                         </div>
                     </div>
 
