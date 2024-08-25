@@ -2,35 +2,25 @@
 import medal from "../../assets/img/medal.png";
 import Footer from "../../components/footer";
 import { getLeaderBoard } from "../../api";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Stats = () => {
     const [leaderboard, setLeaderboard] = useState<any[]>([]);
-    const totalPoints = useMemo(() => Number(sessionStorage.getItem("totalPoints")), []);
-    const userId = useMemo(() => String(sessionStorage.getItem("userId")), []);
+    const [totalPoints] = useState(Number(sessionStorage.getItem("totalPoints")));
+    // const [userId] = useState(String(sessionStorage.getItem("userId")));
 
-    const colorCodes: string[] = ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"];
+    const colorCodes:any= ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"]
 
+  
     useEffect(() => {
-        const fetchLeaderboard = async () => {
-            try {
-                const res = await getLeaderBoard();
-                if (res.status === 200) {
-                    setLeaderboard(res.data);
-                } else {
-                    console.error('Failed to fetch leaderboard data:', res.status);
-                }
-            } catch (error) {
-                console.error('Error fetching leaderboard:', error);
+        getLeaderBoard().then((res) => {
+            if (res.status == 200) {
+                setLeaderboard(res.data);
             }
-        };
-
-        fetchLeaderboard();
+        });
     }, []);
 
-    const usersIndex = useMemo(() => {
-        return leaderboard ? leaderboard.findIndex((item) => item.userId === userId) : -1;
-    }, [leaderboard, userId]);
+    let usersIndex = leaderboard ? leaderboard.findIndex((item) => item.userId == sessionStorage.getItem("userId")) : null;
     
     console.log(leaderboard, usersIndex);
 

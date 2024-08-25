@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 import { getReferees, } from "../../api";
@@ -9,7 +9,8 @@ import { toast } from "react-hot-toast";
 
 const Referral = () => {
     const [referralLeaderboard, setReferralLeaderboard] = useState<any[]>([]);
-    const colorCodes: any = ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"]
+    const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
+
     const [open, setOpen] = useState<Boolean>()
 
 
@@ -27,7 +28,7 @@ const Referral = () => {
     }, []);
 
 
-    const copyToClipboard = (e: React.MouseEvent) => {
+    const copyToClipboard = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         const referralLink = sessionStorage.getItem("referralLink");
         navigator.clipboard.writeText(referralLink as string);
@@ -39,18 +40,19 @@ const Referral = () => {
                 color: "#fff",
             },
         });
-    };
-    const shareToTg = async (e: React.MouseEvent) => {
+    }, []);
+    const shareToTg = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         const referralLink = sessionStorage.getItem("referralLink");
         const text = encodeURIComponent("GOT DOGS?? Join me on AiDogs and be a part of the dog revolution.. Earn 1.000 $AIDOG when you signup. ");
         const urlTo = `https://t.me/share/url?url=${referralLink}&text=${text}`;
         window.open(urlTo, "_blank");
-    };
+    }, []);
 
-    const openOverlay = () => {
-        setOpen(!open)
-    }
+
+    const toggleOverlay = useCallback(() => {
+        setOpen((prevOpen) => !prevOpen);
+    }, []);
 
     return (
         <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
@@ -77,7 +79,7 @@ const Referral = () => {
                                     <div className="flex justify-end items-end pt-6 border-opacity-20 border-b-[#FFFFFF] w-full px-2 mt-3 ">
                                         <button
                                             className="bg-white font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2   rounded-[1px] w-full"
-                                            onClick={openOverlay}
+                                            onClick={toggleOverlay}
 
                                         >
                                             Invite friends
@@ -104,7 +106,7 @@ const Referral = () => {
                                             <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full" style={{ background: `${colorCodes[Math.floor(Math.random() * 10)]}` }}>
                                                 <p className="text-[#FFFFFF] text-lg font-bold">
                                                     {item?.fullname.charAt(0).toUpperCase() + item?.fullname.charAt(1).toUpperCase()}
-                                                    {/* {item.fullname.charAt(1).toUpperCase() + item?.lastName.charAt(0).toUpperCase()}{" "} */}
+                                               
                                                 </p>
                                             </div>
                                             <div className="pl-3">
@@ -126,12 +128,7 @@ const Referral = () => {
                     </div> : <div className="text-[#A6A6A6] flex justify-center items-center"> Your referrals will appear here</div>
                     }
                 </div>
-                {/* {open && <div 
-                    className="overlay slide__up"
-                              >
-                        <p className="text-white">Hi</p>
-                </div>} */}
-
+          
             
                     {open ? (
                         <div className="header__curtain__black header__curtain flex flex-col justify-around z-[100]" > 
