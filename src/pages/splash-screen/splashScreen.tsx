@@ -1,12 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 // import welcome from "../../assets/img/welcome.png";
 import AiDog from "../../assets/img/doggy.png";
 
 import { useSearchParams, useNavigate } from "react-router-dom";
 import {  getRefereesPoints, getUser } from "../../api";
 
+type TelegramUser = {
+    id: number;
+    username: string;
+    first_name: string;
+    last_name: string;
+};
+
 const w = window as any;
-const parseTelegramInitData = (initData: string) => {
+const parseTelegramInitData = (initData: string): TelegramUser | null => {
     const params = new URLSearchParams(initData);
     const userEncoded = params.get("user");
 
@@ -38,67 +45,60 @@ const SplashScreen = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
-    const tid = liveData == null ? (searchParams.get("tid") as unknown as number) : (sessionStorage.getItem("tid") as unknown as number);
-    const username = liveData == null ? (searchParams.get("u") as unknown as string) : (sessionStorage.getItem("username") as unknown as string);
-    const fullname = liveData == null ? (searchParams.get("fn") as unknown as string) : (sessionStorage.getItem("fullname") as unknown as string);
-    const referralCode = searchParams.get("r") as unknown as string;
-    sessionStorage.setItem("referralCode", referralCode);
-    sessionStorage.setItem("username", username);
-    sessionStorage.setItem("fullname", fullname);
-    sessionStorage.setItem("tid", tid?.toString());
 
-    console.log("referralCode", referralCode )
+    const tid = useMemo(() => liveData ? liveData.id : searchParams.get("tid"), [liveData, searchParams]);
+    const username = useMemo(() => liveData ? liveData.username : searchParams.get("u"), [liveData, searchParams]);
+    const fullname = useMemo(() => liveData ? liveData.first_name + " " + liveData.last_name : searchParams.get("fn"), [liveData, searchParams]);
+    const referralCode = useMemo(() => searchParams.get("r"), [searchParams]);
+
+
+    useEffect(() => {
+        if (referralCode) {
+            sessionStorage.setItem("referralCode", referralCode);
+        }
+        sessionStorage.setItem("username", username as string);
+        sessionStorage.setItem("fullname", fullname as string);
+        sessionStorage.setItem("tid", tid?.toString() as string);
+    }, [tid, username, fullname, referralCode]);
    
 
-    // http://localhost:5173/splash-screen?r=7ify3
+
     useEffect(() => {
-        setTimeout(() => {
-            getUser(Number(tid))
-                .then(async (res) => {
-                    console.log(res);
-                    if (res.status == 404) {
-                        // hande footprint
-                        
-                        sessionStorage.setItem("referees", JSON.stringify([]));
-                        navigate(`/early-adopters`, {
-                            replace: true,
-                        });
-                    } else {
-                        const userData = res.data;
-                        const referralLink = import.meta.env.VITE_BOT_LINK + `?start=${userData.referralCode}`;
+        const fetchData = async () => {
+            try {
+                const userResponse = await getUser(Number(tid));
+                if (userResponse.status === 404) {
+                    sessionStorage.setItem("referees", JSON.stringify([]));
+                    navigate(`/early-adopters`, { replace: true });
+                } else {
+                    const userData = userResponse.data;
+                    const referralLink = `${import.meta.env.VITE_BOT_LINK}?start=${userData.referralCode}`;
 
-                    
-                        sessionStorage.setItem("referralLink", referralLink);
-                        sessionStorage.setItem("points", userData.points);
-                        sessionStorage.setItem("totalPoints", userData.totalPoints);
-                        sessionStorage.setItem("referees", JSON.stringify(userData.referees));
-                        sessionStorage.setItem("claimedTasks", JSON.stringify(userData.tasksClaimed));
-                        sessionStorage.setItem("userId", JSON.stringify(userData.userId));
+                    sessionStorage.setItem("referralLink", referralLink);
+                    sessionStorage.setItem("points", userData.points);
+                    sessionStorage.setItem("totalPoints", userData.totalPoints);
+                    sessionStorage.setItem("referees", JSON.stringify(userData.referees));
+                    sessionStorage.setItem("claimedTasks", JSON.stringify(userData.tasksClaimed));
+                    sessionStorage.setItem("userId", userData.userId.toString());
 
-                        getRefereesPoints(String(sessionStorage.getItem("referralCode"))).then(() => {
-                            getUser(Number(sessionStorage.getItem("tid"))).then((res) => {
-                                if (res.status == 200) {
-                                    sessionStorage.setItem("totalPoints", res.data.totalPoints);
-                                    sessionStorage.setItem("referees", JSON.stringify(res.data.referees));
-            
-                                    console.log("user", res.data)
-                    
-                                }
-                            });
-                        });
-                       
-    
-
-                        navigate(`/`, {
-                            replace: true,
-                        });
+                    const refereesResponse = await getRefereesPoints(referralCode!);
+                    if (refereesResponse) {
+                        const updatedUserResponse = await getUser(Number(tid));
+                        if (updatedUserResponse.status === 200) {
+                            sessionStorage.setItem("totalPoints", updatedUserResponse.data.totalPoints);
+                            sessionStorage.setItem("referees", JSON.stringify(updatedUserResponse.data.referees));
+                        }
                     }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }, 10000);
-    }, []);
+
+                    navigate(`/`, { replace: true });
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchData();
+    }, [tid, navigate, referralCode]);
 
     return (
         <section className="h-screen w-full bg-[#000000] flex flex-col items-center justify-center py-5 gap-10 overflow-hidden relative font-OpenSans md:hidden">

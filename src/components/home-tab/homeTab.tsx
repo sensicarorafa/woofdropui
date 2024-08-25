@@ -365,7 +365,7 @@ console.log("isTaskIdPending", isTaskIdPending)
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
            {open && 
-           <div className='absolute m-auto bg-[#000000] bg-opacity-95 flex items-center bg-[#000000 h-[100%] w-full top-0  z-[100]'  onClick={closeModal}>
+           <div className='absolute m-auto bg-[#000000] bg-opacity-95 flex items-center h-[100%] w-full top-0  z-[100]'  onClick={closeModal}>
                 <div className='flex relative m-auto flex-col justify-center bg-[#80808059] h-[370px] w-[90%] rounded-lg '>
                     <div className='absolute top-2 right-3 rounded-full px-2 py-1 bg-[#9ca3af54]' onClick={closeModal}>
                         <p className='text-white text-sm'>X</p>

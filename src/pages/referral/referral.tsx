@@ -134,7 +134,7 @@ const Referral = () => {
 
             
                     {open ? (
-                        <div className="header__curtain__black header__curtain flex flex-col justify-around" > 
+                        <div className="header__curtain__black header__curtain flex flex-col justify-around z-[100]" > 
                         <p className=" flex justify-center items-center text-white text-2xl">Invite frens</p>
                         <hr/> 
                            <button
