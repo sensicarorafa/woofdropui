@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -31,6 +31,7 @@ const HomeTab = () => {
     const [followDisabled, setFollowDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
+    const [referralCode, setReferralCode] = useState('')
 
     const [referees, setReferees] = useState(0);
     const [open, setOpenModal] = useState<boolean>(false);
@@ -223,27 +224,20 @@ const HomeTab = () => {
           setTotalPoints(getUserData?.data?.userData?.pointsNo);
           setSocialTasks(getUserData?.data?.userData?.socialRewardDeets);
           setReferees(getUserData?.data?.userData?.referralPoints);
+          setReferralCode(getUserData?.data?.userData?.referralCode);
         }
         if (user) {
           fetchUserData();
         }
     }, [user])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
+    const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${referralCode}`;
+    const encodedText = useMemo(() => {
+        const text = `Got $DOGS??\r\n\nJoin me on AIDOGS and be a part of the dog revolution.\r\n\nEarn 2,500 $AIDOGS when you signup.\r\n\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOGS`;
+        return encodeURIComponent(text);
+    }, [referralLink]);
+
+    const url = `https://twitter.com/intent/tweet?text=${encodedText}`;
 
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
@@ -553,12 +547,6 @@ const HomeTab = () => {
                                             {
                                                 !task.rewardClaimed && !engageRepost &&
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={async () => {
-                                                    
-                                                    const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-                                                    const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
-                                                    const text = `Got $DOGS??\r\n\nJoin me on AIDOGS and be a part of the dog revolution.\r\n\nEarn 2,500 $AIDOGS when you signup.\r\n\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOGS;`
-                                                
-                                                    const url = `https://twitter.com/intent/tweet?text=${text};`
                                                     window.open(url, '_blank');
                                                     setTimeout(() => {
                                                         setEngageRepost(true)
