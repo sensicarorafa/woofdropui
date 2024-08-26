@@ -65,26 +65,13 @@ const Congrats = () => {
 
     
 
-    /*const copyLink = async (e: React.MouseEvent) => {
-        e.preventDefault();
-        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
-        navigator.clipboard.writeText(referralLink as string);
-        toast("Copied!", {
-            className: "",
-            duration: 799,
-            style: {
-              background: "#363636",
-              color: "#fff",
-            },
-        });
-    };*/
-
     async function copyLink(): Promise<void> {
         const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
         const text = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
-        if (navigator.clipboard && window.isSecureContext) {
-          try {
+        
+        try {
+          // Attempt to use the Clipboard API first
+          if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(text);
             console.log('Text copied to clipboard');
             toast("Copied to clipboard!", {
@@ -95,11 +82,13 @@ const Congrats = () => {
                     color: "#fff",
                 },
             });
-          } catch (error) {
-            console.error('Failed to copy text: ', error);
+          } else {
+            // Fallback for iOS or other environments
+            fallbackCopyTextToClipboard(text);
           }
-        } else {
-          // Fallback for older browsers
+        } catch (error) {
+          console.error('Failed to copy text: ', error);
+          // If the Clipboard API fails, attempt the fallback
           fallbackCopyTextToClipboard(text);
         }
     }
@@ -108,10 +97,11 @@ const Congrats = () => {
         const textArea = document.createElement('textarea');
         textArea.value = text;
       
-        // Avoid scrolling to bottom
+        // Style adjustments to prevent any potential scrolling issues
         textArea.style.position = 'fixed';
         textArea.style.top = '0';
         textArea.style.left = '0';
+        textArea.style.opacity = '0'; // Hide the textarea
       
         document.body.appendChild(textArea);
         textArea.focus();
@@ -128,9 +118,18 @@ const Congrats = () => {
                 background: "#363636",
                 color: "#fff",
             },
-        });
+          });
         } catch (err) {
           console.error('Fallback: Unable to copy', err);
+          
+          toast("Error!", {
+            className: "",
+            duration: 799,
+            style: {
+                background: "#363636",
+                color: "#fff",
+            },
+          });
         }
       
         document.body.removeChild(textArea);

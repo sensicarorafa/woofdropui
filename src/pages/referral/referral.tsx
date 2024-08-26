@@ -54,55 +54,13 @@ const Referral = () => {
         }
     }, [user])
 
-    /*async function copyToClipboard() {
-        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
-        // Create a temporary textarea element
-        const textarea = document.createElement('textarea');
-        textarea.value = referralLink;
-      
-        // Set the textarea to be invisible
-        textarea.style.position = 'absolute';
-        textarea.style.left = '-9999px';
-      
-        // Append the textarea to the DOM
-        document.body.appendChild(textarea);
-      
-        // Select the text in the textarea
-        textarea.select();
-        textarea.setSelectionRange(0, textarea.value.length);
-        toast("Copied to clipboard!", {
-            className: "",
-            duration: 799,
-            style: {
-                background: "#363636",
-                color: "#fff",
-            },
-        });
-      
-        // Execute the copy command using the Clipboard API
-        try {
-          document.execCommand('copy');
-        } catch (err) {
-            toast("Error", {
-                className: "",
-                duration: 799,
-                style: {
-                    background: "#363636",
-                    color: "#fff",
-                },
-            });
-        }
-      
-        // Remove the temporary textarea from the DOM
-        document.body.removeChild(textarea);
-    }*/
-
     async function copyToClipboard(): Promise<void> {
         const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
         const text = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
-        if (navigator.clipboard && window.isSecureContext) {
-          try {
+        
+        try {
+          // Attempt to use the Clipboard API first
+          if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(text);
             console.log('Text copied to clipboard');
             toast("Copied to clipboard!", {
@@ -113,11 +71,13 @@ const Referral = () => {
                     color: "#fff",
                 },
             });
-          } catch (error) {
-            console.error('Failed to copy text: ', error);
+          } else {
+            // Fallback for iOS or other environments
+            fallbackCopyTextToClipboard(text);
           }
-        } else {
-          // Fallback for older browsers
+        } catch (error) {
+          console.error('Failed to copy text: ', error);
+          // If the Clipboard API fails, attempt the fallback
           fallbackCopyTextToClipboard(text);
         }
     }
@@ -126,10 +86,11 @@ const Referral = () => {
         const textArea = document.createElement('textarea');
         textArea.value = text;
       
-        // Avoid scrolling to bottom
+        // Style adjustments to prevent any potential scrolling issues
         textArea.style.position = 'fixed';
         textArea.style.top = '0';
         textArea.style.left = '0';
+        textArea.style.opacity = '0'; // Hide the textarea
       
         document.body.appendChild(textArea);
         textArea.focus();
@@ -146,29 +107,23 @@ const Referral = () => {
                 background: "#363636",
                 color: "#fff",
             },
-        });
+          });
         } catch (err) {
           console.error('Fallback: Unable to copy', err);
-        }
-      
-        document.body.removeChild(textArea);
-    }
-      
-
-    /*const copyToClipboard = async () => {
-        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
-        navigator.clipboard.writeText(referralLink as string);
-        toast("Copied to clipboard!", {
+          
+          toast("Error!", {
             className: "",
             duration: 799,
             style: {
                 background: "#363636",
                 color: "#fff",
             },
-        });
-    };*/
-
+          });
+        }
+      
+        document.body.removeChild(textArea);
+    }
+      
     const shareToTg = async () => {
         const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
         const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
