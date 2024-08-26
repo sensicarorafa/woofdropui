@@ -58,7 +58,7 @@ const Congrats = () => {
         e.preventDefault();
         const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
         const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
-        const text = encodeURIComponent("GOT DOGS?? Join me on AiDogs and be a part of the dog revolution.. Earn 1.000 $AIDOG when you signup. ");
+        const text = encodeURIComponent("GOT DOGS?? Join me on AiDogs and be a part of the dog revolution.. Earn 2500 $AIDOG when you signup. ");
         const urlTo = `https://t.me/share/url?url=${referralLink}&text=${text}`;
         window.open(urlTo, "_blank");
     };
