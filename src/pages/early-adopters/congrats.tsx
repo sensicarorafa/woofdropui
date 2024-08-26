@@ -65,7 +65,7 @@ const Congrats = () => {
 
     
 
-    const copyLink = async (e: React.MouseEvent) => {
+    /*const copyLink = async (e: React.MouseEvent) => {
         e.preventDefault();
         const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
         const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
@@ -78,7 +78,51 @@ const Congrats = () => {
               color: "#fff",
             },
         });
-    };
+    };*/
+
+    async function copyLink() {
+        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
+        // Create a temporary textarea element
+        const textarea = document.createElement('textarea');
+        textarea.value = referralLink;
+      
+        // Set the textarea to be invisible
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+      
+        // Append the textarea to the DOM
+        document.body.appendChild(textarea);
+      
+        // Select the text in the textarea
+        textarea.select();
+        textarea.setSelectionRange(0, textarea.value.length);
+        toast("Copied to clipboard!", {
+            className: "",
+            duration: 799,
+            style: {
+                background: "#363636",
+                color: "#fff",
+            },
+        });
+      
+        // Execute the copy command using the Clipboard API
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+            toast("Error", {
+                className: "",
+                duration: 799,
+                style: {
+                    background: "#363636",
+                    color: "#fff",
+                },
+            });
+        }
+      
+        // Remove the temporary textarea from the DOM
+        document.body.removeChild(textarea);
+    }
 
     const goHome = () => {
         navigate("/home")
