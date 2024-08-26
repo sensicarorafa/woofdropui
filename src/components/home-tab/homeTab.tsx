@@ -438,7 +438,7 @@ const HomeTab = () => {
                                                     openTg()
                                                     setTimeout(() => {
                                                         setEngageTelegram(true)
-                                                    }, 60000)
+                                                    }, 30000)
                                                 }}>
                                                     Open
                                                 </button>
@@ -479,7 +479,7 @@ const HomeTab = () => {
                                                     window.open('https://x.com/aidogscomm', '_blank');
                                                     setTimeout(() => {
                                                         setEngageFollow(true)
-                                                    }, 60000)
+                                                    }, 30000)
                                                 }}>
                                                     Follow
                                                 </button>
@@ -520,7 +520,7 @@ const HomeTab = () => {
                                                     window.open('https://x.com/aidogscomm', '_blank');
                                                     setTimeout(() => {
                                                         setEngageRepost(true)
-                                                    }, 60000)
+                                                    }, 30000)
                                                 }}>
                                                     Share
                                                 </button>

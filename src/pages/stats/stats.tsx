@@ -2,12 +2,12 @@
 import medal from "../../assets/img/medal.png";
 import Footer from "../../components/footer";
 import { getLeaderBoard } from "../../api";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { capitalizeAllFirstLetters } from "../../utils/helpers";
 
 const Stats = () => {
     const [leaderboard, setLeaderboard] = useState<any[]>([]);
-    const userId = useMemo(() => String(sessionStorage.getItem("userId")), []);
 
     const colorCodes: string[] = ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"];
 
@@ -28,9 +28,7 @@ const Stats = () => {
         fetchLeaderboard();
     }, []);
 
-    const usersIndex = useMemo(() => {
-        return leaderboard ? leaderboard.findIndex((item) => item.userId === userId) : -1;
-    }, [leaderboard, userId]);
+    const [usersIndex, setUserIndex] = useState(0)
     
     console.log(leaderboard, usersIndex);
 
@@ -69,7 +67,7 @@ const Stats = () => {
           const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
           console.log(getUserData?.data)
           setTotalPoints(getUserData?.data?.userData?.pointsNo);
-          setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name} ${getUserData?.data?.userData?.user?.last_name}`);
+          setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name ?  getUserData?.data?.userData?.user?.first_name : ''} ${getUserData?.data?.userData?.user?.last_name ? getUserData?.data?.userData?.user?.last_name : ''}`);
         }
         if (user) {
           fetchUserData();
@@ -81,13 +79,15 @@ const Stats = () => {
           setLeaderboardLoading(true)
           const getLeaderboardData = await axios.post(`${import.meta.env.VITE_APP_URL}/leaderboard-data`, {})
     
-          const sortedData = getLeaderboardData.data.leaderboardData.map((board: any) => {
+          const sortedData = getLeaderboardData.data.leaderboardData.map((board: any, index: number) => {
+            if (user && user.id === board.user.id) setUserIndex(index + 1)
             return {
               id: board.user.id, 
               name: board.user.username ? board.user.username : board.user.first_name, 
               points: board.pointsNo, 
               referrals: board.referralPoints, 
-              total: board.totalPoints
+              total: board.totalPoints,
+              position: index + 1
             }
           })
     
@@ -124,7 +124,7 @@ const Stats = () => {
                                             </div>
                                             <div className="flex flex-col justify-center">
                                                 <p className="text-[#FFFFFF] leading-none font-bold text-sm">
-                                                    {username.toUpperCase()}
+                                                    {capitalizeAllFirstLetters(username)}
                                                 </p>
                                                 <div className="flex gap-2 items-center mt-[-2px]">
                                                     <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{totalPoints.toLocaleString()} <span className="text-[#A6A6A6] text-sm">$AIDOGS</span> </p>
@@ -136,10 +136,10 @@ const Stats = () => {
                                     )}
                                 </div>
                                 <div className="flex-col gap-1">
-                                    {leaderboard.length > 0 && usersIndex != null ? (
+                                    {leaderboardData.length > 0 ? (
                                         <>
                                             {/* <p className="text-[#FEC95E] font-normal font-OpenSans text-sm">Ranking</p> */}
-                                            <p className="text-[#FFFFFF] font-bold font-OpenSans text-xl">{"#" + (Number(usersIndex) + 1)}</p>
+                                            <p className="text-[#FFFFFF] font-bold font-OpenSans text-xl">{"#" + (usersIndex)}</p>
                                         </>
                                     ) : (
                                         <span className="text-[#FFFFFF]">...</span>
@@ -159,7 +159,7 @@ const Stats = () => {
                                                         </p>
                                                     </div>
                                                     <div className="pl-3">
-                                                        <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{item?.name.toUpperCase()}</p>
+                                                        <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{capitalizeAllFirstLetters(item?.name)}</p>
                                                         <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{`${item.points}`?.toLocaleString() } <span className="text-[#A6A6A6] text-sm">$AIDOGS</span></p>
                                                     </div>
                                                 </div>

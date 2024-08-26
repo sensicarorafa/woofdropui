@@ -11,7 +11,7 @@ const Footer = () => {
     return (
         <footer className="flex items-center justify-between h-[10vh] px-5  w-full">
             <NavLink
-                to="/"
+                to="/home"
                 className={({ isActive }) =>
                     isActive
                         ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"

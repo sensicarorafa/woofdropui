@@ -41,3 +41,27 @@ export const watchLocation = (watch: boolean = true) => {
         }
     }
 };
+
+export const capitalizeFirstLetter = (word: string | undefined): string => {
+    const firstLetter = word?.charAt(0);
+  
+    const firstLetterCap = firstLetter?.toUpperCase();
+  
+    const remainingLetters = word?.slice(1);
+  
+    let capitalizedWord = "";
+  
+    if (firstLetterCap && remainingLetters) {
+      capitalizedWord = firstLetterCap + remainingLetters;
+    }
+  
+    return capitalizedWord;
+};
+
+export const capitalizeAllFirstLetters = (word?: string): string => {
+    if (word) {
+      let splitName = word.split(" ");
+      splitName = splitName.map((name) => capitalizeFirstLetter(name));
+      return splitName.join(" ");
+    } else return "";
+};
