@@ -132,7 +132,7 @@ const HomeTab = () => {
             })
 
             const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
-                claimTreshold: 'repost',
+                claimTreshold: 'two-frens',
                 user
             })
 
