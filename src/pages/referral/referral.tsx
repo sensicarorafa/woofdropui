@@ -67,11 +67,11 @@ const Referral = () => {
             },
         });
     }, []);
-      
+
     const shareToTg = async () => {
         const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
         const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
-        const text = encodeURIComponent("GOT DOGS?? Join me on AiDogs and be a part of the dog revolution.. Earn 1.000 $AIDOG when you signup. ");
+        const text = encodeURIComponent("GOT DOGS?? Join me on AiDogs and be a part of the dog revolution.. Earn 2,500 $AIDOG when you signup.");
         const urlTo = `https://t.me/share/url?url=${referralLink}&text=${text}`;
         window.open(urlTo, "_blank");
     }
@@ -159,6 +159,7 @@ const Referral = () => {
             
                     {open ? (
                         <div className="header__curtain__black header__curtain flex flex-col justify-around z-[100]" > 
+                        <p className="text-xs flex justify-end cursor-pointer w-auto text-white" onClick={toggleOverlay}>Close</p>
                         <p className=" flex justify-center items-center text-white text-2xl">Invite frens</p>
                         <hr/> 
                            <button
