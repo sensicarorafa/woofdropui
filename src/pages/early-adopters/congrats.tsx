@@ -7,7 +7,7 @@ import useWindowDimensions from '../../utils/useWindowSize'
 import Confetti from 'react-confetti'
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const Congrats = () => {
     const navigate = useNavigate();
@@ -65,75 +65,20 @@ const Congrats = () => {
 
     
 
-    async function copyLink(): Promise<void> {
+    const copyLink = useCallback(async (e: React.MouseEvent) => {
+        e.preventDefault();
         const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-        const text = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
-        
-        try {
-          // Attempt to use the Clipboard API first
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-            console.log('Text copied to clipboard');
-            toast("Copied to clipboard!", {
-                className: "",
-                duration: 799,
-                style: {
-                    background: "#363636",
-                    color: "#fff",
-                },
-            });
-          } else {
-            // Fallback for iOS or other environments
-            fallbackCopyTextToClipboard(text);
-          }
-        } catch (error) {
-          console.error('Failed to copy text: ', error);
-          // If the Clipboard API fails, attempt the fallback
-          fallbackCopyTextToClipboard(text);
-        }
-    }
-      
-    function fallbackCopyTextToClipboard(text: string): void {
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-      
-        // Style adjustments to prevent any potential scrolling issues
-        textArea.style.position = 'fixed';
-        textArea.style.top = '0';
-        textArea.style.left = '0';
-        textArea.style.opacity = '0'; // Hide the textarea
-      
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-      
-        try {
-          const successful = document.execCommand('copy');
-          const msg = successful ? 'successful' : 'unsuccessful';
-          console.log('Fallback: Copying text command was ' + msg);
-          toast("Copied to clipboard!", {
+        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
+        navigator.clipboard.writeText(referralLink as string);
+        toast("Copied to clipboard!", {
             className: "",
             duration: 799,
             style: {
                 background: "#363636",
                 color: "#fff",
             },
-          });
-        } catch (err) {
-          console.error('Fallback: Unable to copy', err);
-          
-          toast("Error!", {
-            className: "",
-            duration: 799,
-            style: {
-                background: "#363636",
-                color: "#fff",
-            },
-          });
-        }
-      
-        document.body.removeChild(textArea);
-    }
+        });
+    }, []);
 
     const goHome = () => {
         navigate("/home")
