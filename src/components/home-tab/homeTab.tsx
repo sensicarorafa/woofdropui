@@ -25,6 +25,8 @@ const HomeTab = () => {
     const [engageRepost, setEngageRepost] = useState(false);
     const [engageTelegram, setEngageTelegram] = useState(false);
     const [engageFollow, setEngageFollow] = useState(false);
+    const [tgStart, setTgStart] = useState(true);
+    const [tgClaim, setTgClaim] = useState(false);
 
     const [referees, setReferees] = useState(0);
     const [open, setOpenModal] = useState<boolean>(false);
@@ -434,14 +436,36 @@ const HomeTab = () => {
                                         <div className="">
                                             {
                                                 !task.rewardClaimed && !engageTelegram &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    openTg()
-                                                    setTimeout(() => {
-                                                        setEngageTelegram(true)
-                                                    }, 30000)
-                                                }}>
-                                                    Open
-                                                </button>
+                                                <>
+                                                    {
+                                                        tgStart &&
+                                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                            openTg()
+                                                            setTgClaim(true)
+                                                            setTgStart(false)
+                                                        }}>
+                                                            Start
+                                                        </button>
+                                                    }
+                                                    {
+                                                        tgClaim &&
+                                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                            toast("Confirming, please wait...", {
+                                                                className: "",
+                                                                duration: 799,
+                                                                style: {
+                                                                  background: "#363636",
+                                                                  color: "#fff",
+                                                                },
+                                                            });
+                                                            setTimeout(() => {
+                                                                setEngageTelegram(true)
+                                                            }, 30000)
+                                                        }}>
+                                                            Check
+                                                        </button>
+                                                    }
+                                                </>
                                             }
                                             {
                                                 !task.rewardClaimed && engageTelegram &&

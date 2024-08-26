@@ -1,18 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { capitalizeAllFirstLetters } from "../../utils/helpers";
 
 
 
 
 const Referral = () => {
-    //const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
+    const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
 
     const [open, setOpen] = useState<Boolean>()
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
+    const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
 
     useEffect(() => {
         // Ensure the Telegram Web Apps SDK is ready
@@ -37,6 +39,21 @@ const Referral = () => {
           })
         }
     }, []);
+
+    useEffect (() => {
+        const fetchUserReferrals = async () => {
+            const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+            const getUserReferrals = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-referrals`, {
+                referralCode: getUserData?.data?.userData?.referralCode
+            })
+            console.log(getUserReferrals?.data)
+            setReferralLeaderboard(getUserReferrals?.data?.userData)
+        }
+        if (user) {
+          fetchUserReferrals();
+        }
+    }, [user])
+
 
     const copyToClipboard = async () => {
         const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
@@ -103,7 +120,7 @@ const Referral = () => {
                             </div>
                         </div>
                     </div>
-                    {/*<div className="flex px-10 py-5 justify-between">
+                    <div className="flex px-10 py-5 justify-between">
                         {referralLeaderboard?.length > 0 && <p className="text-white font-bold text-lg">{referralLeaderboard?.length || 0} frens</p>}
                         {referralLeaderboard?.length > 0 && <p className="text-white">(Top 100)</p>}
 
@@ -116,19 +133,19 @@ const Referral = () => {
                                         <div className="flex items-center">
                                             <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full" style={{ background: `${colorCodes[Math.floor(Math.random() * 10)]}` }}>
                                                 <p className="text-[#FFFFFF] text-lg font-bold">
-                                                    {item?.fullname.charAt(0).toUpperCase() + item?.fullname.charAt(1).toUpperCase()}
+                                                    {item.user.username ? item?.user?.username?.charAt(0).toUpperCase() + item?.user?.username?.charAt(1).toUpperCase() : item.user.first_name?.charAt(0).toUpperCase()}
                                                
                                                 </p>
                                             </div>
                                             <div className="pl-3">
-                                                <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{item?.fullname.charAt(0).toUpperCase() + item?.fullname.slice(1)}</p>
+                                                <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{capitalizeAllFirstLetters(item.user.username ? item.user.username : item.user.first_name)}</p>
                                             </div>
                                         </div>
 
 
 
                                         <div className=" flex justify-end items-center">
-                                            <p className="text-[#A6A6A6] w-[80px] text-sm text-nowrap text-left font-Rockwell">+{`${item.points}`?.toLocaleString()} $AIDOGS</p>
+                                            <p className="text-[#A6A6A6] w-[80px] text-sm text-nowrap text-left font-Rockwell">+{`${item.pointsNo / 10}`?.toLocaleString()} $AIDOGS</p>
 
 
                                         </div>
@@ -137,7 +154,7 @@ const Referral = () => {
                                 : null}
                         </div>
                     </div> : <div className="text-[#A6A6A6] flex justify-center items-center"> Your referrals will appear here</div>
-                    }*/}
+                    }
                 </div>
           
             
