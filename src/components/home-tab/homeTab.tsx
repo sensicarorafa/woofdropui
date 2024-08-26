@@ -552,8 +552,14 @@ const HomeTab = () => {
                                         <div className="">
                                             {
                                                 !task.rewardClaimed && !engageRepost &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    window.open('https://x.com/aidogscomm', '_blank');
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={async () => {
+                                                    
+                                                    const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+                                                    const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
+                                                    const text = `Got $DOGS??\r\n\nJoin me on AIDOGS and be a part of the dog revolution.\r\n\nEarn 2,500 $AIDOGS when you signup.\r\n\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOGS;`
+                                                
+                                                    const url = `https://twitter.com/intent/tweet?text=${text};`
+                                                    window.open(url, '_blank');
                                                     setTimeout(() => {
                                                         setEngageRepost(true)
                                                     }, 30000)
