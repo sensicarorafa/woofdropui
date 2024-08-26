@@ -63,12 +63,9 @@ const Congrats = () => {
         window.open(urlTo, "_blank");
     };
 
-    
-
-    const copyLink = useCallback(async (e: React.MouseEvent) => {
+    const copyLink = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
-        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-        const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`;
+        const referralLink = sessionStorage.getItem("referralLink");
         navigator.clipboard.writeText(referralLink as string);
         toast("Copied to clipboard!", {
             className: "",
