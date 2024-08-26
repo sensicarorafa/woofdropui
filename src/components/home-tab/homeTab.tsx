@@ -26,7 +26,7 @@ const HomeTab = () => {
     const [engageTelegram, setEngageTelegram] = useState(false);
     const [engageFollow, setEngageFollow] = useState(false);
 
-    const [referees, setReferees] = useState<any[]>();
+    const [referees, setReferees] = useState(0);
     const [open, setOpenModal] = useState<boolean>(false);
 
     const openTg = () => {
@@ -738,7 +738,7 @@ const HomeTab = () => {
                         </div>
                         <div className="">
                             <p className='text-white pr-5'>
-                                {referees?.length || 0}
+                                {referees}
                             </p>
                         </div>
                     </div>
