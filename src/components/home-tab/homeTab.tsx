@@ -25,6 +25,10 @@ const HomeTab = () => {
     const [engageRepost, setEngageRepost] = useState(false);
     const [engageTelegram, setEngageTelegram] = useState(false);
     const [engageFollow, setEngageFollow] = useState(false);
+    const [tgDisabled, setTgDisabled] = useState(false);
+    const [repostDisabled, setRepostDisabled] = useState(false);
+    const [twoFrensDisabled, setTwoFrensDisabled] = useState(false);
+    const [followDisabled, setFollowDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
 
@@ -42,6 +46,7 @@ const HomeTab = () => {
     };
 
     const claimTg = async () => {
+        setTgDisabled(true)
         const points = 150;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
             pointsNo: points,
@@ -65,10 +70,12 @@ const HomeTab = () => {
             setTotalPoints(updatePoints?.data?.userData?.pointsNo)
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
+            setTgDisabled(false);
         }
     };
     
     const claimFollow = async () => {
+        setFollowDisabled(true)
         const points = 150;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
             pointsNo: points,
@@ -92,10 +99,12 @@ const HomeTab = () => {
             setTotalPoints(updatePoints?.data?.userData?.pointsNo)
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
+            setFollowDisabled(false);
         }
     };
 
     const claimShare = async () => {
+        setRepostDisabled(true);
         const points = 150;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
             pointsNo: points,
@@ -119,10 +128,12 @@ const HomeTab = () => {
             setTotalPoints(updatePoints?.data?.userData?.pointsNo)
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
+            setRepostDisabled(false);
         }
     };
   
     const claimTwoFrens = async () => {
+        setTwoFrensDisabled(true)
         const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user});
         const referralPoints = getUserData?.data?.userData?.referralPoints
 
@@ -150,6 +161,7 @@ const HomeTab = () => {
                 setTotalPoints(updatePoints?.data?.userData?.pointsNo)
                 setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
                 setReferees(updatePoints?.data?.userData?.referralPoints);
+                setTwoFrensDisabled(false);
             }
         } else {
             toast("You need at least two referrals to claim", {
@@ -471,7 +483,7 @@ const HomeTab = () => {
                                                 !task.rewardClaimed && engageTelegram &&
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                     claimTg();
-                                                }}>
+                                                }} disabled={tgDisabled}>
                                                     Claim
                                                 </button>
                                             }
@@ -512,7 +524,7 @@ const HomeTab = () => {
                                                 !task.rewardClaimed && engageFollow &&
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                     claimFollow();
-                                                }}>
+                                                }} disabled={followDisabled}>
                                                     Claim
                                                 </button>
                                             }
@@ -553,7 +565,7 @@ const HomeTab = () => {
                                                 !task.rewardClaimed && engageRepost &&
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                     claimShare();
-                                                }}>
+                                                }} disabled={repostDisabled}>
                                                     Claim
                                                 </button>
                                             }
@@ -592,7 +604,7 @@ const HomeTab = () => {
                                                 !task.rewardClaimed && engageTwoFrens &&
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                     claimTwoFrens();
-                                                }}>
+                                                }} disabled={twoFrensDisabled}>
                                                     Claim
                                                 </button>
                                             }
