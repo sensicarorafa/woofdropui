@@ -127,7 +127,7 @@ const HomeTab = () => {
         const referralPoints = getUserData?.data?.userData?.referralPoints
 
         if (referralPoints >= 2) {
-            const points = 150;
+            const points = 2000;
             const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
                 pointsNo: points,
                 user
