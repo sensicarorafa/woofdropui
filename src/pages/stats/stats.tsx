@@ -80,7 +80,7 @@ const Stats = () => {
           const getLeaderboardData = await axios.post(`${import.meta.env.VITE_APP_URL}/leaderboard-data`, {user})
     
           const sortedData = getLeaderboardData.data.leaderboardData.map((board: any, index: number) => {
-            if (user && user.id === board.user.id) setUserIndex(index + 1)
+            if (user && user.id === board.user.id) setUserIndex(getLeaderboardData.data.userRank)
             return {
               id: board.user.id, 
               name: board.user.username ? board.user.username : board.user.first_name, 
@@ -91,12 +91,10 @@ const Stats = () => {
             }
           })
     
-          console.log({sortedData})
-    
           setLeaderboardData(sortedData)
           setLeaderboardLoading(false)
         }
-        fetchLeaderboardData();
+        if (user) fetchLeaderboardData();
       }, [user]);
 
     return (
