@@ -77,7 +77,7 @@ const Stats = () => {
     useEffect (() => {
         const fetchLeaderboardData = async () => {
           setLeaderboardLoading(true)
-          const getLeaderboardData = await axios.post(`${import.meta.env.VITE_APP_URL}/leaderboard-data`, {})
+          const getLeaderboardData = await axios.post(`${import.meta.env.VITE_APP_URL}/leaderboard-data`, {user})
     
           const sortedData = getLeaderboardData.data.leaderboardData.map((board: any, index: number) => {
             if (user && user.id === board.user.id) setUserIndex(index + 1)
