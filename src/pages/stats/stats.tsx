@@ -94,7 +94,7 @@ const Stats = () => {
           setLeaderboardData(sortedData)
           setLeaderboardLoading(false)
         }
-        if (user) fetchLeaderboardData();
+        if (user && user !== null && user.id) fetchLeaderboardData();
       }, [user]);
 
     return (
