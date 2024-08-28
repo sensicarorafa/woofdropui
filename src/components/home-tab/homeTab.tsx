@@ -12,6 +12,8 @@ import Footer from "../footer";
 import { useEffect, useState } from "react";
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -192,6 +194,7 @@ const HomeTab = () => {
 
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Ensure the Telegram Web Apps SDK is ready
@@ -219,12 +222,17 @@ const HomeTab = () => {
 
     useEffect (() => {
         const fetchUserData = async () => {
-          const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-          console.log(getUserData?.data)
-          setTotalPoints(getUserData?.data?.userData?.pointsNo);
-          setSocialTasks(getUserData?.data?.userData?.socialRewardDeets);
-          setReferees(getUserData?.data?.userData?.referralPoints);
-          setReferralCode(getUserData?.data?.userData?.referralCode);
+          const userCookies = Cookies.get('authLoggedUserAiDogs');
+          if (userCookies) {
+            const getUserData = JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+            console.log(getUserData?.data)
+            setTotalPoints(getUserData?.data?.userData?.pointsNo);
+            setSocialTasks(getUserData?.data?.userData?.socialRewardDeets);
+            setReferees(getUserData?.data?.userData?.referralPoints);
+            setReferralCode(getUserData?.data?.userData?.referralCode);
+          } else {
+            navigate('/starter')
+          }
         }
         if (user) {
           fetchUserData();

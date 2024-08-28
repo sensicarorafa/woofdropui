@@ -4,6 +4,8 @@ import Footer from "../../components/footer";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { capitalizeAllFirstLetters } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 
 
@@ -15,6 +17,7 @@ const Referral = () => {
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
     const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Ensure the Telegram Web Apps SDK is ready
@@ -42,12 +45,17 @@ const Referral = () => {
 
     useEffect (() => {
         const fetchUserReferrals = async () => {
-            const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-            const getUserReferrals = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-referrals`, {
-                referralCode: getUserData?.data?.userData?.referralCode
-            })
-            console.log(getUserReferrals?.data)
-            setReferralLeaderboard(getUserReferrals?.data?.userData)
+            const userCookies = Cookies.get('authLoggedUserAiDogs');
+            if (userCookies) {
+                const getUserData =  JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+                const getUserReferrals = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-referrals`, {
+                    referralCode: getUserData?.data?.userData?.referralCode
+                })
+                console.log(getUserReferrals?.data)
+                setReferralLeaderboard(getUserReferrals?.data?.userData)
+            } else {
+              navigate('/starter')
+            }
         }
         if (user) {
           fetchUserReferrals();

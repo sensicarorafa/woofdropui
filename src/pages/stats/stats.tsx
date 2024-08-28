@@ -4,6 +4,8 @@ import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { capitalizeAllFirstLetters } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Stats = () => {
 
@@ -16,6 +18,7 @@ const Stats = () => {
     const [leaderboardLoading, setLeaderboardLoading] = useState<boolean>(false)
     const [username, setUserName] = useState('');
     const [totalPoints, setTotalPoints] = useState(0);
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Ensure the Telegram Web Apps SDK is ready
@@ -43,10 +46,15 @@ const Stats = () => {
 
     useEffect (() => {
         const fetchUserData = async () => {
-          const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-          console.log(getUserData?.data)
-          setTotalPoints(getUserData?.data?.userData?.pointsNo);
-          setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name ?  getUserData?.data?.userData?.user?.first_name : ''} ${getUserData?.data?.userData?.user?.last_name ? getUserData?.data?.userData?.user?.last_name : ''}`);
+            const userCookies = Cookies.get('authLoggedUserAiDogs');
+            if (userCookies) {
+                const getUserData =  JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+                console.log(getUserData?.data)
+                setTotalPoints(getUserData?.data?.userData?.pointsNo);
+                setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name ?  getUserData?.data?.userData?.user?.first_name : ''} ${getUserData?.data?.userData?.user?.last_name ? getUserData?.data?.userData?.user?.last_name : ''}`);
+            } else {
+                navigate('/starter')
+            }
         }
         if (user) {
           fetchUserData();
