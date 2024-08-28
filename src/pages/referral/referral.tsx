@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 import { toast } from "react-hot-toast";
