@@ -127,7 +127,7 @@ const Referral = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex px-10 py-5 justify-between">
+                    {/*<div className="flex px-10 py-5 justify-between">
                         {referralLeaderboard?.length > 0 && <p className="text-white font-bold text-lg">{referralLeaderboard?.length || 0} frens</p>}
                         {referralLeaderboard?.length > 0 && <p className="text-white">(Top 100)</p>}
 
@@ -161,7 +161,7 @@ const Referral = () => {
                                 : null}
                         </div>
                     </div> : <div className="text-[#A6A6A6] flex justify-center items-center"> Your referrals will appear here</div>
-                    }
+                    }*/}
                 </div>
           
             
