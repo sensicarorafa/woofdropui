@@ -3,7 +3,7 @@ import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { capitalizeAllFirstLetters } from "../../utils/helpers";
+//import { capitalizeAllFirstLetters } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -11,12 +11,12 @@ import Cookies from "js-cookie";
 
 
 const Referral = () => {
-    const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
+    //const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
 
     const [open, setOpen] = useState<Boolean>()
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
-    const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
+    //const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const Referral = () => {
                     referralCode: getUserData?.data?.userData?.referralCode
                 })
                 console.log(getUserReferrals?.data)
-                setReferralLeaderboard(getUserReferrals?.data?.userData)
+                //setReferralLeaderboard(getUserReferrals?.data?.userData)
             } else {
               navigate('/starter')
             }
