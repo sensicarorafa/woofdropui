@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 import { toast } from "react-hot-toast";
-import axios from "axios";
+//import axios from "axios";
 //import { capitalizeAllFirstLetters } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -47,11 +47,11 @@ const Referral = () => {
         const fetchUserReferrals = async () => {
             const userCookies = Cookies.get('authLoggedUserAiDogs');
             if (userCookies) {
-                const getUserData =  JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+                /*const getUserData =  JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
                 const getUserReferrals = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-referrals`, {
                     referralCode: getUserData?.data?.userData?.referralCode
                 })
-                console.log(getUserReferrals?.data)
+                console.log(getUserReferrals?.data)*/
                 //setReferralLeaderboard(getUserReferrals?.data?.userData)
             } else {
               navigate('/starter')
