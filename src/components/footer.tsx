@@ -27,7 +27,7 @@ const Footer = () => {
                     </>
                 )}
             </NavLink>
-            <NavLink
+            {/*<NavLink
                 to="/leaderboard"
                 className={({ isActive }) =>
                     isActive
@@ -43,7 +43,7 @@ const Footer = () => {
                         <p className="text-[2.2vh]">Leaderboard</p>
                     </>
                 )}
-            </NavLink>
+            </NavLink>*/}
             <NavLink
                 to="/invites"
                 className={({ isActive }) =>
