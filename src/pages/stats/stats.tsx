@@ -1,36 +1,15 @@
 
 import medal from "../../assets/img/medal.png";
 import Footer from "../../components/footer";
-import { getLeaderBoard } from "../../api";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { capitalizeAllFirstLetters } from "../../utils/helpers";
 
 const Stats = () => {
-    const [leaderboard, setLeaderboard] = useState<any[]>([]);
 
     const colorCodes: string[] = ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"];
 
-    useEffect(() => {
-        const fetchLeaderboard = async () => {
-            try {
-                const res = await getLeaderBoard();
-                if (res.status === 200) {
-                    setLeaderboard(res.data);
-                } else {
-                    console.error('Failed to fetch leaderboard data:', res.status);
-                }
-            } catch (error) {
-                console.error('Error fetching leaderboard:', error);
-            }
-        };
-
-        fetchLeaderboard();
-    }, []);
-
     const [usersIndex, setUserIndex] = useState(0)
-    
-    console.log(leaderboard, usersIndex);
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
     const [leaderboardData, setLeaderboardData] = useState<any>([])
