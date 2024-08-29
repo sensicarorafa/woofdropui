@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 
 import home from "../assets/img/home.png";
 import homeActive from "../assets/img/home-active.png";
-//import handShakeActive from "../assets/img/handshake-active.png";
-//import handShake from "../assets/img/handshake.png";
+import handShakeActive from "../assets/img/handshake-active.png";
+import handShake from "../assets/img/handshake.png";
 import podium from "../assets/img/podium.png";
 import podiumActive from "../assets/img/podium-active.png";
 
@@ -27,7 +27,7 @@ const Footer = () => {
                     </>
                 )}
             </NavLink>
-            {/*<NavLink
+            <NavLink
                 to="/leaderboard"
                 className={({ isActive }) =>
                     isActive
@@ -43,7 +43,7 @@ const Footer = () => {
                         <p className="text-[2.2vh]">Leaderboard</p>
                     </>
                 )}
-            </NavLink>*/}
+            </NavLink>
             <NavLink
                 to="/invites"
                 className={({ isActive }) =>
