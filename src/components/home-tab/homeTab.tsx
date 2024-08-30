@@ -40,15 +40,15 @@ const HomeTab = () => {
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
     const [referralCode, setReferralCode] = useState('');
-    //const [pointsToday, setPointsToday] = useState();
+    const [pointsToday, setPointsToday] = useState(0);
 
     const [referees, setReferees] = useState(0);
     const [open, setOpenModal] = useState<boolean>(false);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
 
-    /*const handleOpenBottomSheet = () => {
+    const handleOpenBottomSheet = () => {
         setBottomSheetOpen(true);
-    };*/
+    };
 
     const handleCloseBottomSheet = () => {
         setBottomSheetOpen(false);
@@ -87,7 +87,8 @@ const HomeTab = () => {
                 },
             });
             Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
-            setTotalPoints(updatePoints?.data?.userData?.pointsNo)
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
@@ -118,8 +119,10 @@ const HomeTab = () => {
                 },
             });
             Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
-            setTotalPoints(updatePoints?.data?.userData?.pointsNo)
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setFollowDisabled(false);
         }
@@ -148,8 +151,10 @@ const HomeTab = () => {
                 },
             });
             Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
-            setTotalPoints(updatePoints?.data?.userData?.pointsNo)
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setRepostDisabled(false);
         }
@@ -179,8 +184,10 @@ const HomeTab = () => {
                 },
             });
             Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
-            setTotalPoints(updatePoints?.data?.userData?.pointsNo)
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setInstagramDisabled(false);
         }        
@@ -209,8 +216,10 @@ const HomeTab = () => {
                 },
             });
             Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
-            setTotalPoints(updatePoints?.data?.userData?.pointsNo)
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setYoutubeDisabled(false)
         }
@@ -242,8 +251,10 @@ const HomeTab = () => {
                     color: "#fff",
                     },
                 });
-                setTotalPoints(updatePoints?.data?.userData?.pointsNo)
+                setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+                setPointsToday(updatePoints?.data?.userData?.pointsToday);
                 setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+                setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
                 setReferees(updatePoints?.data?.userData?.referralPoints);
                 setTwoFrensDisabled(false);
             }
@@ -258,6 +269,40 @@ const HomeTab = () => {
             });
         }
     };
+
+    const claimDailyTask = async (tasks: any, index: any) => {
+        const taskToClaim = tasks[index];
+
+        console.log(taskToClaim);
+        const points = taskToClaim.claimTreshold * 100;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-daily-reward`, {
+            claimTreshold: taskToClaim.claimTreshold,
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            handleCloseBottomSheet();
+        }
+    }
 
     const toggleModal = useCallback(() => {
         setOpenModal(prev => !prev);
@@ -308,6 +353,7 @@ const HomeTab = () => {
             const getUserData = JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
             console.log(getUserData?.data)
             setTotalPoints(getUserData?.data?.userData?.pointsNo);
+            setPointsToday(getUserData?.data?.userData?.pointsToday);
             setSocialTasks(getUserData?.data?.userData?.socialRewardDeets);
             setDailyLoginTasks(getUserData?.data?.userData?.referralRewardDeets);
             setReferees(getUserData?.data?.userData?.referralPoints);
@@ -527,12 +573,16 @@ const HomeTab = () => {
                     </Swiper>
                 </div>
 
-               {/*<div className="w-full flex justify-between items-center pt-7 pb-5 px-5">
+                <div className="w-full flex justify-between items-center pt-7 pb-5 px-5">
                     <p className='text-white text-lg flex justify-start w-auto items-center'>Claim Daily Login Reward</p>
                     <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center flex justify-end w-auto items-center">
-                        <button className="bg-white text-md font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button>
+                        {
+                            pointsToday === 1 ?
+                            <button className="bg-white text-md font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" disabled={true}>Claimed</button> : 
+                            <button className="bg-white text-md font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button>
+                        }
                     </div>
-                </div>*/}
+                </div>
 
                 <div className="w-full flex flex-col pt-7 px-4 relative z-10">
                     <p className='text-white text-xl pb-5'>Tasks</p>
@@ -817,146 +867,6 @@ const HomeTab = () => {
                         ))
                     }
 
-                    
-                    {/*tasks.map((task) => {
-                        let isTaskClaimed: boolean = taskList.find((t) => t.taskId == task.id);
-                
-                        return (
-
-                            <div key={task.id} className='flex justify-between py-2 w-full items-center'>
-                                <div className='flex items-center'>
-                                    <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-
-                                        {task.icon}
-                                    </div>
-                                    <div className='flex flex-col pl-5'>
-                                        <p className='text-white text-bold taskTitle' onClick={() => openTask(task.id)}>{task.name}</p>
-                                        <span className='text-[#A6A6A6]'>+{task.reward.toLocaleString()} $AIDOGS</span>
-                                    </div>
-                                </div>
-                                <div className="">
-
-
-
-                                    <button
-                                        className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
-                                            }`}
-                                        onClick={(isTaskIdPending == task.id || isTaskIdPendingLocal == task.id) ? (e) => claim(e, task.id, Number(task.reward)) : (e) => pendingTask(e, task.id)}
-                                        disabled={isTaskClaimed}
-                                    >
-
-                                        {isTaskClaimed ? "Done" :
-                                            <>
-                                                {(isTaskIdPending == task.id || isTaskIdPendingLocal == task.id) ?
-                                                    <>{isLoading ? <>
-                                                      <span className="loader"></span>
-                                                    </>:
-                                                        <>Claim
-                                                        </>
-                                                    }
-                                                    </>
-                                                    :
-
-                                                    <>{isLoading && (task.id == isTaskIdPending || isTaskIdPendingLocal == task.id) ?
-                                                        <>
-                                                            <span className="loader"></span>
-                                                        </> :
-                                                        <>{task.btnText}
-                                                        </> 
-                                                    }
-                                                    </>
-                                                }
-                                            </>
-
-                                        }
-                                    </button>
-                                </div>
-                            </div>
-
-
-                        );
-                    })}
-                    {referralTasks.map((task) => {
-                        let isTaskClaimed: boolean = taskList.find((t) => t.taskId == task.id);
-
-                        return (
-
-                            <div key={task.id} className='flex justify-between py-2 w-full items-center'>
-                                <div className='flex items-center'>
-                                    <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-
-                                        <img className="w-full" src={logoSm} alt="" />
-
-                                    </div>
-                                    <div className='flex flex-col pl-3'>
-                                        <p className='text-white text-bold'>{task.name}</p>
-                                        <span className='text-[#A6A6A6]'>+{task.reward.toLocaleString()} $AIDOGS</span>
-                                    </div>
-                                </div>
-                                <div className="">
-
-                                    {task.id == activeReferral ?
-
-                                        <button
-                                            className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
-                                                }`}
-                                            onClick={task.id == isReferralCompleteId ? (e) => claim(e, task.id, Number(task.reward)) : (e) => checkReferralTask(e, task.id, Number(task.reward))}
-                                            disabled={isTaskClaimed}
-                                        >
-
-                                            {isTaskClaimed ? "Done" :
-                                                <>
-                                                    {task.id == isReferralCompleteId ?
-
-
-
-                                                        <>{isLoading ?
-                                                            <>
-                                                                <span className="loader"></span>
-                                                            </> :
-                                                            <>Claim
-                                                            </>
-                                                        }
-                                                        </>
-                                                        :
-                                                        <>
-                                                        
-                                                            <>Check
-                                                            </>
-                                                     
-                                                        </>
-                                                    }
-                                                </>
-
-                                            }
-                                        </button> :
-                                        <button
-                                            className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]  ${isTaskClaimed && "opacity-50"
-                                                }`}
-                                            onClick={(e) => switchReferralState(e, task.id)}
-                                            disabled={isTaskClaimed}
-                                        >
-
-                                            {isTaskClaimed ? "Done" :
-                                                <>
-
-                                                    {task.btnText}
-
-
-                                                </>
-
-                                            }
-                                        </button>
-                                    }
-
-
-                                </div>
-                            </div>
-
-
-                        );
-                    })*/}
-
                     <div className='flex justify-between py-2 w-full items-center'>
                         <div className='flex items-center'>
                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
@@ -980,11 +890,52 @@ const HomeTab = () => {
             <Footer />
             <BottomSheet isOpen={isBottomSheetOpen} onClose={handleCloseBottomSheet}>
                 <h2 className="text-xl font-bold text-white text-center">Claim Daily Reward</h2>
+                <p className="text-xs font-bold text-white text-center">Click on any day to claim, if you are eligible for that day you will recieve your rewards</p>
                 
                 <div className="my-4 grid grid-cols-4">
                     {
                         dailyLoginTasks.map((task: any, idx: any) => (
-                            <div className={`flex flex-col gap-1 rounded-md bg-white/20 ${isFirstUnclaimedReward(dailyLoginTasks, idx) ? 'border border-white' : ''} text-white m-1 p-1`}>
+                            <div className={`flex flex-col gap-1 rounded-md bg-white/20 ${isFirstUnclaimedReward(dailyLoginTasks, idx) && pointsToday < 1 ? 'border border-white' : ''} text-white m-1 p-1 cursor-pointer`} onClick={() => {
+                                if (dailyLoginTasks[idx].rewardClaimed) {
+                                    toast(`You have claimed points for today`, {
+                                        className: "",
+                                        duration: 799,
+                                        style: {
+                                        background: "#363636",
+                                        color: "#fff",
+                                        },
+                                    });
+                                }
+                                if (isFirstUnclaimedReward(dailyLoginTasks, idx) && pointsToday < 1) {
+                                    toast(`Claiming for day ${idx + 1}, please wait....`, {
+                                        className: "",
+                                        duration: 799,
+                                        style: {
+                                        background: "#363636",
+                                        color: "#fff",
+                                        },
+                                    });
+                                    claimDailyTask(dailyLoginTasks, idx)
+                                } else if (isFirstUnclaimedReward(dailyLoginTasks, idx) && (pointsToday > 0 || pointsToday === 1)) {
+                                    toast(`You have claimed points for today`, {
+                                        className: "",
+                                        duration: 799,
+                                        style: {
+                                        background: "#363636",
+                                        color: "#fff",
+                                        },
+                                    });
+                                } else if (!isFirstUnclaimedReward(dailyLoginTasks, idx)) {
+                                    toast(`You are not yet eligible to claim for day ${idx + 1}`, {
+                                        className: "",
+                                        duration: 799,
+                                        style: {
+                                        background: "#363636",
+                                        color: "#fff",
+                                        },
+                                    });
+                                }
+                            }}>
                                 <p className='text-center text-white text-xs'>Day {idx + 1}</p>
                                 <div className="flex justify-center items-center w-[30%] mx-auto">
                                     <img className="w-full" src={logoBig} alt="" />
@@ -993,10 +944,6 @@ const HomeTab = () => {
                             </div>
                         ))
                     }
-                </div>
-
-                <div className="my-3 flex justify-center items-center py-4">
-                    <button className="bg-white text-md font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" onClick={() => {}}>Claim</button>
                 </div>
             </BottomSheet>
         </div>
