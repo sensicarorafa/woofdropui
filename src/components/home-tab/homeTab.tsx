@@ -91,7 +91,7 @@ const HomeTab = () => {
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setTgDisabled(false);
         }
@@ -123,7 +123,7 @@ const HomeTab = () => {
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setFollowDisabled(false);
         }
@@ -155,7 +155,7 @@ const HomeTab = () => {
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setRepostDisabled(false);
         }
@@ -188,7 +188,7 @@ const HomeTab = () => {
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setInstagramDisabled(false);
         }        
@@ -220,7 +220,7 @@ const HomeTab = () => {
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-            setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setYoutubeDisabled(false)
         }
@@ -255,7 +255,7 @@ const HomeTab = () => {
                 setTotalPoints(updatePoints?.data?.userData?.pointsNo);
                 setPointsToday(updatePoints?.data?.userData?.pointsToday);
                 setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-                setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
+                setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
                 setReferees(updatePoints?.data?.userData?.referralPoints);
                 setTwoFrensDisabled(false);
             }
