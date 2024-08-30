@@ -416,6 +416,15 @@ const HomeTab = () => {
         setOpenModal(prev => !prev);
     }, []);
 
+    function rearrangeRewards(socialRewardDeets: any) {
+        return socialRewardDeets.sort((a: any, b: any) => {
+            // Sort by rewardClaimed field; false comes before true
+            if (a.rewardClaimed === b.rewardClaimed) {
+                return 0;
+            }
+            return a.rewardClaimed ? 1 : -1;
+        });
+    }
 
 
 
@@ -697,7 +706,7 @@ const HomeTab = () => {
                     <p className='text-white text-xl pb-5'>Tasks</p>
 
                     {
-                        socialTasks.map((task: any) => (
+                        rearrangeRewards(socialTasks).map((task: any) => (
                             <>
                                 {
                                     task.claimTreshold === 'telegram' &&
