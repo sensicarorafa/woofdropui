@@ -15,6 +15,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import BottomSheet from '../BottomSheet';
+import CountdownTimer from '../CountdownTimer';
 
 
 
@@ -582,6 +583,11 @@ const HomeTab = () => {
                             <button className="bg-white text-md font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button>
                         }
                     </div>
+                    
+                </div>
+
+                <div className="text-center w-full">
+                    {pointsToday === 1 && <CountdownTimer />}
                 </div>
 
                 <div className="w-full flex flex-col pt-7 px-4 relative z-10">
