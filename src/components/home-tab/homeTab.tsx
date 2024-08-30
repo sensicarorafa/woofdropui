@@ -14,8 +14,8 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import BottomSheet from '../BottomSheet';
-import CountdownTimer from '../CountdownTimer';
+//import BottomSheet from '../BottomSheet';
+//import CountdownTimer from '../CountdownTimer';
 
 
 
@@ -45,7 +45,7 @@ const HomeTab = () => {
 
     const [referees, setReferees] = useState(0);
     const [open, setOpenModal] = useState<boolean>(false);
-    const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+    /*const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
 
     const handleOpenBottomSheet = () => {
         setBottomSheetOpen(true);
@@ -53,7 +53,7 @@ const HomeTab = () => {
 
     const handleCloseBottomSheet = () => {
         setBottomSheetOpen(false);
-    };
+    };*/
 
     const openTg = () => {
         window.open("https://t.me/aidogs_community", "_blank");
@@ -271,7 +271,7 @@ const HomeTab = () => {
         }
     };
 
-    const claimDailyTask = async (tasks: any, index: any) => {
+    /*const claimDailyTask = async (tasks: any, index: any) => {
         const taskToClaim = tasks[index];
 
         console.log(taskToClaim);
@@ -301,9 +301,9 @@ const HomeTab = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
-            handleCloseBottomSheet();
+            //handleCloseBottomSheet();
         }
-    }
+    }*/
 
     const toggleModal = useCallback(() => {
         setOpenModal(prev => !prev);
@@ -359,6 +359,7 @@ const HomeTab = () => {
             setDailyLoginTasks(getUserData?.data?.userData?.referralRewardDeets);
             setReferees(getUserData?.data?.userData?.referralPoints);
             setReferralCode(getUserData?.data?.userData?.referralCode);
+            console.log(pointsToday, dailyLoginTasks)
           } else {
             navigate('/starter')
           }
@@ -376,7 +377,7 @@ const HomeTab = () => {
 
     const url = `https://twitter.com/intent/tweet?text=${encodedText}`;
 
-    type Reward = {
+    /*type Reward = {
         claimTreshold: number;
         rewardClaimed: boolean;
     };
@@ -393,7 +394,7 @@ const HomeTab = () => {
         }
       
         return rewards[index].rewardClaimed === false;
-    };
+    };*/
 
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
@@ -574,7 +575,7 @@ const HomeTab = () => {
                     </Swiper>
                 </div>
 
-                <div className="w-full flex justify-between items-center pt-7 pb-5 px-5">
+                {/*<div className="w-full flex justify-between items-center pt-7 pb-5 px-5">
                     <p className='text-white text-lg flex justify-start w-auto items-center'>Claim Daily Login Reward</p>
                     <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center flex justify-end w-auto items-center">
                         {
@@ -588,7 +589,7 @@ const HomeTab = () => {
 
                 <div className="text-center w-full">
                     {pointsToday === 1 && <CountdownTimer />}
-                </div>
+                </div>*/}
 
                 <div className="w-full flex flex-col pt-7 px-4 relative z-10">
                     <p className='text-white text-xl pb-5'>Tasks</p>
@@ -894,7 +895,7 @@ const HomeTab = () => {
                 </div>
             </div>
             <Footer />
-            <BottomSheet isOpen={isBottomSheetOpen} onClose={handleCloseBottomSheet}>
+            {/*<BottomSheet isOpen={isBottomSheetOpen} onClose={handleCloseBottomSheet}>
                 <h2 className="text-xl font-bold text-white text-center">Claim Daily Reward</h2>
                 <p className="text-xs font-bold text-white text-center">Click on any day to claim, if you are eligible for that day you will recieve your rewards</p>
                 
@@ -951,7 +952,7 @@ const HomeTab = () => {
                         ))
                     }
                 </div>
-            </BottomSheet>
+            </BottomSheet>*/}
         </div>
     );
 };
