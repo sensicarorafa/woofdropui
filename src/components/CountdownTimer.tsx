@@ -29,7 +29,6 @@ const CountdownTimer = () => {
   return (
     <div className="h-auto font-neuropol">
       <div className="text-center text-white flex gap-5 px-4 justify-center items-center">
-        <h1 className="text-sm font-bold">You can claim again in</h1>
         <div className="text-sm">
           {formatTime(timeLeft)}
         </div>

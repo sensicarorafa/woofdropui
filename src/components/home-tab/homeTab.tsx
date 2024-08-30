@@ -408,9 +408,9 @@ const HomeTab = () => {
         }
     }
 
-    const toggleModal = useCallback(() => {
+    /*const toggleModal = useCallback(() => {
         setOpenModal(prev => !prev);
-    }, []);
+    }, []);*/
 
     const closeModal = useCallback(() => {
         setOpenModal(prev => !prev);
@@ -595,8 +595,24 @@ const HomeTab = () => {
                         modules={[Pagination]}
                         className="mySwiper"
                     >
-
                         <SwiperSlide>
+                            <div className="flex h-[180px] flex-col rounded-lg justify-between items-center text-white bg-white/15 py-3">
+                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
+                                    <img className="w-full" src={logoSm} alt="" />
+
+                                </div>
+                                <p className='text-white text-center text-sm flex justify-start w-auto items-center'>Claim Daily Login Reward</p>
+                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center flex justify-end w-auto items-center">
+                                    {
+                                        pointsToday === 1 ?
+                                        <CountdownTimer /> : 
+                                        <button className="bg-white text-md font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button>
+                                    }
+                                </div>
+                                
+                            </div>
+                        </SwiperSlide>
+                        {/*<SwiperSlide>
                             <div className='flex h-[180px] flex-col rounded-lg justify-between items-center text-white bg-white/15 py-3'>
                                 <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
                                     <img className="w-full" src={logoSm} alt="" />
@@ -622,7 +638,7 @@ const HomeTab = () => {
                                 </div>
 
                             </div>
-                        </SwiperSlide>
+                        </SwiperSlide>*/}
                         <SwiperSlide>
                             <div className='flex h-[180px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
                                 <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
@@ -650,7 +666,7 @@ const HomeTab = () => {
                             </div>
                         </SwiperSlide>
                         <SwiperSlide>
-                            <div className='flex h-[180px] -col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
+                            <div className='flex h-[180px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
                                 <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
                                     <img className="w-full" src={logoSm} alt="" />
 
@@ -675,22 +691,6 @@ const HomeTab = () => {
                         </SwiperSlide>
 
                     </Swiper>
-                </div>
-
-                <div className="w-full flex justify-between items-center pt-7 pb-5 px-5">
-                    <p className='text-white text-lg flex justify-start w-auto items-center'>Claim Daily Login Reward</p>
-                    <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center flex justify-end w-auto items-center">
-                        {
-                            pointsToday === 1 ?
-                            <button className="bg-white text-md font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" disabled={true}>Claimed</button> : 
-                            <button className="bg-white text-md font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button>
-                        }
-                    </div>
-                    
-                </div>
-
-                <div className="text-center w-full">
-                    {pointsToday === 1 && <CountdownTimer />}
                 </div>
 
                 <div className="w-full flex flex-col pt-7 px-4 relative z-10">
