@@ -14,8 +14,8 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-//import BottomSheet from '../BottomSheet';
-//import CountdownTimer from '../CountdownTimer';
+import BottomSheet from '../BottomSheet';
+import CountdownTimer from '../CountdownTimer';
 
 
 
@@ -27,6 +27,8 @@ const HomeTab = () => {
     const [dailyLoginTasks, setDailyLoginTasks] = useState<any>([]);
 
     const [engageTwoFrens, setEngageTwoFrens] = useState(false);
+    const [engageFiveFrens, setEngageFiveFrens] = useState(false);
+    const [engageTenFrens, setEngageTenFrens] = useState(false);
     const [engageRepost, setEngageRepost] = useState(false);
     const [engageTelegram, setEngageTelegram] = useState(false);
     const [engageFollow, setEngageFollow] = useState(false);
@@ -35,6 +37,8 @@ const HomeTab = () => {
     const [tgDisabled, setTgDisabled] = useState(false);
     const [repostDisabled, setRepostDisabled] = useState(false);
     const [twoFrensDisabled, setTwoFrensDisabled] = useState(false);
+    const [fiveFrensDisabled, setFiveFrensDisabled] = useState(false);
+    const [tenFrensDisabled, setTenFrensDisabled] = useState(false);
     const [followDisabled, setFollowDisabled] = useState(false);
     const [youtubeDisabled, setYoutubeDisabled] = useState(false);
     const [instagramDisabled, setInstagramDisabled] = useState(false);
@@ -45,7 +49,7 @@ const HomeTab = () => {
 
     const [referees, setReferees] = useState(0);
     const [open, setOpenModal] = useState<boolean>(false);
-    /*const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+    const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
 
     const handleOpenBottomSheet = () => {
         setBottomSheetOpen(true);
@@ -53,7 +57,7 @@ const HomeTab = () => {
 
     const handleCloseBottomSheet = () => {
         setBottomSheetOpen(false);
-    };*/
+    };
 
     const openTg = () => {
         window.open("https://t.me/aidogs_community", "_blank");
@@ -271,11 +275,110 @@ const HomeTab = () => {
         }
     };
 
-    /*const claimDailyTask = async (tasks: any, index: any) => {
+    const claimFiveFrens = async () => {
+        setFiveFrensDisabled(true)
+        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user});
+        const referralPoints = getUserData?.data?.userData?.referralPoints
+
+        if (referralPoints >= 5) {
+            const points = 5000;
+            const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+                pointsNo: points,
+                user
+            })
+
+            const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+                claimTreshold: 'five-frens',
+                user
+            })
+
+            if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+                toast("Claimed successfully", {
+                    className: "",
+                    duration: 799,
+                    style: {
+                    background: "#363636",
+                    color: "#fff",
+                    },
+                });
+                setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+                setPointsToday(updatePoints?.data?.userData?.pointsToday);
+                setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+                setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
+                setReferees(updatePoints?.data?.userData?.referralPoints);
+                setFiveFrensDisabled(false);
+            }
+        } else {
+            toast("You need at least five referrals to claim", {
+                className: "",
+                duration: 799,
+                style: {
+                background: "#363636",
+                color: "#fff",
+                },
+            });
+        }
+    };
+
+    const claimTenFrens = async () => {
+        setTenFrensDisabled(true)
+        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user});
+        const referralPoints = getUserData?.data?.userData?.referralPoints
+
+        if (referralPoints >= 10) {
+            const points = 10000;
+            const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+                pointsNo: points,
+                user
+            })
+
+            const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+                claimTreshold: 'ten-frens',
+                user
+            })
+
+            if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+                toast("Claimed successfully", {
+                    className: "",
+                    duration: 799,
+                    style: {
+                    background: "#363636",
+                    color: "#fff",
+                    },
+                });
+                setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+                setPointsToday(updatePoints?.data?.userData?.pointsToday);
+                setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+                setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
+                setReferees(updatePoints?.data?.userData?.referralPoints);
+                setTenFrensDisabled(false);
+            }
+        } else {
+            toast("You need at least ten referrals to claim", {
+                className: "",
+                duration: 799,
+                style: {
+                background: "#363636",
+                color: "#fff",
+                },
+            });
+        }
+    };
+
+    const getPoints = async (idx: number) => {
+        if (idx === 0) return 75;
+        if(idx === 1) return 100;
+        if(idx === 2) return 125;
+        if(idx === 3) return 150;
+        if(idx === 4) return 175;
+        if(idx === 5) return 200;
+        if(idx === 6) return 300;
+    }
+
+    const claimDailyTask = async (tasks: any, index: any) => {
         const taskToClaim = tasks[index];
 
-        console.log(taskToClaim);
-        const points = taskToClaim.claimTreshold * 100;
+        const points = await getPoints(index);
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
             pointsNo: points,
             user
@@ -301,9 +404,9 @@ const HomeTab = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
-            //handleCloseBottomSheet();
+            handleCloseBottomSheet();
         }
-    }*/
+    }
 
     const toggleModal = useCallback(() => {
         setOpenModal(prev => !prev);
@@ -359,7 +462,6 @@ const HomeTab = () => {
             setDailyLoginTasks(getUserData?.data?.userData?.referralRewardDeets);
             setReferees(getUserData?.data?.userData?.referralPoints);
             setReferralCode(getUserData?.data?.userData?.referralCode);
-            console.log(pointsToday, dailyLoginTasks)
           } else {
             navigate('/starter')
           }
@@ -377,7 +479,7 @@ const HomeTab = () => {
 
     const url = `https://twitter.com/intent/tweet?text=${encodedText}`;
 
-    /*type Reward = {
+    type Reward = {
         claimTreshold: number;
         rewardClaimed: boolean;
     };
@@ -394,7 +496,7 @@ const HomeTab = () => {
         }
       
         return rewards[index].rewardClaimed === false;
-    };*/
+    };
 
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
@@ -575,7 +677,7 @@ const HomeTab = () => {
                     </Swiper>
                 </div>
 
-                {/*<div className="w-full flex justify-between items-center pt-7 pb-5 px-5">
+                <div className="w-full flex justify-between items-center pt-7 pb-5 px-5">
                     <p className='text-white text-lg flex justify-start w-auto items-center'>Claim Daily Login Reward</p>
                     <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center flex justify-end w-auto items-center">
                         {
@@ -589,7 +691,7 @@ const HomeTab = () => {
 
                 <div className="text-center w-full">
                     {pointsToday === 1 && <CountdownTimer />}
-                </div>*/}
+                </div>
 
                 <div className="w-full flex flex-col pt-7 px-4 relative z-10">
                     <p className='text-white text-xl pb-5'>Tasks</p>
@@ -783,7 +885,6 @@ const HomeTab = () => {
                                         </div>
                                     </div>
                                 }
-                                
                                 {
                                     task.claimTreshold === 'instagram' &&
                                     <div className='flex justify-between py-2 w-full items-center'>
@@ -870,6 +971,84 @@ const HomeTab = () => {
                                         </div>
                                     </div>
                                 }
+                                {
+                                    task.claimTreshold === 'five-frens' &&
+                                    <div className='flex justify-between py-2 w-full items-center'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoSm} alt="" />
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 5 frens</p>
+                                                <span className='text-[#A6A6A6]'>+5000 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engageFiveFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    setEngageFiveFrens(true)
+                                                }}>
+                                                    Start
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engageFiveFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimFiveFrens();
+                                                }} disabled={fiveFrensDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    task.claimTreshold === 'ten-frens' &&
+                                    <div className='flex justify-between py-2 w-full items-center'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoSm} alt="" />
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 10 frens</p>
+                                                <span className='text-[#A6A6A6]'>+10000 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engageTenFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    setEngageTenFrens(true)
+                                                }}>
+                                                    Start
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engageTenFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimTenFrens();
+                                                }} disabled={tenFrensDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
                             </>
                         ))
                     }
@@ -895,15 +1074,16 @@ const HomeTab = () => {
                 </div>
             </div>
             <Footer />
-            {/*<BottomSheet isOpen={isBottomSheetOpen} onClose={handleCloseBottomSheet}>
+            <BottomSheet isOpen={isBottomSheetOpen} onClose={handleCloseBottomSheet}>
                 <h2 className="text-xl font-bold text-white text-center">Claim Daily Reward</h2>
                 <p className="text-xs font-bold text-white text-center">Click on any day to claim, if you are eligible for that day you will recieve your rewards</p>
                 
                 <div className="my-4 grid grid-cols-4">
                     {
                         dailyLoginTasks.map((task: any, idx: any) => (
+                            idx !== 7 && idx !== 8 && idx !== 9 &&
                             <div className={`flex flex-col gap-1 rounded-md bg-white/20 ${isFirstUnclaimedReward(dailyLoginTasks, idx) && pointsToday < 1 ? 'border border-white' : ''} text-white m-1 p-1 cursor-pointer`} onClick={() => {
-                                if (dailyLoginTasks[idx].rewardClaimed) {
+                                if (task.rewardClaimed) {
                                     toast(`You have claimed points for today`, {
                                         className: "",
                                         duration: 799,
@@ -947,12 +1127,22 @@ const HomeTab = () => {
                                 <div className="flex justify-center items-center w-[30%] mx-auto">
                                     <img className="w-full" src={logoBig} alt="" />
                                 </div>
-                                <p className="text-white text-sm text-center font-smeibold">{task.claimTreshold * 100}</p>
+                                <p className="text-white text-sm text-center font-smeibold">{
+                                    <>
+                                        {idx === 0 && 75}
+                                        {idx === 1 && 100}
+                                        {idx === 2 && 125}
+                                        {idx === 3 && 150}
+                                        {idx === 4 && 175}
+                                        {idx === 5 && 200}
+                                        {idx === 6 && 300}
+                                    </>    
+                                }</p>
                             </div>
                         ))
                     }
                 </div>
-            </BottomSheet>*/}
+            </BottomSheet>
         </div>
     );
 };

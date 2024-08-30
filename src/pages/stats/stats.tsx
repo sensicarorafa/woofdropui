@@ -1,24 +1,24 @@
 
-//import medal from "../../assets/img/medal.png";
+import medal from "../../assets/img/medal.png";
 import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
-//import axios from "axios";
-//import { capitalizeAllFirstLetters } from "../../utils/helpers";
-//import { useNavigate } from "react-router-dom";
-//import Cookies from "js-cookie";
+import axios from "axios";
+import { capitalizeAllFirstLetters } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Stats = () => {
 
-    //const colorCodes: string[] = ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"];
+    const colorCodes: string[] = ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"];
 
     //const [usersIndex, setUserIndex] = useState(0)
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
-    //const [leaderboardData, setLeaderboardData] = useState<any>([])
-    //const [leaderboardLoading, setLeaderboardLoading] = useState<boolean>(false)
-    //const [username, setUserName] = useState('');
-    //const [totalPoints, setTotalPoints] = useState(0);
-    //const navigate = useNavigate()
+    const [leaderboardData, setLeaderboardData] = useState<any>([])
+    const [leaderboardLoading, setLeaderboardLoading] = useState<boolean>(false)
+    const [username, setUserName] = useState('');
+    const [totalPoints, setTotalPoints] = useState(0);
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Ensure the Telegram Web Apps SDK is ready
@@ -45,7 +45,7 @@ const Stats = () => {
         }
     }, []);
 
-    /*useEffect (() => {
+    useEffect (() => {
         const fetchUserData = async () => {
             const userCookies = Cookies.get('authLoggedUserAiDogs');
             if (userCookies) {
@@ -66,15 +66,12 @@ const Stats = () => {
         const fetchLeaderboardData = async () => {
           setLeaderboardLoading(true)
           const getLeaderboardData = await axios.post(`${import.meta.env.VITE_APP_URL}/leaderboard-data`, {user})
-    
+            
           const sortedData = getLeaderboardData.data.leaderboardData.map((board: any, index: number) => {
-            if (user && user.id === board.user.id) setUserIndex(getLeaderboardData.data.userRank)
             return {
-              id: board.user.id, 
-              name: board.user.username ? board.user.username : board.user.first_name, 
+              id: board.userId, 
+              name: board.username ? board.username : board.firstName, 
               points: board.pointsNo, 
-              referrals: board.referralPoints, 
-              total: board.totalPoints,
               position: index + 1
             }
           })
@@ -83,7 +80,7 @@ const Stats = () => {
           setLeaderboardLoading(false)
         }
         if (user && user !== null && user.id) fetchLeaderboardData();
-    }, [user]);*/
+    }, [user]);
 
     return (
         <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
@@ -99,11 +96,11 @@ const Stats = () => {
                                     </p>
                                 )}
                             </div>
-                            <div className="min-h-[50vh] flex flex-col gap-6 items-center m-auto">
+                            {/*<div className="min-h-[50vh] flex flex-col gap-6 items-center m-auto">
                                 <p className="text-xl capitalize font-semibold text-white">{('Still in development.....').toUpperCase()}</p>
                                 <p className="text-lg capitalize text-white">{('Coming soon').toUpperCase()}</p>
-                            </div>
-                            {/*<>
+                            </div>*/}
+                            <>
                                 <div className=" flex justify-between items-center px-5 py-3 w-full bg-[#FFFFFF] bg-opacity-10 rounded-lg gap-5 mt-2">
                                     <div className="flex gap-3 py-4 items-center">
                                         {!leaderboardLoading ? (
@@ -129,7 +126,8 @@ const Stats = () => {
                                     <div className="flex-col gap-1">
                                         {leaderboardData.length > 0 ? (
                                             <>
-                                                <p className="text-[#FFFFFF] font-bold font-OpenSans text-xl">{"#" + (usersIndex)}</p>
+                                                <img className="w-[10vw]" src={medal} alt="" />
+                                                {/*<p className="text-[#FFFFFF] font-bold font-OpenSans text-xl">{medal}</p>*/}
                                             </>
                                         ) : (
                                             <span className="text-[#FFFFFF]">...</span>
@@ -170,7 +168,7 @@ const Stats = () => {
                                             : null}
                                     </div>
                                 </div>
-                            </>*/}
+                            </>
                         </div>
                     </div>
                 </div>
