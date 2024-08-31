@@ -6,6 +6,8 @@ import handShakeActive from "../assets/img/handshake-active.png";
 import handShake from "../assets/img/handshake.png";
 import podium from "../assets/img/podium.png";
 import podiumActive from "../assets/img/podium-active.png";
+import logoBig from "../assets/img/logobig.png";
+import logoSm from "../assets/img/logosm.svg";
 
 const Footer = () => {
     return (
@@ -61,7 +63,23 @@ const Footer = () => {
                     </>
                 )}
             </NavLink>
-          
+            <NavLink
+                to="/contest"
+                className={({ isActive }) =>
+                    isActive
+                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"
+                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#A6A6A6]"
+                }
+            >
+                {({ isActive }) => (
+                    <>
+                        <div className="w-[3vh]">
+                            <img className="w-full" src={isActive ? logoBig : logoSm} alt="" />
+                        </div>
+                        <p className="text-[2.2vh]">Contest</p>
+                    </>
+                )}
+            </NavLink>
         </footer>
     );
 };

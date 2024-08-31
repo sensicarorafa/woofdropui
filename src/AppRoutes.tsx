@@ -10,6 +10,7 @@ import History from "./pages/history/history";
 import Character from "./pages/character/character";
 import Congrats from "./pages/early-adopters/congrats";
 import Starter from "./pages/starter/starter";
+import Contest from "./pages/contest/contest";
 
 export default function AppRoutes() {
     return (
@@ -30,6 +31,7 @@ export default function AppRoutes() {
                 <Route path="/power-up" element={<PowerUp />} />
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/history" element={<History />} />
+                <Route path="/Contest" element={<Contest />} />
             </Routes>
         </Router>
     );
