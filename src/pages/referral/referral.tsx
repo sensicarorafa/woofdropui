@@ -1,22 +1,23 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 import { toast } from "react-hot-toast";
-//import axios from "axios";
-//import { capitalizeAllFirstLetters } from "../../utils/helpers";
+import axios from "axios";
+import { capitalizeAllFirstLetters } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import medal from "../../assets/img/medal.png";
 
 
 
 
 const Referral = () => {
-    //const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
+    const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
 
     const [open, setOpen] = useState<Boolean>()
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
-    //const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
+    const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -47,12 +48,18 @@ const Referral = () => {
         const fetchUserReferrals = async () => {
             const userCookies = Cookies.get('authLoggedUserAiDogs');
             if (userCookies) {
-                /*const getUserData =  JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-                const getUserReferrals = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-referrals`, {
-                    referralCode: getUserData?.data?.userData?.referralCode
-                })
-                console.log(getUserReferrals?.data)*/
-                //setReferralLeaderboard(getUserReferrals?.data?.userData)
+                //const getUserData =  JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+                const getReferralsLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/referral-leaderboard-data`, {user})
+                console.log(getReferralsLeaderboard?.data)
+                const sortedData = getReferralsLeaderboard.data.leaderboardData.map((board: any, index: number) => {
+                    return {
+                      id: board.userId, 
+                      name: board.username ? board.username : board.firstName, 
+                      points: board.referralPoints, 
+                      position: index + 1
+                    }
+                  })
+                setReferralLeaderboard(sortedData);
             } else {
               navigate('/starter')
             }
@@ -162,6 +169,40 @@ const Referral = () => {
                         </div>
                     </div> : <div className="text-[#A6A6A6] flex justify-center items-center"> Your referrals will appear here</div>
                     }*/}
+                    <h1 className="text-[#FFFFFF] w-full text-left font-bold text-xl my-7 text-center">{referralLeaderboard.length > 0 && "Referral Leaderboard"}</h1>
+                    <div className="flex flex-col items-center justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
+                        <div className="h-full w-full">
+                            {referralLeaderboard.length > 0
+                                ? referralLeaderboard.slice(0, 100).map((item: any, idx: any) => (
+                                    <div key={idx.toString()} className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">
+                                        <div className="flex">
+                                            <div className={`flex justify-center h-[45px] w-[45px]  items-center px-3 py-3 rounded-full`} style={{background:`${colorCodes[Math.floor(Math.random() * 10)]}`}}>
+                                                <p className="text-[#FFFFFF] text-lg font-bold]">
+                                                    {item?.name.charAt(0).toUpperCase() + item?.name.charAt(1).toUpperCase()}
+                                                </p>
+                                            </div>
+                                            <div className="pl-3">
+                                                <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{capitalizeAllFirstLetters(item?.name)}</p>
+                                                <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{`${item.points}`?.toLocaleString() } <span className="text-[#A6A6A6] text-sm">$AIDOGS</span></p>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div className=" flex justify-end items-center">
+                                            {idx === 0 || idx === 1 || idx === 2 ? 
+                                                <>
+                                                    <div className=" flex w-full justify-end small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
+                                                        <img className="" src={medal} alt="" />
+                                                    </div>
+                                                </> :   <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>}
+                                            
+                                        </div>
+                                    </div>
+                                ))
+                                : null}
+                        </div>
+                    </div>
                 </div>
           
             
