@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 //import { toast } from "react-hot-toast";
@@ -17,6 +17,7 @@ const Contest = () => {
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
     const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
     const [totalPoints, setTotalPoints] = useState(0);
+    const [open, setOpenModal] = useState<boolean>(false);
     const [username, setUserName] = useState('');
     const navigate = useNavigate()
 
@@ -50,7 +51,7 @@ const Contest = () => {
             if (userCookies) {
                 const getUserData =  JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
                 console.log(getUserData?.data)
-                setTotalPoints(getUserData?.data?.userData?.referralPoints);
+                setTotalPoints(getUserData?.data?.userData?.referralContest);
                 setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name ?  getUserData?.data?.userData?.user?.first_name : ''} ${getUserData?.data?.userData?.user?.last_name ? getUserData?.data?.userData?.user?.last_name : ''}`);
 
                 const getReferralsLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/referral-leaderboard-data`, {user})
@@ -72,6 +73,14 @@ const Contest = () => {
           fetchUserReferrals();
         }
     }, [user])
+
+    const toggleModal = useCallback(() => {
+        setOpenModal(prev => !prev);
+    }, []);
+
+    const closeModal = useCallback(() => {
+        setOpenModal(prev => !prev);
+    }, []);
 
     return (
         <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
@@ -111,7 +120,15 @@ const Contest = () => {
                             </>
                         </div>
                     </div>
-                    <h1 className="text-[#FFFFFF] w-full text-left font-bold text-xl my-7 text-center">{referralLeaderboard.length > 0 && "Referral Leaderboard"}</h1>
+                    <div className="flex w-auto mx-auto justify-center items-center gap-2">
+                        <h1 className="text-[#FFFFFF] w-auto text-left font-bold text-xl mt-4 mb-2 text-center">{referralLeaderboard.length > 0 && "Referral Leaderboard"}</h1>
+                        <div className="cursor-pointer text-[#000] w-6 h-6 rounded-full bg-[#FFF] flex justify-center items-center font-bold" onClick={toggleModal}>?</div>
+                    </div>
+
+                    <div className="flex w-auto mx-auto justify-center items-center gap-2 mb-3">
+                        <p className="text-xs text-white text-center">Leaderboard is updated once every 6 hours</p>
+                    </div>
+                    
                     <div className="flex flex-col items-center justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
                         <div className="h-full w-full">
                             {referralLeaderboard.length > 0
@@ -168,6 +185,73 @@ const Contest = () => {
                 </div>
             </div>
             <Footer />
+            {open && 
+           <div className='absolute m-auto bg-[#000000] bg-opacity-95 flex items-center h-[100%] w-full top-0  z-[100]'  onClick={closeModal}>
+                <div className='flex relative m-auto flex-col justify-center bg-[#80808059] h-auto w-[90%] rounded-lg gap-4'>
+                    <div className='flex justify-end rounded-full px-2 py-1'>
+                        <p className='text-white text-sm bg-[#9ca3af54] z-[200] px-2 py-1 rounded-full'>X</p>
+                    </div>
+                    <div className='flex items-center w-full'>
+                        <p className='text-white text-center w-full'>
+                            How It Works
+                        </p>
+                    </div>
+                    <div className='flex items-center w-full px-3'>
+                        <p className='text-white w-full'>
+                            Invite your frens, climb the rank and earn $10000 USDT Prize Pool
+                        </p>
+                    </div>
+                    <div className='flex items-center w-full px-3'>
+                        <p className='text-white w-full'>
+                            The top inviters by September 10th(5PM UTC) will split the prize pool as follows
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col gap-3 w-full px-2 mb-5">
+                        <div className="flex gap-2 w-full">
+                            <div className="w-auto">
+                                <img className="w-[10vw]" src={medal} alt="" />
+                            </div>
+                            <div className="w-auto">
+                                <p className="text-white font-semibold">1 winner: $1000 USDT</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                            <div className="w-auto">
+                                <img className="w-[10vw]" src={medal} alt="" />
+                            </div>
+                            <div className="w-auto">
+                                <p className="text-white font-semibold">10 winners: $500 USDT</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                            <div className="w-auto">
+                                <img className="w-[10vw]" src={medal} alt="" />
+                            </div>
+                            <div className="w-auto">
+                                <p className="text-white font-semibold">20 winners: $125 USDT</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                            <div className="w-auto">
+                                <img className="w-[10vw]" src={medal} alt="" />
+                            </div>
+                            <div className="w-auto">
+                                <p className="text-white font-semibold">20 winners: $50 USDT</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                            <div className="w-auto">
+                                <img className="w-[10vw]" src={medal} alt="" />
+                            </div>
+                            <div className="w-auto">
+                                <p className="text-white font-semibold">50 winners: $10 USDT</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>}
         </section>
     );
 };
