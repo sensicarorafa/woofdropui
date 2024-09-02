@@ -59,7 +59,7 @@ const Contest = () => {
                 const sortedData = getReferralsLeaderboard.data.leaderboardData.map((board: any, index: number) => {
                     return {
                       id: board.userId, 
-                      name: board.username ? board.username : board.firstName, 
+                      name: board.firstName.slice(0, -2), 
                       points: board.referralPoints, 
                       position: index + 1
                     }
