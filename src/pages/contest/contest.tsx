@@ -106,7 +106,7 @@ const Contest = () => {
                                             {capitalizeAllFirstLetters(username)}
                                         </p>
                                         <div className="flex gap-2 items-center mt-[-2px]">
-                                            <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{totalPoints.toLocaleString()} <span className="text-[#A6A6A6] text-sm">FRENS</span> </p>
+                                            <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{parseInt(totalPoints.toLocaleString())} <span className="text-[#A6A6A6] text-sm">FRENS</span> </p>
                                         </div>
                                     </div>
                                 </>
@@ -142,7 +142,7 @@ const Contest = () => {
                                             </div>
                                             <div className="pl-3">
                                                 <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{capitalizeAllFirstLetters(item?.name)}</p>
-                                                <p className="text-[#A6A6A6] text-nowrap text-left font-Rockwell">{`${item.points}`?.toLocaleString() } <span className="text-[#A6A6A6] text-sm">FRENS</span></p>
+                                                <p className="text-[#A6A6A6] text-nowrap text-left font-Rockwell">{`${parseInt(item.points)}`?.toLocaleString() } <span className="text-[#A6A6A6] text-sm">FRENS</span></p>
                                                 {
                                                     idx === 0 &&
                                                     <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $1000</p>
