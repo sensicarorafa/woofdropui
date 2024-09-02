@@ -29,17 +29,23 @@ const HomeTab = () => {
     const [engageTwoFrens, setEngageTwoFrens] = useState(false);
     const [engageFiveFrens, setEngageFiveFrens] = useState(false);
     const [engageTenFrens, setEngageTenFrens] = useState(false);
+    const [engageTwentyFrens, setEngageTwentyFrens] = useState(false);
+    const [engageThirtyFrens, setEngageThirtyFrens] = useState(false);
     const [engageRepost, setEngageRepost] = useState(false);
     const [engageTelegram, setEngageTelegram] = useState(false);
     const [engageFollow, setEngageFollow] = useState(false);
     const [engageYoutube, setEngageYoutube] = useState(false);
     const [engageInstagram, setEngageInstagram] = useState(false);
     const [engageYtVidOne, setEngageYtVidOne] = useState(false);
+    const [engageRtTagThreeFrens, setEngageRtTagThreeFrens] = useState(false);
     const [tgDisabled, setTgDisabled] = useState(false);
     const [repostDisabled, setRepostDisabled] = useState(false);
     const [twoFrensDisabled, setTwoFrensDisabled] = useState(false);
     const [fiveFrensDisabled, setFiveFrensDisabled] = useState(false);
     const [tenFrensDisabled, setTenFrensDisabled] = useState(false);
+    const [twentyFrensDisabled, setTwentyFrensDisabled] = useState(false);
+    const [thirtyFrensDisabled, setThirtyFrensDisabled] = useState(false);
+    const [rtTagThreeFrensDisabled, setRtTagThreeFrensDisabled] = useState(false);
     const [followDisabled, setFollowDisabled] = useState(false);
     const [youtubeDisabled, setYoutubeDisabled] = useState(false);
     const [instagramDisabled, setInstagramDisabled] = useState(false);
@@ -367,6 +373,96 @@ const HomeTab = () => {
         }
     };
 
+    const claimTwentyFrens = async () => {
+        setTwentyFrensDisabled(true)
+        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user});
+        const referralPoints = getUserData?.data?.userData?.referralPoints
+
+        if (referralPoints >= 20) {
+            const points = 20000;
+            const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+                pointsNo: points,
+                user
+            })
+
+            const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+                claimTreshold: 'twenty-frens',
+                user
+            })
+
+            if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+                toast("Claimed successfully", {
+                    className: "",
+                    duration: 799,
+                    style: {
+                    background: "#363636",
+                    color: "#fff",
+                    },
+                });
+                setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+                setPointsToday(updatePoints?.data?.userData?.pointsToday);
+                setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+                setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
+                setReferees(updatePoints?.data?.userData?.referralPoints);
+                setTwentyFrensDisabled(false);
+            }
+        } else {
+            toast("You need at least twenty referrals to claim", {
+                className: "",
+                duration: 799,
+                style: {
+                background: "#363636",
+                color: "#fff",
+                },
+            });
+        }
+    };
+
+    const claimThirtyFrens = async () => {
+        setThirtyFrensDisabled(true)
+        const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user});
+        const referralPoints = getUserData?.data?.userData?.referralPoints
+
+        if (referralPoints >= 30) {
+            const points = 30000;
+            const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+                pointsNo: points,
+                user
+            })
+
+            const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+                claimTreshold: 'thirty-frens',
+                user
+            })
+
+            if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+                toast("Claimed successfully", {
+                    className: "",
+                    duration: 799,
+                    style: {
+                    background: "#363636",
+                    color: "#fff",
+                    },
+                });
+                setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+                setPointsToday(updatePoints?.data?.userData?.pointsToday);
+                setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+                setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
+                setReferees(updatePoints?.data?.userData?.referralPoints);
+                setThirtyFrensDisabled(false);
+            }
+        } else {
+            toast("You need at least thirty referrals to claim", {
+                className: "",
+                duration: 799,
+                style: {
+                background: "#363636",
+                color: "#fff",
+                },
+            });
+        }
+    };
+
     const claimYtVidOne = async () => {
         setYtVidOneDisabled(true)
         const points = 150;
@@ -398,6 +494,38 @@ const HomeTab = () => {
             setYtVidOneDisabled(false)
         }
     }
+
+    const claimRtTagThreeFrens = async () => {
+        setRtTagThreeFrensDisabled(true);
+        const points = 150;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'rt-tag-three-frens',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setRtTagThreeFrensDisabled(false);
+        }
+    };
 
     const getPoints = async (idx: number) => {
         if (idx === 0) return 75;
@@ -1123,6 +1251,125 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                     claimTenFrens();
                                                 }} disabled={tenFrensDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    task.claimTreshold === 'twenty-frens' &&
+                                    <div className='flex justify-between py-2 w-full items-center'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoSm} alt="" />
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 20 frens</p>
+                                                <span className='text-[#A6A6A6]'>+20000 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engageTwentyFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    setEngageTwentyFrens(true)
+                                                }}>
+                                                    Start
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engageTwentyFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimTwentyFrens();
+                                                }} disabled={twentyFrensDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    task.claimTreshold === 'thirty-frens' &&
+                                    <div className='flex justify-between py-2 w-full items-center'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoSm} alt="" />
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 30 frens</p>
+                                                <span className='text-[#A6A6A6]'>+30000 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engageThirtyFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    setEngageThirtyFrens(true)
+                                                }}>
+                                                    Start
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engageThirtyFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimThirtyFrens();
+                                                }} disabled={thirtyFrensDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    task.claimTreshold === 'rt-tag-three-frens' &&
+                                    <div className='flex justify-between py-2 w-full items-center'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>RT and Tag 3 frens</p>
+                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engageRtTagThreeFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={async () => {
+                                                    window.open('https://x.com/aidogscomm/status/1829832856316543280?s=19', '_blank');
+                                                    setTimeout(() => {
+                                                        setEngageRtTagThreeFrens(true)
+                                                    }, 30000)
+                                                }}>
+                                                    Start
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engageRtTagThreeFrens &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimRtTagThreeFrens();
+                                                }} disabled={rtTagThreeFrensDisabled}>
                                                     Claim
                                                 </button>
                                             }
