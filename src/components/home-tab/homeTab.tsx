@@ -719,7 +719,7 @@ const HomeTab = () => {
     const url = `https://twitter.com/intent/tweet?text=${encodedText}`;
 
     const encodedToMarketText = useMemo(() => {
-        const text = `I just claimed my free 2000 $AIDOGS just for being a Tomarket user.\n\nSignup and claim yours now: ${referralLink}`;
+        const text = `I just claimed my free 2000 $AIDOGS just for being a Tomarket user.\n\nSignup and claim yours now: ${referralLink}\n\n #AIDOGS #Tomarket`;
         return encodeURIComponent(text);
     }, [referralLink]);
 
