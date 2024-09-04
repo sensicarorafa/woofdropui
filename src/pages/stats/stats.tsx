@@ -152,7 +152,7 @@ const Stats = () => {
                                                         </div>
                                                         <div className="pl-3">
                                                             <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{capitalizeAllFirstLetters(item?.name)}</p>
-                                                            <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{`${item.points}`?.toLocaleString() } <span className="text-[#A6A6A6] text-sm">$AIDOGS</span></p>
+                                                            <p className="text-[#A6A6A6] w-[80px] text-nowrap text-left font-Rockwell">{`${parseInt(item.points)}`?.toLocaleString() } <span className="text-[#A6A6A6] text-sm">$AIDOGS</span></p>
                                                         </div>
                                                     </div>
 
