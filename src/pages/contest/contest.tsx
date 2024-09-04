@@ -82,6 +82,10 @@ const Contest = () => {
         setOpenModal(prev => !prev);
     }, []);
 
+    function sortArrayByPointsDescending(arr: any) {
+        return arr.sort((a: any, b: any) => b.points - a.points);
+    }
+
     return (
         <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
             <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
@@ -132,7 +136,7 @@ const Contest = () => {
                     <div className="flex flex-col items-center justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
                         <div className="h-full w-full">
                             {referralLeaderboard.length > 0
-                                ? referralLeaderboard.slice(0, 100).map((item: any, idx: any) => (
+                                ? sortArrayByPointsDescending(referralLeaderboard).slice(0, 100).map((item: any, idx: any) => (
                                     <div key={idx.toString()} className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">
                                         <div className="flex">
                                             <div className={`flex justify-center h-[45px] w-[45px]  items-center px-3 py-3 rounded-full`} style={{background:`${colorCodes[Math.floor(Math.random() * 10)]}`}}>

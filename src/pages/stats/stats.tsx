@@ -70,7 +70,7 @@ const Stats = () => {
           const sortedData = getLeaderboardData.data.leaderboardData.map((board: any, index: number) => {
             return {
               id: board.userId, 
-              name: board.username ? board.username : board.firstName, 
+              name: board.firstName, 
               points: board.pointsNo, 
               position: index + 1
             }
@@ -81,6 +81,10 @@ const Stats = () => {
         }
         if (user && user !== null && user.id) fetchLeaderboardData();
     }, [user]);
+
+    function sortArrayByPointsDescending(arr: any) {
+        return arr.sort((a: any, b: any) => b.points - a.points);
+    }
 
     return (
         <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
@@ -138,7 +142,7 @@ const Stats = () => {
                                 <div className="flex flex-col items-center justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
                                     <div className="h-full w-full">
                                         {leaderboardData.length > 0
-                                            ? leaderboardData.slice(0, 100).map((item: any, idx: any) => (
+                                            ? sortArrayByPointsDescending(leaderboardData).slice(0, 100).map((item: any, idx: any) => (
                                                 <div key={idx.toString()} className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">
                                                     <div className="flex">
                                                         <div className={`flex justify-center h-[45px] w-[45px]  items-center px-3 py-3 rounded-full`} style={{background:`${colorCodes[Math.floor(Math.random() * 10)]}`}}>
