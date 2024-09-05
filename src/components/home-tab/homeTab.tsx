@@ -913,37 +913,6 @@ const HomeTab = () => {
         }
     }
 
-    const claimBirdsContainer = async () => {
-        const points = 10;
-        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
-            pointsNo: points,
-            user
-        })
-
-        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
-            claimTreshold: 'birds-container',
-            user
-        })
-
-        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
-            toast("Claimed successfully", {
-                className: "",
-                duration: 799,
-                style: {
-                  background: "#363636",
-                  color: "#fff",
-                },
-            });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
-            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
-            setPointsToday(updatePoints?.data?.userData?.pointsToday);
-            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
-            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
-            setReferees(updatePoints?.data?.userData?.referralPoints);
-            closeModalBirds();
-        }
-    }
-
     const claimJoinTonAi = async () => {
         setJoinTonAiDisabled(true)
         const points = 2000;
@@ -1173,145 +1142,6 @@ const HomeTab = () => {
                         <p className='text-white'>Close</p>
                     </div>
                 </div>
-                {
-                    rearrangeRewards(socialTasks).map((task: any) => (
-                        <>
-                        {!task.rewardClaimed &&
-                        <>
-                        {
-                            task.claimTreshold === 'follow-birds-x' &&
-                            <div className='flex justify-between py-2 w-full items-center'>
-                                <div className='flex items-center'>
-                                    <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                        <img className="w-full" src={logoSm} alt="" />
-                                    </div>
-                                    <div className='flex flex-col pl-5'>
-                                        <p className='text-white text-bold taskTitle' onClick={() => {}}>Follow Birds on X</p>
-                                        <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
-                                    </div>
-                                </div>
-                                <div className="">
-                                    {
-                                        !task.rewardClaimed && !engageFollowBirds &&
-                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                            window.open('https://x.com/TheBirdsDogs', '_blank');
-                                            setTimeout(() => {
-                                                setEngageFollowBirds(true)
-                                            }, 30000)
-                                        }}>
-                                            Follow
-                                        </button>
-                                    }
-                                    {
-                                        !task.rewardClaimed && engageFollowBirds &&
-                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                            claimFollowBirds();
-                                        }} disabled={followBirdsDisabled}>
-                                            Claim
-                                        </button>
-                                    }
-                                    {
-                                        task.rewardClaimed &&
-                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
-                                            Done
-                                        </button>
-                                    }
-                                </div>
-                            </div>
-                        }
-                        {
-                            task.claimTreshold === 'sub-birds-yt' &&
-                            <div className='flex justify-between py-2 w-full items-center'>
-                                <div className='flex items-center'>
-                                    <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                        <img className="w-full" src={logoSm} alt="" />
-                                    </div>
-                                    <div className='flex flex-col pl-5'>
-                                        <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Birds Telegram</p>
-                                        <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
-                                    </div>
-                                </div>
-                                
-                                <div className="">
-                                    {
-                                        !task.rewardClaimed && !engageYoutubeBirds &&
-                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://t.me/+PLeoc54Kw5oxN2M9', '_blank');
-                                            setTimeout(() => {
-                                                setEngageYoutubeBirds(true)
-                                            }, 30000)
-                                        }}>
-                                            Start
-                                        </button>
-                                    }
-                                    {
-                                        !task.rewardClaimed && engageYoutubeBirds &&
-                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                            claimYoutubeBirds();
-                                        }} disabled={youtubeBirdsDisabled}>
-                                            Claim
-                                        </button>
-                                    }
-                                    {
-                                        task.rewardClaimed &&
-                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
-                                            Done
-                                        </button>
-                                    }
-                                </div>
-                            </div>
-                        }
-                        {
-                            task.claimTreshold === 'play-birds' &&
-                            <div className='flex justify-between py-2 w-full items-center'>
-                                <div className='flex items-center'>
-                                    <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                        <img className="w-full" src={logoSm} alt="" />
-                                    </div>
-                                    <div className='flex flex-col pl-5'>
-                                        <p className='text-white text-bold taskTitle' onClick={() => {}}>Play BIRDS</p>
-                                        <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
-                                    </div>
-                                </div>
-                                
-                                <div className="">
-                                    {
-                                        !task.rewardClaimed && !engagePlayBirds &&
-                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://t.me/birdx2_bot/birdx?startapp=1920150983', '_blank');
-                                            setTimeout(() => {
-                                                setEngagePlayBirds(true)
-                                            }, 30000)
-                                        }}>
-                                            Start
-                                        </button>
-                                    }
-                                    {
-                                        !task.rewardClaimed && engagePlayBirds &&
-                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                            claimPlayBirds();
-                                        }} disabled={playBirdsDisabled}>
-                                            Claim
-                                        </button>
-                                    }
-                                    {
-                                        task.rewardClaimed &&
-                                        <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
-                                            Done
-                                        </button>
-                                    }
-                                </div>
-                            </div>
-                        }
-                        </>}
-                        </>
-                    ))
-                }
-                
-                {
-                    <div className='my-3'>
-                    <p className="text-white font-bold">Please only click this button if you have completed all the tasks above</p>
-                    <div className="flex justify-center items-center text-[#000] w-auto text-center p-3 rounded-md bg-[#FFF] cursor-pointer" onClick={claimBirdsContainer}>Complete</div>
-                    </div>
-                }
             </div>}
             <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
                 <div className="flex flex-col items-center pt-5 px-10 w-full flex-1">
@@ -2158,24 +1988,36 @@ const HomeTab = () => {
                                         </div>
                                     </div>
                                 }
-                                {/*
-                                    task.claimTreshold === 'birds-container' &&
+                                {
+                                    task.claimTreshold === 'follow-birds-x' &&
                                     <div className='flex justify-between py-2 w-full items-center'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
-                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Birds Tasks</p>
-                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS Each</span>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Follow Birds on X</p>
+                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
                                             </div>
                                         </div>
-                                        
                                         <div className="">
                                             {
-                                                !task.rewardClaimed &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {toggleModalBirds()}}>
-                                                    Start
+                                                !task.rewardClaimed && !engageFollowBirds &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    window.open('https://x.com/TheBirdsDogs', '_blank');
+                                                    setTimeout(() => {
+                                                        setEngageFollowBirds(true)
+                                                    }, 30000)
+                                                }}>
+                                                    Follow
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engageFollowBirds &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimFollowBirds();
+                                                }} disabled={followBirdsDisabled}>
+                                                    Claim
                                                 </button>
                                             }
                                             {
@@ -2186,8 +2028,89 @@ const HomeTab = () => {
                                             }
                                         </div>
                                     </div>
-                                */}
-                                
+                                }
+                                {
+                                    task.claimTreshold === 'sub-birds-yt' &&
+                                    <div className='flex justify-between py-2 w-full items-center'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoSm} alt="" />
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Birds Telegram</p>
+                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engageYoutubeBirds &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://t.me/+PLeoc54Kw5oxN2M9', '_blank');
+                                                    setTimeout(() => {
+                                                        setEngageYoutubeBirds(true)
+                                                    }, 30000)
+                                                }}>
+                                                    Start
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engageYoutubeBirds &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimYoutubeBirds();
+                                                }} disabled={youtubeBirdsDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    task.claimTreshold === 'play-birds' &&
+                                    <div className='flex justify-between py-2 w-full items-center'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoSm} alt="" />
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Play BIRDS</p>
+                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engagePlayBirds &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://t.me/birdx2_bot/birdx?startapp=1920150983', '_blank');
+                                                    setTimeout(() => {
+                                                        setEngagePlayBirds(true)
+                                                    }, 30000)
+                                                }}>
+                                                    Start
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engagePlayBirds &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimPlayBirds();
+                                                }} disabled={playBirdsDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
                                 {
                                     task.claimTreshold === 'ton-ai' &&
                                     <div className='flex justify-between py-2 w-full items-center'>
