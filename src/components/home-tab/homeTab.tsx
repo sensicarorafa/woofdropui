@@ -914,7 +914,7 @@ const HomeTab = () => {
     }
 
     const claimBirdsContainer = async () => {
-        const points = 0;
+        const points = 1;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
             pointsNo: points,
             user
@@ -2234,7 +2234,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
+                                            <img className="w-full" src={logoSm} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Play HoldCoin</p>
@@ -2275,7 +2275,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
+                                            <img className="w-full" src={logoSm} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Join HoldCoin Channel</p>
