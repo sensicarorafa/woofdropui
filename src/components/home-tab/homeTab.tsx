@@ -2128,7 +2128,7 @@ const HomeTab = () => {
                                                 <img className="w-full" src={logoSm} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
-                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Join TONAI</p>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Join TonAi</p>
                                                 <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
                                             </div>
                                         </div>
