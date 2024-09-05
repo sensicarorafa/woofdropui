@@ -2034,7 +2034,7 @@ const HomeTab = () => {
                                     </div>
                                 }
                                 {
-                                    task.claimTreshold === 'rt-tag-three-frens-three' &&
+                                    task.claimTreshold === 'rt-tag-three-frens-four' &&
                                     <div className='flex justify-between py-2 w-full items-center'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
