@@ -984,9 +984,9 @@ const HomeTab = () => {
         setOpenModal(prev => !prev);
     }, []);
 
-    const toggleModalBirds = useCallback(() => {
+    /*const toggleModalBirds = useCallback(() => {
         setOpenModalBirds(prev => !prev);
-    }, []);
+    }, []);*/
 
     const closeModalBirds = useCallback(() => {
         setOpenModalBirds(prev => !prev);
@@ -2158,7 +2158,7 @@ const HomeTab = () => {
                                         </div>
                                     </div>
                                 }
-                                {
+                                {/*
                                     task.claimTreshold === 'birds-container' &&
                                     <div className='flex justify-between py-2 w-full items-center'>
                                         <div className='flex items-center'>
@@ -2186,7 +2186,7 @@ const HomeTab = () => {
                                             }
                                         </div>
                                     </div>
-                                }
+                                */}
                                 
                                 {
                                     task.claimTreshold === 'ton-ai' &&
