@@ -41,12 +41,14 @@ const HomeTab = () => {
     const [engageInstagram, setEngageInstagram] = useState(false);
     const [engageYtVidOne, setEngageYtVidOne] = useState(false);
     const [engageRtTagThreeFrens, setEngageRtTagThreeFrens] = useState(false);
-    const [engageRtTagThreeFrensTwo, setEngageRtTagThreeFrensTwo] = useState(false);
+    const [engageRtTagThreeFrensThree, setEngageRtTagThreeFrensThree] = useState(false);
     const [engageInviteTomarket, setEngageInviteToMarket] = useState(false);
     const [engageToMarketGift, setEngageToMarketGift] = useState(false);
     const [engageJoinGoats, setEngageJoinGoats] = useState(false);
     const [engageJoinTonAi, setEngageJoinTonAi] = useState(false);
     const [engageYtVidTwo, setEngageYtVidTwo] = useState(false);
+    const [engageHoldCoin, setEngageHoldCoin] = useState(false);
+    const [engageHoldCoinChannel, setEngageHoldCoinChannel] = useState(false);
     const [tgDisabled, setTgDisabled] = useState(false);
     const [repostDisabled, setRepostDisabled] = useState(false);
     const [twoFrensDisabled, setTwoFrensDisabled] = useState(false);
@@ -68,6 +70,8 @@ const HomeTab = () => {
     const [ytVidTwoDisabled, setYtVidTwoDisabled] = useState(false);
     const [joinGoatsDisabled, setJoinGoatsDisabled] = useState(false);
     const [joinTonAiDisabled, setJoinTonAiDisabled] = useState(false);
+    const [holdCoinDisabled, setHoldCoinDisabled] = useState(false);
+    const [holdCoinChannelDisabled, setHoldCoinChannelDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
     const [referralCode, setReferralCode] = useState('');
@@ -484,7 +488,7 @@ const HomeTab = () => {
 
     const claimYtVidOne = async () => {
         setYtVidOneDisabled(true)
-        const points = 150;
+        const points = 1000;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
             pointsNo: points,
             user
@@ -610,7 +614,7 @@ const HomeTab = () => {
         }
     };
 
-    const claimRtTagThreeFrensTwo = async () => {
+    const claimRtTagThreeFrensThree = async () => {
         setRtTagThreeFrensTwoDisabled(true);
         const points = 150;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
@@ -674,9 +678,73 @@ const HomeTab = () => {
         }
     };
 
+    const claimHoldCoin = async () => {
+        setHoldCoinDisabled(true)
+        const points = 2000;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'hold-coin-bot',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setHoldCoinDisabled(false);
+        }
+    };
+
+    const claimHoldCoinChannel = async () => {
+        setHoldCoinChannelDisabled(true)
+        const points = 2000;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'hold-coin-channel',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setHoldCoinChannelDisabled(false);
+        }
+    };
+
     const claimYtVidTwo = async () => {
         setYtVidTwoDisabled(true)
-        const points = 150;
+        const points = 1000;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
             pointsNo: points,
             user
@@ -916,9 +984,9 @@ const HomeTab = () => {
         setOpenModal(prev => !prev);
     }, []);
 
-    /*const toggleModalBirds = useCallback(() => {
+    const toggleModalBirds = useCallback(() => {
         setOpenModalBirds(prev => !prev);
-    }, []);*/
+    }, []);
 
     const closeModalBirds = useCallback(() => {
         setOpenModalBirds(prev => !prev);
@@ -1654,7 +1722,7 @@ const HomeTab = () => {
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Watch YouTube Video</p>
-                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                                                <span className='text-[#A6A6A6]'>+1000 $AIDOGS</span>
                                             </div>
                                         </div>
                                         
@@ -1966,7 +2034,7 @@ const HomeTab = () => {
                                     </div>
                                 }
                                 {
-                                    task.claimTreshold === 'rt-tag-three-frens-two' &&
+                                    task.claimTreshold === 'rt-tag-three-frens-three' &&
                                     <div className='flex justify-between py-2 w-full items-center'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
@@ -1979,20 +2047,20 @@ const HomeTab = () => {
                                         </div>
                                         <div className="">
                                             {
-                                                !task.rewardClaimed && !engageRtTagThreeFrensTwo &&
+                                                !task.rewardClaimed && !engageRtTagThreeFrensThree &&
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={async () => {
-                                                    window.open('https://x.com/aidogscomm/status/1830702378989035961?s=19', '_blank');
+                                                    window.open('https://x.com/aidogscomm/status/1831369827283509286?s=19', '_blank');
                                                     setTimeout(() => {
-                                                        setEngageRtTagThreeFrensTwo(true)
+                                                        setEngageRtTagThreeFrensThree(true)
                                                     }, 30000)
                                                 }}>
                                                     Start
                                                 </button>
                                             }
                                             {
-                                                !task.rewardClaimed && engageRtTagThreeFrensTwo &&
+                                                !task.rewardClaimed && engageRtTagThreeFrensThree &&
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    claimRtTagThreeFrensTwo();
+                                                    claimRtTagThreeFrensThree();
                                                 }} disabled={rtTagThreeFrensTwoDisabled}>
                                                     Claim
                                                 </button>
@@ -2058,7 +2126,7 @@ const HomeTab = () => {
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Watch YouTube Video</p>
-                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                                                <span className='text-[#A6A6A6]'>+1000 $AIDOGS</span>
                                             </div>
                                         </div>
                                         
@@ -2090,7 +2158,7 @@ const HomeTab = () => {
                                         </div>
                                     </div>
                                 }
-                                {/*
+                                {
                                     task.claimTreshold === 'birds-container' &&
                                     <div className='flex justify-between py-2 w-full items-center'>
                                         <div className='flex items-center'>
@@ -2118,7 +2186,7 @@ const HomeTab = () => {
                                             }
                                         </div>
                                     </div>
-                                */}
+                                }
                                 
                                 {
                                     task.claimTreshold === 'ton-ai' &&
@@ -2149,6 +2217,88 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                     claimJoinTonAi();
                                                 }} disabled={joinTonAiDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    task.claimTreshold === 'hold-coin-bot' &&
+                                    <div className='flex justify-between py-2 w-full items-center'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Play HoldCoin</p>
+                                                <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engageHoldCoin &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    window.open('https://t.me/theHoldCoinBot', '_blank');
+                                                    setTimeout(() => {
+                                                        setEngageHoldCoin(true)
+                                                    }, 30000)
+                                                }}>
+                                                    Join
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engageHoldCoin &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimHoldCoin();
+                                                }} disabled={holdCoinDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    task.claimTreshold === 'hold-coin-channel' &&
+                                    <div className='flex justify-between py-2 w-full items-center'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Join HoldCoin Channel</p>
+                                                <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engageHoldCoinChannel &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    window.open('https://t.me/+hp2cVksOOh9lN2Q1', '_blank');
+                                                    setTimeout(() => {
+                                                        setEngageHoldCoinChannel(true)
+                                                    }, 30000)
+                                                }}>
+                                                    Join
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engageHoldCoinChannel &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimHoldCoinChannel();
+                                                }} disabled={holdCoinChannelDisabled}>
                                                     Claim
                                                 </button>
                                             }
