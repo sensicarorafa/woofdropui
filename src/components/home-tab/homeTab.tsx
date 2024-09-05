@@ -914,7 +914,7 @@ const HomeTab = () => {
     }
 
     const claimBirdsContainer = async () => {
-        const points = 1;
+        const points = 10;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
             pointsNo: points,
             user
