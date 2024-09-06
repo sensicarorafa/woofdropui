@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import logoBig from "../../assets/img/logobig.png";
-import logoSm from "../../assets/img/logosm.svg";
+//import logoSm from "../../assets/img/logosm.svg";
 
 import Footer from "../footer";
 import { useEffect, useState } from "react";
