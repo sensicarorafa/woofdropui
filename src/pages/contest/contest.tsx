@@ -5,7 +5,6 @@ import Footer from "../../components/footer";
 import axios from "axios";
 import { capitalizeAllFirstLetters } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import medal from "../../assets/img/medal.png";
 import BottomSheet from "../../components/BottomSheet";
 
@@ -48,28 +47,24 @@ const Contest = () => {
 
     useEffect (() => {
         const fetchUserReferrals = async () => {
-            const userCookies = Cookies.get('authLoggedUserAiDogs');
-            if (userCookies) {
-                const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-                console.log(getUserData?.data)
-                setTotalPoints(getUserData?.data?.userData?.referralContest);
-                setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name ?  getUserData?.data?.userData?.user?.first_name : ''} ${getUserData?.data?.userData?.user?.last_name ? getUserData?.data?.userData?.user?.last_name : ''}`);
+            const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+            console.log(getUserData?.data)
+            setTotalPoints(getUserData?.data?.userData?.referralContest);
+            setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name ?  getUserData?.data?.userData?.user?.first_name : ''} ${getUserData?.data?.userData?.user?.last_name ? getUserData?.data?.userData?.user?.last_name : ''}`);
 
-                const getReferralsLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/referral-leaderboard-data`, {user})
-                console.log(getReferralsLeaderboard?.data)
-                const sortedData = getReferralsLeaderboard.data.leaderboardData.map((board: any, index: number) => {
-                    return {
-                      id: board.userId, 
-                      name: board.firstName.length > 10 ? board.firstName.slice(0, -2) : board.firstName, 
-                      points: board.referralPoints, 
-                      position: index + 1
-                    }
-                  })
-                setReferralLeaderboard(sortedData);
-            } else {
-              navigate('/starter')
-            }
+            const getReferralsLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/referral-leaderboard-data`, {user})
+            console.log(getReferralsLeaderboard?.data)
+            const sortedData = getReferralsLeaderboard.data.leaderboardData.map((board: any, index: number) => {
+                return {
+                    id: board.userId, 
+                    name: board.firstName.length > 10 ? board.firstName.slice(0, -2) : board.firstName, 
+                    points: board.referralPoints, 
+                    position: index + 1
+                }
+                })
+            setReferralLeaderboard(sortedData);
         }
+
         if (user) {
           fetchUserReferrals();
         }

@@ -5,7 +5,6 @@ import { toast } from "react-hot-toast";
 //import axios from "axios";
 //import { capitalizeAllFirstLetters } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import BottomSheet from "../../components/BottomSheet";
 //import medal from "../../assets/img/medal.png";
 
@@ -47,12 +46,7 @@ const Referral = () => {
 
     useEffect (() => {
         const fetchUserReferrals = async () => {
-            const userCookies = Cookies.get('authLoggedUserAiDogs');
-            if (userCookies) {
-                
-            } else {
-              navigate('/starter')
-            }
+            console.log('ade')
         }
         if (user) {
           fetchUserReferrals();

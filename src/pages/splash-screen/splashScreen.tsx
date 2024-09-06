@@ -2,7 +2,6 @@ import AiDog from "../../assets/img/doggy.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const SplashScreen = () => {
     const navigate = useNavigate();
@@ -34,21 +33,16 @@ const SplashScreen = () => {
 
     useEffect (() => {
         const fetchUserData = async () => {
-          const userCookies = Cookies.get('authLoggedUserAiDogs');
-          if (userCookies) {
-            const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-            sessionStorage.setItem('referralLink', `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`)
-            if (!getUserData?.data?.userData?.earlyAdopterBonusClaimed) {
-              setTimeout(() => {
-                  navigate(`/early-adopters`);
-              }, 5000);
-            } else {
-              setTimeout(() => {
-                  navigate(`/home`);
-              }, 5000);
-            }
+          const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+          sessionStorage.setItem('referralLink', `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`)
+          if (!getUserData?.data?.userData?.earlyAdopterBonusClaimed) {
+            setTimeout(() => {
+                navigate(`/early-adopters`);
+            }, 5000);
           } else {
-            navigate('/starter')
+            setTimeout(() => {
+                navigate(`/home`);
+            }, 5000);
           }
         }
         if (user) {

@@ -12,8 +12,6 @@ import Footer from "../footer";
 import { useEffect, useState } from "react";
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 import BottomSheet from '../BottomSheet';
 import CountdownTimer from '../CountdownTimer';
 
@@ -122,7 +120,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -154,7 +151,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -186,7 +182,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -219,7 +214,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -251,7 +245,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -508,7 +501,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -540,7 +532,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -572,7 +563,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -604,7 +594,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -636,7 +625,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -668,7 +656,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -700,7 +687,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -732,7 +718,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -764,7 +749,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -807,7 +791,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -839,7 +822,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -871,7 +853,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -903,7 +884,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -935,7 +915,6 @@ const HomeTab = () => {
                   color: "#fff",
                 },
             });
-            Cookies.set('authLoggedUserAiDogs', JSON.stringify(updatePoints));
             setTotalPoints(updatePoints?.data?.userData?.pointsNo);
             setPointsToday(updatePoints?.data?.userData?.pointsToday);
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -978,7 +957,6 @@ const HomeTab = () => {
 
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         // Ensure the Telegram Web Apps SDK is ready
@@ -1006,8 +984,6 @@ const HomeTab = () => {
 
     useEffect (() => {
         const fetchUserData = async () => {
-          const userCookies = Cookies.get('authLoggedUserAiDogs');
-          if (userCookies) {
             const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
             console.log(getUserData?.data)
             setTotalPoints(getUserData?.data?.userData?.pointsNo);
@@ -1016,10 +992,8 @@ const HomeTab = () => {
             setDailyLoginTasks(getUserData?.data?.userData?.referralRewardDeets);
             setReferees(getUserData?.data?.userData?.referralPoints);
             setReferralCode(getUserData?.data?.userData?.referralCode);
-          } else {
-            navigate('/starter')
-          }
         }
+
         if (user) {
           fetchUserData();
         }
