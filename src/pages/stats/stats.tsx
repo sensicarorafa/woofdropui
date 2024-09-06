@@ -6,6 +6,7 @@ import axios from "axios";
 import { capitalizeAllFirstLetters } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import BottomSheet from "../../components/BottomSheet";
 
 const Stats = () => {
 
@@ -49,7 +50,7 @@ const Stats = () => {
         const fetchUserData = async () => {
             const userCookies = Cookies.get('authLoggedUserAiDogs');
             if (userCookies) {
-                const getUserData =  JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+                const getUserData =  await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
                 console.log(getUserData?.data)
                 setTotalPoints(getUserData?.data?.userData?.pointsNo);
                 setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name ?  getUserData?.data?.userData?.user?.first_name : ''} ${getUserData?.data?.userData?.user?.last_name ? getUserData?.data?.userData?.user?.last_name : ''}`);
@@ -87,25 +88,16 @@ const Stats = () => {
     }
 
     return (
-        <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
+        <section className="flex flex-col h-screen w-full bg-[#210133] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
            
             <div className="flex flex-col w-full overflow-y-auto h-[100%]">
                 <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
                     <div className="fixed top-0 bottom-[10vh] w-full overflow-y-scroll mb-[10px]">
                         <div className="flex flex-col items-center justify-start px-5 pt-12 py-5 h-full relative z-40">
-                            <div className="w-full flex flex-col items-center pb-3 justify-center">
-                                {(
-                                    <p className="text-[#FFFFFF] text-bold mt-[-15px] text-3xl font-Rockwell">
-                                        Wall of Fame{" "}
-                                    </p>
-                                )}
-                            </div>
-                            {/*<div className="min-h-[50vh] flex flex-col gap-6 items-center m-auto">
-                                <p className="text-xl capitalize font-semibold text-white">{('Still in development.....').toUpperCase()}</p>
-                                <p className="text-lg capitalize text-white">{('Coming soon').toUpperCase()}</p>
-                            </div>*/}
-                            <>
-                                <div className=" flex justify-between items-center px-5 py-3 w-full bg-[#FFFFFF] bg-opacity-10 rounded-lg gap-5 mt-2">
+                            <BottomSheet isOpen={true} onClose={() => {
+                                navigate('/home')
+                            }} bgColor="#180026" title="Leaderboard">
+                                <div className=" flex justify-between items-center px-5 py-3 w-full gap-5 mt-2">
                                     <div className="flex gap-3 py-4 items-center">
                                         {!leaderboardLoading ? (
                                             <>
@@ -116,7 +108,7 @@ const Stats = () => {
                                                 </div>
                                                 <div className="flex flex-col justify-center">
                                                     <p className="text-[#FFFFFF] leading-none font-bold text-sm">
-                                                        {capitalizeAllFirstLetters(username)}
+                                                        {'You'}
                                                     </p>
                                                     <div className="flex gap-2 items-center mt-[-2px]">
                                                         <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{totalPoints.toLocaleString()} <span className="text-[#A6A6A6] text-sm">$AIDOGS</span> </p>
@@ -138,8 +130,7 @@ const Stats = () => {
                                         )}
                                     </div>
                                 </div>
-                                <h1 className="text-[#FFFFFF] w-full text-left font-bold text-xl my-7">{leaderboardData.length > 0 && "Leaderboard"}</h1>
-                                <div className="flex flex-col items-center justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
+                                <div className="flex flex-col items-center justify-start w-full gap-5 relative">
                                     <div className="h-full w-full">
                                         {leaderboardData.length > 0
                                             ? sortArrayByPointsDescending(leaderboardData).slice(0, 100).map((item: any, idx: any) => (
@@ -159,12 +150,12 @@ const Stats = () => {
 
 
                                                     <div className=" flex justify-end items-center">
-                                                        {idx === 0 || idx === 1 || idx === 2 ? 
                                                             <>
-                                                                <div className=" flex w-full justify-end small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
+                                                                <div className="flex w-full justify-end small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
                                                                     <img className="" src={medal} alt="" />
+                                                                    <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>
                                                                 </div>
-                                                            </> :   <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>}
+                                                            </>
                                                         
                                                     </div>
                                                 </div>
@@ -172,7 +163,7 @@ const Stats = () => {
                                             : null}
                                     </div>
                                 </div>
-                            </>
+                            </BottomSheet>
                         </div>
                     </div>
                 </div>

@@ -79,7 +79,7 @@ const HomeTab = () => {
 
     const [referees, setReferees] = useState(0);
     const [open, setOpenModal] = useState<boolean>(false);
-    const [openBirds, setOpenModalBirds] = useState<boolean>(false);
+    //const [openBirds, setOpenModalBirds] = useState<boolean>(false);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
 
     const handleOpenBottomSheet = () => {
@@ -957,9 +957,9 @@ const HomeTab = () => {
         setOpenModalBirds(prev => !prev);
     }, []);*/
 
-    const closeModalBirds = useCallback(() => {
+    /*const closeModalBirds = useCallback(() => {
         setOpenModalBirds(prev => !prev);
-    }, []);
+    }, []);*/
 
     function rearrangeRewards(socialRewardDeets: any) {
         return socialRewardDeets.sort((a: any, b: any) => {
@@ -1008,7 +1008,7 @@ const HomeTab = () => {
         const fetchUserData = async () => {
           const userCookies = Cookies.get('authLoggedUserAiDogs');
           if (userCookies) {
-            const getUserData = JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+            const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
             console.log(getUserData?.data)
             setTotalPoints(getUserData?.data?.userData?.pointsNo);
             setPointsToday(getUserData?.data?.userData?.pointsToday);
@@ -1062,7 +1062,7 @@ const HomeTab = () => {
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
            {open && 
-           <div className='absolute m-auto bg-[#000000] bg-opacity-95 flex items-center h-[100%] w-full top-0  z-[100]'  onClick={closeModal}>
+           <div className='absolute m-auto bg-[#210133] bg-opacity-95 flex items-center h-[100%] w-full top-0  z-[100]'  onClick={closeModal}>
                 <div className='flex relative m-auto flex-col justify-center bg-[#80808059] h-[370px] w-[90%] rounded-lg '>
                     <div className='absolute top-2 right-3 rounded-full px-2 py-1 bg-[#9ca3af54] z-[200]'>
                         <p className='text-white text-sm'>X</p>
@@ -1135,29 +1135,23 @@ const HomeTab = () => {
                     </div>
                 </div>
             </div>}
-            {openBirds && 
+            {/*openBirds && 
             <div className='absolute m-auto bg-[#000000] h-auto w-[90%] z-[100] rounded-lg p-4 overflow-y-scroll'>
                 <div className="flex w-full justify-end">
                     <div className="flex w-auto justify-end cursor-pointer" onClick={closeModalBirds}>
                         <p className='text-white'>Close</p>
                     </div>
                 </div>
-            </div>}
+            </div>*/}
             <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
-                <div className="flex flex-col items-center pt-5 px-10 w-full flex-1">
-
-                    <div className=" w-[50%] small-mobile:w-[32%] mobile:w-[36%]">
-                        <img className="w-full" src={logoBig} alt="" />
-                    </div>
-                </div>
-                <div className="flex flex-col rounded-lg bg-white/20 py-5 my-4  justify-center align-center m-auto items-center w-80">
+                <div className="flex flex-col py-5 my-4  justify-center align-center m-auto items-center w-80">
                     <p className="text-[#FFFFFF] text-4xl font-OpenSans font-bold">{totalPoints.toLocaleString()}</p>
-                    <p className="text-[#A6A6A6] text-xl font-OpenSans font-light">$AIDOGS</p>
+                    <p className="text-[#A6A6A6] text-xl font-OpenSans font-semibold">$AIDOGS</p>
                 </div>
-                <div>
+                <div className='bg-[#180026] rounded-md px-6 py-4'>
                     <Swiper
-                        slidesPerView={2}
-                        spaceBetween={25}
+                        slidesPerView={3}
+                        spaceBetween={15}
                         pagination={{
                             clickable: true,
                         }}
@@ -1165,20 +1159,59 @@ const HomeTab = () => {
                         className="mySwiper"
                     >
                         <SwiperSlide>
-                            <div className="flex h-[180px] flex-col rounded-lg justify-between items-center text-white bg-white/15 py-3">
+                            <div className="flex h-[120px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3">
                                 <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
-                                    <img className="w-full" src={logoSm} alt="" />
-
+                                    <img className="w-full" src={logoBig} alt="" />
                                 </div>
-                                <p className='text-white text-center text-sm flex justify-start w-auto items-center'>Claim Daily Login Reward</p>
-                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center flex justify-end w-auto items-center">
+                                <div className='flex flex-col justify-center align-center items-center py-4'>
+                                    <p className='text-sm'>Daily Reward</p>
+                                </div>
+                                <div className="flex flex-col rounded-lg bg-white/20 justify-center align-center m-auto items-center">
                                     {
                                         pointsToday === 1 ?
                                         <CountdownTimer /> : 
-                                        <button className="bg-white text-md font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button>
+                                        <button className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button>
                                     }
                                 </div>
-                                
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <div className='flex h-[120px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
+                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
+                                    <img className="w-full" src={logoBig} alt="" />
+                                </div>
+                                <div className='flex flex-col justify-center align-center items-center py-4'>
+                                    <p className='text-sm'>JOIN Telegram</p>
+                                </div>
+                                <div className="flex flex-col rounded-lg bg-white/20 justify-center align-center m-auto items-center">
+                                    <button className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px]" onClick={() => {openTg()}}>
+                                        Join
+                                    </button>
+                                </div>
+
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <div className='flex h-[120px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
+                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
+                                    <img className="w-full" src={logoBig} alt="" />
+
+                                </div>
+                                <div className='flex flex-col justify-center align-center items-center py-4'>
+                                    <p className='text-sm'> Follow On X</p>
+                                </div>
+                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center m-auto items-center">
+
+
+                                    <button
+                                        className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
+                                        onClick={(e) => openTwitter(e)}
+
+                                    >
+                                        Follow
+                                    </button>
+                                </div>
+
                             </div>
                         </SwiperSlide>
                         {/*<SwiperSlide>
@@ -1208,61 +1241,10 @@ const HomeTab = () => {
 
                             </div>
                         </SwiperSlide>*/}
-                        <SwiperSlide>
-                            <div className='flex h-[180px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
-                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
-                                    <img className="w-full" src={logoSm} alt="" />
-
-                                </div>
-                                <div className='flex flex-col justify-center align-center items-center py-4'>
-                                    <p className='text-sm'> JOIN OUR TG</p>
-                                    <p className='text-xs'> Stay updated</p>
-                                </div>
-                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center m-auto items-center">
-
-
-                                    <button
-                                        className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
-                                        onClick={() => {openTg()}}
-
-                                    >
-                                        Join
-                                    </button>
-
-
-                                </div>
-
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className='flex h-[180px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-3'>
-                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
-                                    <img className="w-full" src={logoSm} alt="" />
-
-                                </div>
-                                <div className='flex flex-col justify-center align-center items-center py-4'>
-                                    <p className='text-sm'> FOLLOW US ON X</p>
-                                    <p className='text-xs'> Stay updated</p>
-                                </div>
-                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center m-auto items-center">
-
-
-                                    <button
-                                        className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
-                                        onClick={(e) => openTwitter(e)}
-
-                                    >
-                                        Follow
-                                    </button>
-                                </div>
-
-                            </div>
-                        </SwiperSlide>
-
                     </Swiper>
                 </div>
 
-                <div className="w-full flex flex-col pt-7 px-4 relative z-10">
+                <div className="w-full flex flex-col pt-7 px-4 relative z-10 gap-5">
                     <p className='text-white text-xl pb-5'>Tasks</p>
 
                     {
@@ -1271,7 +1253,7 @@ const HomeTab = () => {
                             <>
                                 {
                                     task.claimTreshold === 'telegram' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
 
@@ -1336,7 +1318,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'follow' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
@@ -1377,7 +1359,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'repost' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
@@ -1418,7 +1400,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'two-frens' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
@@ -1457,7 +1439,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'instagram' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <>
@@ -1500,7 +1482,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'youtube' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <>
@@ -1543,7 +1525,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'yt-vid-one' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <>
@@ -1586,7 +1568,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'five-frens' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
@@ -1625,7 +1607,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'ten-frens' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
@@ -1664,7 +1646,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'twenty-frens' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
@@ -1703,7 +1685,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'thirty-frens' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
@@ -1742,7 +1724,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'rt-tag-three-frens' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
@@ -1783,7 +1765,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'gift-for-tomarket' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
@@ -1824,7 +1806,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'invite-url-tomarket' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
@@ -1865,7 +1847,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'rt-tag-three-frens-four' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
@@ -1906,7 +1888,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'join-goats' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
@@ -1947,7 +1929,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'yt-vid-two' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <>
@@ -1990,7 +1972,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'follow-birds-x' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
@@ -2031,7 +2013,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'sub-birds-yt' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
@@ -2072,7 +2054,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'play-birds' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
@@ -2113,7 +2095,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'ton-ai' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                                 <img className="w-full" src={logoSm} alt="" />
@@ -2154,7 +2136,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'hold-coin-bot' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                             <img className="w-full" src={logoSm} alt="" />
@@ -2195,7 +2177,7 @@ const HomeTab = () => {
                                 }
                                 {
                                     task.claimTreshold === 'hold-coin-channel' &&
-                                    <div className='flex justify-between py-2 w-full items-center'>
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
                                             <img className="w-full" src={logoSm} alt="" />

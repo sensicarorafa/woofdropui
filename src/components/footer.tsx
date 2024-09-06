@@ -11,7 +11,7 @@ import logoSm from "../assets/img/logosm.svg";
 
 const Footer = () => {
     return (
-        <footer className="flex items-center justify-between h-[10vh] px-5  w-full">
+        <footer className="flex items-center justify-between h-[10vh] px-5 z-50 w-full bg-[#210133]">
             <NavLink
                 to="/home"
                 className={({ isActive }) =>
@@ -47,6 +47,23 @@ const Footer = () => {
                 )}
             </NavLink>
             <NavLink
+                to="/contest"
+                className={({ isActive }) =>
+                    isActive
+                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"
+                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#A6A6A6]"
+                }
+            >
+                {({ isActive }) => (
+                    <>
+                        <div className="w-[3vh]">
+                            <img className="w-full" src={isActive ? logoBig : logoSm} alt="" />
+                        </div>
+                        <p className="text-[2.2vh]">Missions</p>
+                    </>
+                )}
+            </NavLink>
+            <NavLink
                 to="/invites"
                 className={({ isActive }) =>
                     isActive
@@ -60,23 +77,6 @@ const Footer = () => {
                             <img className="w-full" src={isActive ? podiumActive : podium} alt="" />
                         </div>
                         <p className="text-[2.2vh]">Frends</p>
-                    </>
-                )}
-            </NavLink>
-            <NavLink
-                to="/contest"
-                className={({ isActive }) =>
-                    isActive
-                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"
-                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#A6A6A6]"
-                }
-            >
-                {({ isActive }) => (
-                    <>
-                        <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? logoBig : logoSm} alt="" />
-                        </div>
-                        <p className="text-[2.2vh]">Contest</p>
                     </>
                 )}
             </NavLink>

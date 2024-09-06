@@ -62,7 +62,7 @@ const EarlyAdopters = () => {
     };
 
     return (
-        <section className="h-screen w-full bg-[#000000] flex flex-col justify-center items-center gap-28 px-3 overflow-hidden  font-ZillaSlab text-xs small-mobile:text-base md:hidden">
+        <section className="h-screen w-full bg-[#210133] flex flex-col justify-center items-center gap-28 px-3 overflow-hidden  font-ZillaSlab text-xs small-mobile:text-base md:hidden">
 
 
             <div className="flex flex-col justify-between py-10 gap-5 h-[100%]">

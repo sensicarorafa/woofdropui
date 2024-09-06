@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import logoBig from "../../assets/img/logobig.png";
+//import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 //import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { capitalizeAllFirstLetters } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import medal from "../../assets/img/medal.png";
+import BottomSheet from "../../components/BottomSheet";
 
 
 
@@ -49,7 +50,7 @@ const Contest = () => {
         const fetchUserReferrals = async () => {
             const userCookies = Cookies.get('authLoggedUserAiDogs');
             if (userCookies) {
-                const getUserData =  JSON.parse(userCookies) //await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
+                const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
                 console.log(getUserData?.data)
                 setTotalPoints(getUserData?.data?.userData?.referralContest);
                 setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name ?  getUserData?.data?.userData?.user?.first_name : ''} ${getUserData?.data?.userData?.user?.last_name ? getUserData?.data?.userData?.user?.last_name : ''}`);
@@ -74,9 +75,9 @@ const Contest = () => {
         }
     }, [user])
 
-    const toggleModal = useCallback(() => {
+    /*const toggleModal = useCallback(() => {
         setOpenModal(prev => !prev);
-    }, []);
+    }, []);*/
 
     const closeModal = useCallback(() => {
         setOpenModal(prev => !prev);
@@ -87,16 +88,14 @@ const Contest = () => {
     }
 
     return (
-        <section className="flex flex-col h-screen w-full bg-[#000000] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
+        <section className="flex flex-col h-screen w-full bg-[#210133] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
             <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
-
+                <BottomSheet isOpen={true} onClose={() => {
+                    navigate('/home')
+                }} bgColor="#180026" title="Missions">
                 <div className="w-full overflow-y-scroll h-[100%]">
-
-                    <div className="my-6 flex justify-center items-center">
-                        <img src={logoBig} className="w-[25%]" alt="Logo" />
-                    </div>
                     
-                    <div className=" flex justify-between items-center px-5 py-3 w-full bg-[#FFFFFF] bg-opacity-10 rounded-lg gap-5 mt-2">
+                    <div className=" flex justify-between items-center px-5 py-3 w-full gap-5 mt-2 border-b-[1px]">
                         <div className="flex gap-3 py-4 items-center">
                             {username && username.length > 0 ? (
                                 <>
@@ -107,7 +106,7 @@ const Contest = () => {
                                     </div>
                                     <div className="flex flex-col justify-center">
                                         <p className="text-[#FFFFFF] leading-none font-bold text-sm">
-                                            {capitalizeAllFirstLetters(username)}
+                                            {'You'}
                                         </p>
                                         <div className="flex gap-2 items-center mt-[-2px]">
                                             <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{parseInt(totalPoints.toLocaleString())} <span className="text-[#A6A6A6] text-sm">FRENS</span> </p>
@@ -124,20 +123,12 @@ const Contest = () => {
                             </>
                         </div>
                     </div>
-                    <div className="flex w-auto mx-auto justify-center items-center gap-2">
-                        <h1 className="text-[#FFFFFF] w-auto text-left font-bold text-xl mt-4 mb-2 text-center">{referralLeaderboard.length > 0 && "Referral Leaderboard"}</h1>
-                        <div className="cursor-pointer text-[#000] w-6 h-6 rounded-full bg-[#FFF] flex justify-center items-center font-bold" onClick={toggleModal}>?</div>
-                    </div>
-
-                    <div className="flex w-auto mx-auto justify-center items-center gap-2 mb-3">
-                        <p className="text-xs text-white text-center">Leaderboard is updated once every 6 hours</p>
-                    </div>
                     
-                    <div className="flex flex-col items-center justify-start w-full bg-[#FFFFFF] bg-opacity-10 rounded-md gap-5 relative">
+                    <div className="flex flex-col items-center justify-start w-full gap-5 relative">
                         <div className="h-full w-full">
                             {referralLeaderboard.length > 0
                                 ? sortArrayByPointsDescending(referralLeaderboard).slice(0, 100).map((item: any, idx: any) => (
-                                    <div key={idx.toString()} className="border-b-[1px] border-[#FFFFFF] border-opacity-10 flex justify-between items-center ps-3 pe-10 py-3">
+                                    <div key={idx.toString()} className="border-b-[1px] flex justify-between items-center ps-3 pe-10 py-3">
                                         <div className="flex">
                                             <div className={`flex justify-center h-[45px] w-[45px]  items-center px-3 py-3 rounded-full`} style={{background:`${colorCodes[Math.floor(Math.random() * 10)]}`}}>
                                                 <p className="text-[#FFFFFF] text-lg font-bold]">
@@ -173,13 +164,12 @@ const Contest = () => {
 
 
                                         <div className=" flex justify-end items-center">
-                                            {idx === 0 || idx === 1 || idx === 2 ? 
-                                                <>
-                                                    <div className=" flex w-full justify-end small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
-                                                        <img className="" src={medal} alt="" />
-                                                    </div>
-                                                </> :   <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>}
-                                            
+                                            <>
+                                                <div className=" flex w-full justify-end small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
+                                                    <img className="" src={medal} alt="" />
+                                                    <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>
+                                                </div>
+                                            </>                                           
                                         </div>
                                     </div>
                                 ))
@@ -187,6 +177,7 @@ const Contest = () => {
                         </div>
                     </div>
                 </div>
+                </BottomSheet>
             </div>
             <Footer />
             {open && 

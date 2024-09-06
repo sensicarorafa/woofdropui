@@ -81,35 +81,35 @@ const Congrats = () => {
     }
 
     return (
-        <section {...handlers} className="h-screen w-full bg-[#000000] flex flex-col items-center overflow-hidden relative font-ZillaSlab md:hidden">
+        <section {...handlers} className="h-screen w-full bg-[#210133] flex flex-col items-center overflow-hidden relative font-ZillaSlab md:hidden">
             <Confetti
                 width={width}
                 height={height}
             />
-            <div className="flex h-full flex-col items-center pt-20 justify-between  ">
-
-            <div className="flex pt-10 flex-col items-center">
-                            <p className="text-[#FFFFFF] text-4xl">Way to go!</p>
-                            <h1 className="text-[#FFFFFF] text-lg font-bold">Here is your $AIDOG reward</h1>
-                         
-                        </div>
-                <div className="flex flex-col items-center">
-                    <div className="w-[40%]">
+            <div className="flex h-full flex-col items-center justify-between">
+                <div className="flex flex-col items-center gap-3">
+                    <p className="text-[#FFFFFF] text-4xl">Way to go!</p>
+                    <h1 className="text-[#FFFFFF] text-lg font-bold">Here is your $AIDOG reward</h1>                        
+                </div>
+                <div className="flex flex-col items-center my-4">
+                    <div className="w-[50%]">
                         <img className="w-full" src={logoBig} alt="" />
-
                     </div>
-                    <div className="flex pt-10 flex-col items-center">
-                     
-                        <h1 className="text-[#FFFFFF] text-4xl font-bold">2,500 $AIDOGS</h1>
-                        <p className="text-[#A6A6A6] text-lg">Welcome Bonus </p>
+                    <div className="flex flex-col items-center">
+                        <h1 className="text-[#FFFFFF] text-4xl font-bold">2,500</h1>
+                        <p className="text-[#FFFFFF] text-lg font-semibold">Thanks for your time here</p>
                     </div>
                 </div>
 
 
                 <div className=" w-full flex items-center justify-center pb-10">
-                    <div className="flex flex-col justify-center gap-7 items-center">
-
-                        <div className="flex flex-col items-center text-[#FFFFFF] pt-3 pb-1 rounded-lg text-base w-full">
+                    <div className="flex flex-col justify-center gap-3 items-center">
+                        <div className="flex justify-center w-full gap-2">
+                            <button className="bg-white font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2   rounded-[1px] w-full" onClick={goHome}>
+                                Continue
+                            </button>
+                        </div>
+                        <div className="flex flex-col items-center text-[#A6A6A6] rounded-lg text-base w-full">
                             <p className="text-center">Invite to get 10% of your frens rewards.</p>
                             <p className="text-center"></p>
                         </div>
@@ -128,18 +128,6 @@ const Congrats = () => {
                               &nbsp;Share 
                             </button>
                            
-                        </div>
-                        <div className="flex justify-center gap-2">
-
-                            <button
-                                className="bg-white font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2   rounded-[1px] w-full"
-                                onClick={goHome}
-
-
-                            >
-                                Continue
-                            </button>
-
                         </div>
                     </div>
                 </div>
