@@ -32,6 +32,7 @@ const Starter = () => {
     }, []);
 
     useEffect (() => {
+      try {
         const fetchUserData = async () => {
           const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
           if (getUserData?.data?.success) {
@@ -42,6 +43,10 @@ const Starter = () => {
         if (user) {
           fetchUserData();
         }
+      } catch (error: any) {
+        alert(error.message)
+      }
+        
     }, [user])
 
     return (
