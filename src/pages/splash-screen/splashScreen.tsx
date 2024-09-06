@@ -64,7 +64,9 @@ const SplashScreen = () => {
 
                 {/* <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider font-bold">AiDogs</h1> */}
                 {/* <h1 className="text-[#FFFFFF] text-2xl font-ZillaSlab tracking-wider">LOADING...</h1> */}
-                <p className="text-[#A6A6A6] text-lg">Your $AIDOGS airdrop awaits!</p>
+                <p className="text-[#A6A6A6] text-lg">Telegram OG Status Unlocked</p>
+                <p className="text-[#A6A6A6] text-lg">Your $AIDOGS airdrop is Waiting!</p>
+                <p className="text-[#A6A6A6] text-lg">Please, wait a bit</p>
             </div>
         </section>
     );

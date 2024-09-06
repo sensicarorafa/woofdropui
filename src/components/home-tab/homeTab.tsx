@@ -1377,7 +1377,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
+                                                <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 2 frens</p>
@@ -1545,7 +1545,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
+                                                <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 5 frens</p>
@@ -1584,7 +1584,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
+                                                <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 10 frens</p>
@@ -1623,7 +1623,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
+                                                <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 20 frens</p>
@@ -1662,7 +1662,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
+                                                <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Invite 30 frens</p>
@@ -1949,7 +1949,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
+                                                <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Follow Birds on X</p>
@@ -1990,7 +1990,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
+                                                <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Birds Telegram</p>
@@ -2031,7 +2031,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
+                                                <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Play BIRDS</p>
@@ -2072,7 +2072,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoSm} alt="" />
+                                                <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Join TonAi</p>
@@ -2113,7 +2113,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                            <img className="w-full" src={logoSm} alt="" />
+                                            <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Play HoldCoin</p>
@@ -2154,7 +2154,7 @@ const HomeTab = () => {
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
                                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                            <img className="w-full" src={logoSm} alt="" />
+                                            <img className="w-full" src={logoBig} alt="" />
                                             </div>
                                             <div className='flex flex-col pl-5'>
                                                 <p className='text-white text-bold taskTitle' onClick={() => {}}>Join HoldCoin Channel</p>
@@ -2197,7 +2197,7 @@ const HomeTab = () => {
                     <div className='flex justify-between py-2 w-full items-center'>
                         <div className='flex items-center'>
                             <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                <img className="w-full" src={logoSm} alt="" />
+                                <img className="w-full" src={logoBig} alt="" />
 
                             </div>
                             <div className='flex flex-col pl-3'>
