@@ -70,7 +70,7 @@ const Referral = () => {
     const shareToTg = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         const referralLink = sessionStorage.getItem("referralLink");
-        const text = encodeURIComponent("GOT DOGS?? Join me on AiDogs and be a part of the dog revolution.. Earn 2,500 $AIDOG when you signup. ");
+        const text = encodeURIComponent("Are you a Telegram OG? Join me on AiDogs and be a part of the dog revolution.. Earn 2,500 $AIDOG when you signup. ");
         const urlTo = `https://t.me/share/url?url=${referralLink}&text=${text}`;
         window.open(urlTo, "_blank");
     }, []);
