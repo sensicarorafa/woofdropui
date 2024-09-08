@@ -6,8 +6,7 @@ import handShakeActive from "../assets/img/handshake-active.png";
 import handShake from "../assets/img/handshake.png";
 import podium from "../assets/img/podium.png";
 import podiumActive from "../assets/img/podium-active.png";
-import logoBig from "../assets/img/logobig.png";
-import logoSm from "../assets/img/logosm.svg";
+import missionActive from '../assets/img/mission.png'
 
 const Footer = () => {
     return (
@@ -57,7 +56,7 @@ const Footer = () => {
                 {({ isActive }) => (
                     <>
                         <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? logoBig : logoSm} alt="" />
+                            <img className="w-full" src={isActive ? missionActive : missionActive} alt="" />
                         </div>
                         <p className="text-[2.2vh]">Missions</p>
                     </>
