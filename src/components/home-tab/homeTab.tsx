@@ -1108,14 +1108,6 @@ const HomeTab = () => {
                     </div>
                 </div>
             </div>}
-            {/*openBirds && 
-            <div className='absolute m-auto bg-[#000000] h-auto w-[90%] z-[100] rounded-lg p-4 overflow-y-scroll'>
-                <div className="flex w-full justify-end">
-                    <div className="flex w-auto justify-end cursor-pointer" onClick={closeModalBirds}>
-                        <p className='text-white'>Close</p>
-                    </div>
-                </div>
-            </div>*/}
             <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
                 <div className="flex flex-col py-5 my-4  justify-center align-center m-auto items-center w-80">
                     <p className="text-[#FFFFFF] text-4xl font-OpenSans font-bold">{totalPoints.toLocaleString()}</p>
@@ -1186,33 +1178,6 @@ const HomeTab = () => {
 
                             </div>
                         </SwiperSlide>
-                        {/*<SwiperSlide>
-                            <div className='flex h-[180px] flex-col rounded-lg justify-between items-center text-white bg-white/15 py-3'>
-                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
-                                    <img className="w-full" src={logoSm} alt="" />
-
-                                </div>
-                                <div className='flex flex-col justify-center align-center text-center items-center py-4 px-4'>
-                                    <p className='text-sm'> 150% bonus for early claimers</p>
-
-                                </div>
-
-                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center items-center" >
-
-
-                                    <button
-                                        className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
-                                        onClick={toggleModal}
-
-                                    >
-                                        View Reward Structure
-                                    </button>
-
-
-                                </div>
-
-                            </div>
-                        </SwiperSlide>*/}
                     </Swiper>
                 </div>
 
@@ -2258,7 +2223,7 @@ const HomeTab = () => {
                 </div>
             </div>
             <Footer />
-            <BottomSheet isOpen={isBottomSheetOpen} onClose={handleCloseBottomSheet}>
+            <BottomSheet isOpen={isBottomSheetOpen} onClose={handleCloseBottomSheet} noSetMb={true}>
                 <h2 className="text-xl font-bold text-white text-center">Claim Daily Reward</h2>
                 <p className="text-xs font-bold text-white text-center">Click on any day to claim, if you are eligible for that day you will recieve your rewards</p>
                 
