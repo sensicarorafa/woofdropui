@@ -48,6 +48,8 @@ const HomeTab = () => {
     const [engageHoldCoin, setEngageHoldCoin] = useState(false);
     const [engageHoldCoinChannel, setEngageHoldCoinChannel] = useState(false);
     const [engageYtVidThree, setEngageYtVidThree] = useState(false);
+    const [engagePigsBot, setEngagePigsBot] = useState(false);
+    const [engagePigsChannel, setEngagePigsChannel] = useState(false);
     const [tgDisabled, setTgDisabled] = useState(false);
     const [repostDisabled, setRepostDisabled] = useState(false);
     const [twoFrensDisabled, setTwoFrensDisabled] = useState(false);
@@ -71,6 +73,8 @@ const HomeTab = () => {
     const [joinTonAiDisabled, setJoinTonAiDisabled] = useState(false);
     const [holdCoinDisabled, setHoldCoinDisabled] = useState(false);
     const [holdCoinChannelDisabled, setHoldCoinChannelDisabled] = useState(false);
+    const [pigsBotDisabled, setPigsBotDisabled] = useState(false);
+    const [pigsChannelDisabled, setPigsChannelDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
     const [referralCode, setReferralCode] = useState('');
@@ -883,6 +887,68 @@ const HomeTab = () => {
         }
     };
 
+    const claimPigsBot = async () => {
+        setPigsBotDisabled(true)
+        const points = 2000;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'pigs-bot',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setPigsBotDisabled(false);
+        }
+    };
+
+    const claimPigsChannel = async () => {
+        setPigsChannelDisabled(true)
+        const points = 150;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'pigs-channel',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setTotalPoints(updatePoints?.data?.userData?.pointsNo);
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setDailyLoginTasks(updatePoints?.data?.userData?.referralRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setPigsChannelDisabled(false);
+        }
+    };
+
     const getPoints = async (idx: number) => {
         if (idx === 0) return 75;
         if(idx === 1) return 100;
@@ -1183,50 +1249,6 @@ const HomeTab = () => {
 
                 <div className="w-full flex flex-col pt-7 px-4 relative z-10 gap-5">
                     <p className='text-white text-xl pb-5'>Tasks</p>
-
-                    {/*
-                        rearrangeRewards(socialTasks).map((task: any) => (
-                            <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
-                                        <div className='flex items-center'>
-                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
-                                                <img className="w-full" src={logoBig} alt="" />
-                                            </div>
-                                            <div className='flex flex-col pl-5'>
-                                                <p className='text-white text-bold taskTitle'>{task.taskText}</p>
-                                                <span className='text-[#A6A6A6]'>+{task.taskPoints} $AIDOGS</span>
-                                            </div>
-                                        </div>
-                                        <div className="">
-                                            {
-                                                !task.rewardClaimed && !engageTask &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    if (task.taskUrl) window.open(task.taskUrl, '_blank');
-
-                                                    setTimeout(() => {
-                                                        setEngageTask(true)
-                                                    }, 15000)
-                                                }}>
-                                                    Follow
-                                                </button>
-                                            }
-                                            {
-                                                !task.rewardClaimed && engageTask &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
-                                                    claimTask(task.claimTreshold, task.taskPoints);
-                                                }}>
-                                                    Claim
-                                                </button>
-                                            }
-                                            {
-                                                task.rewardClaimed &&
-                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
-                                                    Done
-                                                </button>
-                                            }
-                                        </div>
-                                    </div>
-                        ))
-                    */}
                     {
                         rearrangeRewards(socialTasks).map((task: any) => (
                             !task.rewardClaimed &&
@@ -2186,6 +2208,88 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                     claimRtTagThreeFrensFive();
                                                 }} disabled={rtTagThreeFrensFiveDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    task.claimTreshold === 'pigs-bot' &&
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                            <img className="w-full" src={logoBig} alt="" />
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Pigs</p>
+                                                <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engagePigsBot &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    window.open('https://t.me/PigshouseBot?start=6374484959', '_blank');
+                                                    setTimeout(() => {
+                                                        setEngagePigsBot(true)
+                                                    }, 15000)
+                                                }}>
+                                                    Join
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engagePigsBot &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimPigsBot();
+                                                }} disabled={pigsBotDisabled}>
+                                                    Claim
+                                                </button>
+                                            }
+                                            {
+                                                task.rewardClaimed &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                    Done
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                {
+                                    task.claimTreshold === 'pigs-channel' &&
+                                    <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                        <div className='flex items-center'>
+                                            <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                            <img className="w-full" src={logoBig} alt="" />
+                                            </div>
+                                            <div className='flex flex-col pl-5'>
+                                                <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Pigs Tg Channel</p>
+                                                <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                                            </div>
+                                        </div>
+                                        <div className="">
+                                            {
+                                                !task.rewardClaimed && !engagePigsChannel &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    window.open('https://t.me/+O-k5HRrBaMI1NjZk', '_blank');
+                                                    setTimeout(() => {
+                                                        setEngagePigsChannel(true)
+                                                    }, 15000)
+                                                }}>
+                                                    Join
+                                                </button>
+                                            }
+                                            {
+                                                !task.rewardClaimed && engagePigsChannel &&
+                                                <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                    claimPigsChannel();
+                                                }} disabled={pigsChannelDisabled}>
                                                     Claim
                                                 </button>
                                             }
