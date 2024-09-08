@@ -2223,7 +2223,7 @@ const HomeTab = () => {
                 </div>
             </div>
             <Footer />
-            <BottomSheet isOpen={isBottomSheetOpen} onClose={handleCloseBottomSheet} noSetMb={true}>
+            <BottomSheet isOpen={isBottomSheetOpen} onClose={handleCloseBottomSheet}>
                 <h2 className="text-xl font-bold text-white text-center">Claim Daily Reward</h2>
                 <p className="text-xs font-bold text-white text-center">Click on any day to claim, if you are eligible for that day you will recieve your rewards</p>
                 
