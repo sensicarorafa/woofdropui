@@ -145,7 +145,7 @@ const Stats = () => {
 
                                                     <div className=" flex justify-end items-center">
                                                             <>
-                                                                <div className="flex w-full justify-end small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
+                                                                <div className="flex w-full justify-end items-center small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
                                                                     <img className="" src={medal} alt="" />
                                                                     <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>
                                                                 </div>

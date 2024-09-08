@@ -1926,7 +1926,7 @@ const Contest = () => {
                     {
                         currentView === 'Contest' &&
                         <>
-                        <div className=" flex justify-between items-center px-5 py-3 w-full gap-5 mt-2 border-b-[1px]">
+                        <div className=" flex justify-between items-center px-3 py-3 w-full gap-5 mt-2 border-b-[1px]">
                             <div className="flex gap-3 py-4 items-center">
                                 {username && username.length > 0 ? (
                                     <>
@@ -1996,7 +1996,7 @@ const Contest = () => {
 
                                             <div className=" flex justify-end items-center">
                                                 <>
-                                                    <div className=" flex w-full justify-end small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
+                                                    <div className=" flex w-full justify-end items-center small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
                                                         <img className="" src={medal} alt="" />
                                                         <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>
                                                     </div>
