@@ -30,25 +30,25 @@ const Contest = () => {
     const [engageRepost, setEngageRepost] = useState(false);
     const [engageTelegram, setEngageTelegram] = useState(false);
     const [engageFollow, setEngageFollow] = useState(false);
-    const [engageFollowBirds, setEngageFollowBirds] = useState(false);
+    //const [engageFollowBirds, setEngageFollowBirds] = useState(false);
     const [engageYoutube, setEngageYoutube] = useState(false);
-    const [engageYoutubeBirds, setEngageYoutubeBirds] = useState(false);
-    const [engagePlayBirds, setEngagePlayBirds] = useState(false);
+    //const [engageYoutubeBirds, setEngageYoutubeBirds] = useState(false);
+    //const [engagePlayBirds, setEngagePlayBirds] = useState(false);
     const [engageInstagram, setEngageInstagram] = useState(false);
     const [engageYtVidOne, setEngageYtVidOne] = useState(false);
     const [engageRtTagThreeFrensFive, setEngageRtTagThreeFrensFive] = useState(false);
     const [engageInviteTomarket, setEngageInviteToMarket] = useState(false);
     const [engageToMarketGift, setEngageToMarketGift] = useState(false);
     const [engageJoinGoats, setEngageJoinGoats] = useState(false);
-    const [engageJoinTonAi, setEngageJoinTonAi] = useState(false);
+    //const [engageJoinTonAi, setEngageJoinTonAi] = useState(false);
     const [engageYtVidTwo, setEngageYtVidTwo] = useState(false);
     const [engageHoldCoin, setEngageHoldCoin] = useState(false);
     const [engageHoldCoinChannel, setEngageHoldCoinChannel] = useState(false);
     const [engageYtVidThree, setEngageYtVidThree] = useState(false);
     const [engagePigsBot, setEngagePigsBot] = useState(false);
     const [engagePigsChannel, setEngagePigsChannel] = useState(false);
-    const [engageTonPartyBot, setEngageTonPartyBot] = useState(false);
-    const [engageTonPartyChannel, setEngageTonPartyChannel] = useState(false);
+    //const [engageTonPartyBot, setEngageTonPartyBot] = useState(false);
+    //const [engageTonPartyChannel, setEngageTonPartyChannel] = useState(false);
     const [tgDisabled, setTgDisabled] = useState(false);
     const [repostDisabled, setRepostDisabled] = useState(false);
     const [twoFrensDisabled, setTwoFrensDisabled] = useState(false);
@@ -60,22 +60,22 @@ const Contest = () => {
     const [toMarketGiftDisabled, setToMarketGiftDisabled] = useState(false);
     const [inviteTomarketDisabled, setInviteTomarketDisabled] = useState(false);
     const [followDisabled, setFollowDisabled] = useState(false);
-    const [followBirdsDisabled, setFollowBirdsDisabled] = useState(false);
+    //const [followBirdsDisabled, setFollowBirdsDisabled] = useState(false);
     const [youtubeDisabled, setYoutubeDisabled] = useState(false);
-    const [youtubeBirdsDisabled, setYoutubeBirdsDisabled] = useState(false);
-    const [playBirdsDisabled, setPlayBirdsDisabled] = useState(false);
+    //const [youtubeBirdsDisabled, setYoutubeBirdsDisabled] = useState(false);
+    //const [playBirdsDisabled, setPlayBirdsDisabled] = useState(false);
     const [instagramDisabled, setInstagramDisabled] = useState(false);
     const [ytVidOneDisabled, setYtVidOneDisabled] = useState(false);
     const [ytVidTwoDisabled, setYtVidTwoDisabled] = useState(false);
     const [ytVidThreeDisabled, setYtVidThreeDisabled] = useState(false);
     const [joinGoatsDisabled, setJoinGoatsDisabled] = useState(false);
-    const [joinTonAiDisabled, setJoinTonAiDisabled] = useState(false);
+    //const [joinTonAiDisabled, setJoinTonAiDisabled] = useState(false);
     const [holdCoinDisabled, setHoldCoinDisabled] = useState(false);
     const [holdCoinChannelDisabled, setHoldCoinChannelDisabled] = useState(false);
     const [pigsBotDisabled, setPigsBotDisabled] = useState(false);
     const [pigsChannelDisabled, setPigsChannelDisabled] = useState(false);
-    const [tonPartyBotDisabled, setTonPartyBotDisabled] = useState(false);
-    const [tonPartyChannelDisabled, setTonPartyChannelDisabled] = useState(false);
+    //const [tonPartyBotDisabled, setTonPartyBotDisabled] = useState(false);
+    //const [tonPartyChannelDisabled, setTonPartyChannelDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
     const [referralCode, setReferralCode] = useState('');
@@ -780,7 +780,7 @@ const Contest = () => {
         }
     }
 
-    const claimFollowBirds = async () => {
+    /*const claimFollowBirds = async () => {
         setFollowBirdsDisabled(true)
         const points = 150;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
@@ -894,7 +894,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setJoinTonAiDisabled(false);
         }
-    };
+    };*/
 
     const claimPigsBot = async () => {
         setPigsBotDisabled(true)
@@ -956,7 +956,7 @@ const Contest = () => {
         }
     };
 
-    const claimTonPartyBot = async () => {
+    /*const claimTonPartyBot = async () => {
         setTonPartyBotDisabled(true)
         const points = 2000;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
@@ -1014,7 +1014,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setTonPartyChannelDisabled(false);
         }
-    };
+    };*/
 
     function rearrangeRewards(socialRewardDeets: any) {
         return socialRewardDeets.sort((a: any, b: any) => {
@@ -1799,7 +1799,7 @@ const Contest = () => {
                                             </div>
                                         </div>
                                     }
-                                    {
+                                    {/*
                                         task.claimTreshold === 'follow-birds-x' &&
                                         <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                             <div className='flex items-center'>
@@ -1962,7 +1962,7 @@ const Contest = () => {
                                                 }
                                             </div>
                                         </div>
-                                    }
+                                    */}
                                     {
                                         task.claimTreshold === 'hold-coin-bot' &&
                                         <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
@@ -2127,7 +2127,7 @@ const Contest = () => {
                                             </div>
                                         </div>
                                     }
-                                    {
+                                    {/*
                                         task.claimTreshold === 'ton-party-bot' &&
                                         <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                             <div className='flex items-center'>
@@ -2208,7 +2208,7 @@ const Contest = () => {
                                                 }
                                             </div>
                                         </div>
-                                    }
+                                    */}
                                 </>
                             ))
                         }
