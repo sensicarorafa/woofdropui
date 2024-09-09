@@ -1132,7 +1132,7 @@ const HomeTab = () => {
     
     const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${referralCode}`;
     const encodedText = useMemo(() => {
-        const text = `Got $DOGS??\r\n\nJoin me on AIDOGS and be a part of the dog revolution.\r\n\nEarn 2,500 $AIDOGS when you signup.\r\n\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOGS`;
+        const text = `Are you a Telegram OG??\r\n\nJoin me on AIDOGS and be a part of the dog revolution.\r\n\nEarn 2,500 $AIDOGS when you signup.\r\n\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOGS`;
         return encodeURIComponent(text);
     }, [referralLink]);
 
