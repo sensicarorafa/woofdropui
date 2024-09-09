@@ -45,6 +45,10 @@ const Contest = () => {
     const [engageHoldCoin, setEngageHoldCoin] = useState(false);
     const [engageHoldCoinChannel, setEngageHoldCoinChannel] = useState(false);
     const [engageYtVidThree, setEngageYtVidThree] = useState(false);
+    const [engagePigsBot, setEngagePigsBot] = useState(false);
+    const [engagePigsChannel, setEngagePigsChannel] = useState(false);
+    const [engageTonPartyBot, setEngageTonPartyBot] = useState(false);
+    const [engageTonPartyChannel, setEngageTonPartyChannel] = useState(false);
     const [tgDisabled, setTgDisabled] = useState(false);
     const [repostDisabled, setRepostDisabled] = useState(false);
     const [twoFrensDisabled, setTwoFrensDisabled] = useState(false);
@@ -68,6 +72,10 @@ const Contest = () => {
     const [joinTonAiDisabled, setJoinTonAiDisabled] = useState(false);
     const [holdCoinDisabled, setHoldCoinDisabled] = useState(false);
     const [holdCoinChannelDisabled, setHoldCoinChannelDisabled] = useState(false);
+    const [pigsBotDisabled, setPigsBotDisabled] = useState(false);
+    const [pigsChannelDisabled, setPigsChannelDisabled] = useState(false);
+    const [tonPartyBotDisabled, setTonPartyBotDisabled] = useState(false);
+    const [tonPartyChannelDisabled, setTonPartyChannelDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
     const [referralCode, setReferralCode] = useState('');
@@ -885,6 +893,126 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setJoinTonAiDisabled(false);
+        }
+    };
+
+    const claimPigsBot = async () => {
+        setPigsBotDisabled(true)
+        const points = 2000;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'pigs-bot',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setPigsBotDisabled(false);
+        }
+    };
+
+    const claimPigsChannel = async () => {
+        setPigsChannelDisabled(true)
+        const points = 150;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'pigs-channel',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setPigsChannelDisabled(false);
+        }
+    };
+
+    const claimTonPartyBot = async () => {
+        setTonPartyBotDisabled(true)
+        const points = 2000;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'ton-party-bot',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setTonPartyBotDisabled(false);
+        }
+    };
+
+    const claimTonPartyChannel = async () => {
+        setTonPartyChannelDisabled(true)
+        const points = 150;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'ton-party-channel',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setTonPartyChannelDisabled(false);
         }
     };
 
@@ -1905,6 +2033,170 @@ const Contest = () => {
                                                     <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                         claimHoldCoinChannel();
                                                     }} disabled={holdCoinChannelDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'pigs-bot' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Pigs</p>
+                                                    <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engagePigsBot &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/PigshouseBot?start=6374484959', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngagePigsBot(true)
+                                                        }, 15000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engagePigsBot &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimPigsBot();
+                                                    }} disabled={pigsBotDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'pigs-channel' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Pigs Tg Channel</p>
+                                                    <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engagePigsChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/+O-k5HRrBaMI1NjZk', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngagePigsChannel(true)
+                                                        }, 15000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engagePigsChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimPigsChannel();
+                                                    }} disabled={pigsChannelDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'ton-party-bot' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Join TonParty</p>
+                                                    <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engageTonPartyBot &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/tonparty_bot/party?startapp=ref_Ub5gbwDL', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngageTonPartyBot(true)
+                                                        }, 15000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engageTonPartyBot &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimTonPartyBot();
+                                                    }} disabled={tonPartyBotDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'ton-party-channel' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Join TonParty Tg Channel</p>
+                                                    <span className='text-[#A6A6A6]'>+150 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engageTonPartyChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/+5ITZoOxz9io1NWVk', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngageTonPartyChannel(true)
+                                                        }, 15000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engageTonPartyChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimTonPartyChannel();
+                                                    }} disabled={tonPartyChannelDisabled}>
                                                         Claim
                                                     </button>
                                                 }
