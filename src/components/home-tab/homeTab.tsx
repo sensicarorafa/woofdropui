@@ -1393,7 +1393,7 @@ const HomeTab = () => {
                                                             });
                                                             setTimeout(() => {
                                                                 setEngageTelegram(true)
-                                                            }, 0)
+                                                            }, 5000)
                                                         }}>
                                                             Check
                                                         </button>
@@ -1436,7 +1436,7 @@ const HomeTab = () => {
                                                     window.open('https://x.com/aidogscomm', '_blank');
                                                     setTimeout(() => {
                                                         setEngageFollow(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Follow
                                                 </button>
@@ -1477,7 +1477,7 @@ const HomeTab = () => {
                                                     window.open(url, '_blank');
                                                     setTimeout(() => {
                                                         setEngageRepost(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Share
                                                 </button>
@@ -1559,7 +1559,7 @@ const HomeTab = () => {
                                                     window.open('https://www.instagram.com/aidogscomm?igsh=MjhqdTh1bWptbmE5&utm_source=qr', '_blank');
                                                     setTimeout(() => {
                                                         setEngageInstagram(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Follow
                                                 </button>
@@ -1602,7 +1602,7 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://www.youtube.com/@aidogscomm', '_blank');
                                                     setTimeout(() => {
                                                         setEngageYoutube(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Start
                                                 </button>
@@ -1645,7 +1645,7 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://youtu.be/z_VeGCOwNG4?si=1HwQJhxTVVeMDXRq', '_blank');
                                                     setTimeout(() => {
                                                         setEngageYtVidOne(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Start
                                                 </button>
@@ -1688,7 +1688,7 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://youtu.be/J56VoQdUmV8?si=BrUfCoaphy-6HwOC', '_blank');
                                                     setTimeout(() => {
                                                         setEngageYtVidThree(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Start
                                                 </button>
@@ -1731,7 +1731,7 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://youtu.be/oQUgnloOS6Q?si=EBSqlYaq1HfYz7p4', '_blank');
                                                     setTimeout(() => {
                                                         setEngageYtVidFour(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Start
                                                 </button>
@@ -1928,7 +1928,7 @@ const HomeTab = () => {
                                                     window.open(urlToMarketGift, '_blank');
                                                     setTimeout(() => {
                                                         setEngageToMarketGift(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Share
                                                 </button>
@@ -1969,7 +1969,7 @@ const HomeTab = () => {
                                                     window.open('https://x.com/TomarketFarmer/status/1830637993847378211?s=19', '_blank');
                                                     setTimeout(() => {
                                                         setEngageInviteToMarket(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Start
                                                 </button>
@@ -2010,7 +2010,7 @@ const HomeTab = () => {
                                                     window.open('https://t.me/realgoats_bot/run?startapp=15a53980-df21-4471-94b5-8adb00f41c54', '_blank');
                                                     setTimeout(() => {
                                                         setEngageJoinGoats(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Join
                                                 </button>
@@ -2053,7 +2053,7 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://youtu.be/ssZfO6PAyDs?si=3QWEeILtunO8qOKs', '_blank');
                                                     setTimeout(() => {
                                                         setEngageYtVidTwo(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Start
                                                 </button>
@@ -2094,7 +2094,7 @@ const HomeTab = () => {
                                                     window.open('https://x.com/TheBirdsDogs', '_blank');
                                                     setTimeout(() => {
                                                         setEngageFollowBirds(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Follow
                                                 </button>
@@ -2135,7 +2135,7 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://t.me/+PLeoc54Kw5oxN2M9', '_blank');
                                                     setTimeout(() => {
                                                         setEngageYoutubeBirds(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Start
                                                 </button>
@@ -2176,7 +2176,7 @@ const HomeTab = () => {
                                                 <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://t.me/birdx2_bot/birdx?startapp=1920150983', '_blank');
                                                     setTimeout(() => {
                                                         setEngagePlayBirds(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Start
                                                 </button>
@@ -2217,7 +2217,7 @@ const HomeTab = () => {
                                                     window.open('https://t.me/PeaAIBot/App?startapp=sid-66d828e3841369003ba7e67b', '_blank');
                                                     setTimeout(() => {
                                                         setEngageJoinTonAi(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Join
                                                 </button>
@@ -2258,7 +2258,7 @@ const HomeTab = () => {
                                                     window.open('https://t.me/theHoldCoinBot/app?startapp=ref_yoiyTgVL', '_blank');
                                                     setTimeout(() => {
                                                         setEngageHoldCoin(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Join
                                                 </button>
@@ -2299,7 +2299,7 @@ const HomeTab = () => {
                                                     window.open('https://t.me/+hp2cVksOOh9lN2Q1', '_blank');
                                                     setTimeout(() => {
                                                         setEngageHoldCoinChannel(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Join
                                                 </button>
@@ -2340,7 +2340,7 @@ const HomeTab = () => {
                                                     window.open('https://x.com/aidogscomm/status/1832376968999747746?s=19', '_blank');
                                                     setTimeout(() => {
                                                         setEngageRtTagThreeFrensFive(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Start
                                                 </button>
@@ -2381,7 +2381,7 @@ const HomeTab = () => {
                                                     window.open('https://t.me/PigshouseBot?start=6374484959', '_blank');
                                                     setTimeout(() => {
                                                         setEngagePigsBot(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Join
                                                 </button>
@@ -2422,7 +2422,7 @@ const HomeTab = () => {
                                                     window.open('https://t.me/+O-k5HRrBaMI1NjZk', '_blank');
                                                     setTimeout(() => {
                                                         setEngagePigsChannel(true)
-                                                    }, 0)
+                                                    }, 5000)
                                                 }}>
                                                     Join
                                                 </button>
@@ -2463,7 +2463,7 @@ const HomeTab = () => {
                                                     window.open('https://t.me/tonparty_bot/party?startapp=ref_Ub5gbwDL', '_blank');
                                                     setTimeout(() => {
                                                         setEngageTonPartyBot(true)
-                                                    }, 15000)
+                                                    }, 5000)
                                                 }}>
                                                     Join
                                                 </button>
@@ -2504,7 +2504,7 @@ const HomeTab = () => {
                                                     window.open('https://t.me/+5ITZoOxz9io1NWVk', '_blank');
                                                     setTimeout(() => {
                                                         setEngageTonPartyChannel(true)
-                                                    }, 15000)
+                                                    }, 5000)
                                                 }}>
                                                     Join
                                                 </button>
