@@ -42,8 +42,10 @@ const Contest = () => {
     const [engageJoinGoats, setEngageJoinGoats] = useState(false);
     //const [engageJoinTonAi, setEngageJoinTonAi] = useState(false);
     const [engageYtVidTwo, setEngageYtVidTwo] = useState(false);
-    const [engageHoldCoin, setEngageHoldCoin] = useState(false);
-    const [engageHoldCoinChannel, setEngageHoldCoinChannel] = useState(false);
+    //const [engageHoldCoin, setEngageHoldCoin] = useState(false);
+    //const [engageHoldCoinChannel, setEngageHoldCoinChannel] = useState(false);
+    const [engageFishCoin, setEngageFishCoin] = useState(false);
+    const [engageFishCoinChannel, setEngageFishCoinChannel] = useState(false);
     const [engageYtVidThree, setEngageYtVidThree] = useState(false);
     const [engageYtVidFour, setEngageYtVidFour] = useState(false);
     const [engageYtVidFive, setEngageYtVidFive] = useState(false);
@@ -72,14 +74,16 @@ const Contest = () => {
     const [ytVidThreeDisabled, setYtVidThreeDisabled] = useState(false);
     const [joinGoatsDisabled, setJoinGoatsDisabled] = useState(false);
     //const [joinTonAiDisabled, setJoinTonAiDisabled] = useState(false);
-    const [holdCoinDisabled, setHoldCoinDisabled] = useState(false);
-    const [holdCoinChannelDisabled, setHoldCoinChannelDisabled] = useState(false);
+    //const [holdCoinDisabled, setHoldCoinDisabled] = useState(false);
+    //const [holdCoinChannelDisabled, setHoldCoinChannelDisabled] = useState(false);
     const [ytVidFourDisabled, setYtVidFourDisabled] = useState(false);
     const [ytVidFiveDisabled, setYtVidFiveDisabled] = useState(false);
     //const [pigsBotDisabled, setPigsBotDisabled] = useState(false);
     //const [pigsChannelDisabled, setPigsChannelDisabled] = useState(false);
     //const [tonPartyBotDisabled, setTonPartyBotDisabled] = useState(false);
     //const [tonPartyChannelDisabled, setTonPartyChannelDisabled] = useState(false);
+    const [fishCoinDisabled, setFishCoinDisabled] = useState(false);
+    const [fishChannelDisabled, setFishChannelDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
     const [referralCode, setReferralCode] = useState('');
@@ -668,7 +672,7 @@ const Contest = () => {
         }
     };
 
-    const claimHoldCoin = async () => {
+    /*const claimHoldCoin = async () => {
         setHoldCoinDisabled(true)
         const points = 2000;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
@@ -723,6 +727,64 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setHoldCoinChannelDisabled(false);
+        }
+    };*/
+
+    const claimFishCoin = async () => {
+        setFishCoinDisabled(true)
+        const points = 2000;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'fish-coin-bot',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setFishCoinDisabled(false);
+        }
+    };
+
+    const claimFishCoinChannel = async () => {
+        setFishChannelDisabled(true)
+        const points = 500;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'fish-coin-channel',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setFishChannelDisabled(false);
         }
     };
 
@@ -2111,7 +2173,7 @@ const Contest = () => {
                                             </div>
                                         </div>
                                     */}
-                                    {
+                                    {/*
                                         task.claimTreshold === 'hold-coin-bot' &&
                                         <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                             <div className='flex items-center'>
@@ -2181,6 +2243,88 @@ const Contest = () => {
                                                     <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                         claimHoldCoinChannel();
                                                     }} disabled={holdCoinChannelDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    */}
+                                    {
+                                        task.claimTreshold === 'fish-coin-bot' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Fish</p>
+                                                    <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engageFishCoin &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/fishing_bowl_bot/fish?startapp=EQC0IERgAcF43DTAj-vJe58ARq1sd7B-lOagI-c3HAIo-y6W', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngageFishCoin(true)
+                                                        }, 5000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engageFishCoin &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimFishCoin();
+                                                    }} disabled={fishCoinDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'fish-coin-channel' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Fish Channel</p>
+                                                    <span className='text-[#A6A6A6]'>+500 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engageFishCoinChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/+xIPbexMUSB1lZDBk', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngageFishCoinChannel(true)
+                                                        }, 5000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engageFishCoinChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimFishCoinChannel();
+                                                    }} disabled={fishChannelDisabled}>
                                                         Claim
                                                     </button>
                                                 }
