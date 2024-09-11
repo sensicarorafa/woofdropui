@@ -1,0 +1,18 @@
+.pentagon {
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 60px solid #3F015F; /* Background color */
+    position: relative;
+}
+  
+.pentagon::after {
+    content: '';
+    position: absolute;
+    top: -30px; /* Adjust to bring text inside */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+  

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 
 // Utility function to get time until next midnight
 const getTimeUntilNextMidnight = () => {
@@ -8,7 +8,7 @@ const getTimeUntilNextMidnight = () => {
   return nextMidnight - now;
 };
 
-const CountdownTimer = () => {
+const CountdownTimer:FC<any> = () => {
   const [timeLeft, setTimeLeft] = useState(getTimeUntilNextMidnight());
 
   useEffect(() => {

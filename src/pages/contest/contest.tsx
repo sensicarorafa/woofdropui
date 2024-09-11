@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import medal from "../../assets/img/medal.png";
 import BottomSheet from "../../components/BottomSheet";
 import { toast } from 'react-hot-toast';
+import Cookies from "js-cookie";
 
 
 
@@ -118,6 +119,14 @@ const Contest = () => {
 
     useEffect (() => {
         const fetchUserReferrals = async () => {
+            const getUserCookies = Cookies.get('authUserLoggedInAI');
+            if (getUserCookies) {
+                const getUserCookiesParsed = JSON.parse(getUserCookies);
+                setTotalPoints(getUserCookiesParsed?.data?.userData?.referralContest);
+                setReferralCode(getUserCookiesParsed?.data?.userData?.referralCode);
+                setSocialTasks(getUserCookiesParsed?.data?.userData?.socialRewardDeets);
+                setUserName(getUserCookiesParsed?.data?.userData?.username ? getUserCookiesParsed?.data?.userData?.user?.username : `${getUserCookiesParsed?.data?.userData?.user?.first_name ?  getUserCookiesParsed?.data?.userData?.user?.first_name : ''} ${getUserCookiesParsed?.data?.userData?.user?.last_name ? getUserCookiesParsed?.data?.userData?.user?.last_name : ''}`)
+            }
             const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
             console.log(getUserData?.data)
             setTotalPoints(getUserData?.data?.userData?.referralContest);
