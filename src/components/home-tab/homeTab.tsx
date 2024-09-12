@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import Cookies from 'js-cookie';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -22,9 +21,16 @@ import lock from '../../assets/img/lock.png';
 const HomeTab = () => {
     // Cache sessionStorage values
 
-    const [totalPoints, setTotalPoints] = useState(0);
-    const [socialTasks, setSocialTasks] = useState<any>([]);
-    const [dailyLoginTasks, setDailyLoginTasks] = useState<any>([]);
+    const getUserCookies = sessionStorage.getItem('authUserLoggedInAI');
+    const getUserCookiesParsed = JSON.parse(getUserCookies as string);
+
+    const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.pointsNo : 0);
+    const [socialTasks, setSocialTasks] = useState<any>(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.socialRewardDeets : []);
+    const [dailyLoginTasks, setDailyLoginTasks] = useState<any>(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralRewardDeets : []);
+    const [referralCode, setReferralCode] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralCode : '');
+    const [pointsToday, setPointsToday] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.pointsToday : 0);
+    const [referees, setReferees] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralPoints : 0);
+    const [lastLogin, setLastLogin] = useState<any>(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.lastLogin : null)
     //const [engageTask, setEngageTask] = useState(false);
 
     const [engageTwoFrens, setEngageTwoFrens] = useState(false);
@@ -91,14 +97,9 @@ const HomeTab = () => {
     const [fishChannelDisabled, setFishChannelDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
-    const [referralCode, setReferralCode] = useState('');
-    const [pointsToday, setPointsToday] = useState(0);
-
-    const [referees, setReferees] = useState(0);
     const [open, setOpenModal] = useState<boolean>(false);
     //const [openBirds, setOpenModalBirds] = useState<boolean>(false);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
-    const [lastLogin, setLastLogin] = useState<any>()
 
     const handleOpenBottomSheet = () => {
         setBottomSheetOpen(true);
@@ -1251,17 +1252,6 @@ const HomeTab = () => {
 
     useEffect (() => {
         const fetchUserData = async () => {
-            const getUserCookies = Cookies.get('authUserLoggedInAI');
-            if (getUserCookies) {
-                const getUserCookiesParsed = JSON.parse(getUserCookies);
-                setTotalPoints(getUserCookiesParsed?.data?.userData?.pointsNo);
-                setPointsToday(getUserCookiesParsed?.data?.userData?.pointsToday);
-                setSocialTasks(getUserCookiesParsed?.data?.userData?.socialRewardDeets);
-                setDailyLoginTasks(getUserCookiesParsed?.data?.userData?.referralRewardDeets);
-                setReferees(getUserCookiesParsed?.data?.userData?.referralPoints);
-                setReferralCode(getUserCookiesParsed?.data?.userData?.referralCode);
-                setLastLogin(getUserCookiesParsed?.data?.userData?.lastLogin);
-            }
             const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
             console.log(getUserData?.data, pointsToday)
             setTotalPoints(getUserData?.data?.userData?.pointsNo);

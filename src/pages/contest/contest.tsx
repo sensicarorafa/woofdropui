@@ -8,21 +8,21 @@ import { useNavigate } from "react-router-dom";
 import medal from "../../assets/img/medal.png";
 import BottomSheet from "../../components/BottomSheet";
 import { toast } from 'react-hot-toast';
-import Cookies from "js-cookie";
-
-
 
 
 const Contest = () => {
     const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
+    const getUserCookies = sessionStorage.getItem('authUserLoggedInAI');
+    const getUserCookiesParsed = JSON.parse(getUserCookies as string);
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
     const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
-    const [totalPoints, setTotalPoints] = useState(0);
+    const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralContest : 0);
+    const [referralCode, setReferralCode] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralCode : '');
+    const [socialTasks, setSocialTasks] = useState<any>(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.socialRewardDeets : []);
+    const [username, setUserName] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.username ? getUserCookiesParsed?.data?.userData?.user?.username : `${getUserCookiesParsed?.data?.userData?.user?.first_name ?  getUserCookiesParsed?.data?.userData?.user?.first_name : ''} ${getUserCookiesParsed?.data?.userData?.user?.last_name ? getUserCookiesParsed?.data?.userData?.user?.last_name : ''}` : '');
     const [open, setOpenModal] = useState<boolean>(false);
-    const [username, setUserName] = useState('');
     const [currentView, setCurrentView] = useState('AIDOGS');
-    const [socialTasks, setSocialTasks] = useState<any>([]);
     const [engageTwoFrens, setEngageTwoFrens] = useState(false);
     const [engageFiveFrens, setEngageFiveFrens] = useState(false);
     const [engageTenFrens, setEngageTenFrens] = useState(false);
@@ -87,7 +87,6 @@ const Contest = () => {
     const [fishChannelDisabled, setFishChannelDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
-    const [referralCode, setReferralCode] = useState('');
     const [pointsToday, setPointsToday] = useState(0);
 
     const [referees, setReferees] = useState(0);
@@ -119,14 +118,6 @@ const Contest = () => {
 
     useEffect (() => {
         const fetchUserReferrals = async () => {
-            const getUserCookies = Cookies.get('authUserLoggedInAI');
-            if (getUserCookies) {
-                const getUserCookiesParsed = JSON.parse(getUserCookies);
-                setTotalPoints(getUserCookiesParsed?.data?.userData?.referralContest);
-                setReferralCode(getUserCookiesParsed?.data?.userData?.referralCode);
-                setSocialTasks(getUserCookiesParsed?.data?.userData?.socialRewardDeets);
-                setUserName(getUserCookiesParsed?.data?.userData?.username ? getUserCookiesParsed?.data?.userData?.user?.username : `${getUserCookiesParsed?.data?.userData?.user?.first_name ?  getUserCookiesParsed?.data?.userData?.user?.first_name : ''} ${getUserCookiesParsed?.data?.userData?.user?.last_name ? getUserCookiesParsed?.data?.userData?.user?.last_name : ''}`)
-            }
             const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
             console.log(getUserData?.data)
             setTotalPoints(getUserData?.data?.userData?.referralContest);

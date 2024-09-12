@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 const Starter = () => {
     const navigate = useNavigate();
@@ -35,7 +34,7 @@ const Starter = () => {
       try {
         const fetchUserData = async () => {
           const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
-          Cookies.set('authUserLoggedInAI', JSON.stringify(getUserData))
+          sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(getUserData))
           if (getUserData?.data?.success) {
             navigate('/splash-screen');
           }
