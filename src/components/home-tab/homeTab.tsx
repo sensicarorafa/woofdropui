@@ -143,6 +143,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -174,6 +175,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -205,6 +207,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -237,6 +240,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -268,6 +272,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -303,6 +308,7 @@ const HomeTab = () => {
             })
 
             if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+                sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
                 toast("Claimed successfully", {
                     className: "",
                     duration: 799,
@@ -348,6 +354,7 @@ const HomeTab = () => {
             })
 
             if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+                sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
                 toast("Claimed successfully", {
                     className: "",
                     duration: 799,
@@ -393,6 +400,7 @@ const HomeTab = () => {
             })
 
             if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+                sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
                 toast("Claimed successfully", {
                     className: "",
                     duration: 799,
@@ -438,6 +446,7 @@ const HomeTab = () => {
             })
 
             if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+                sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
                 toast("Claimed successfully", {
                     className: "",
                     duration: 799,
@@ -483,6 +492,7 @@ const HomeTab = () => {
             })
 
             if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+                sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
                 toast("Claimed successfully", {
                     className: "",
                     duration: 799,
@@ -524,6 +534,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -555,6 +566,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -586,6 +598,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -617,6 +630,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -648,6 +662,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -679,6 +694,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -710,6 +726,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -741,6 +758,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -772,6 +790,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -803,6 +822,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -834,6 +854,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -865,6 +886,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -896,6 +918,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -927,6 +950,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -958,6 +982,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -989,6 +1014,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1020,6 +1046,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1051,6 +1078,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1082,6 +1110,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1113,6 +1142,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1144,6 +1174,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1175,6 +1206,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1206,6 +1238,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1237,6 +1270,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1266,8 +1300,9 @@ const HomeTab = () => {
             claimTreshold: 'fish-coin-bot',
             user
         })
-
+        
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1299,6 +1334,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
@@ -1341,6 +1377,7 @@ const HomeTab = () => {
         })
 
         if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
             toast("Claimed successfully", {
                 className: "",
                 duration: 799,
