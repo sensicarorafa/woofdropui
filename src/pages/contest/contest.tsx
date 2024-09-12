@@ -43,8 +43,8 @@ const Contest = () => {
     const [engageJoinGoats, setEngageJoinGoats] = useState(false);
     //const [engageJoinTonAi, setEngageJoinTonAi] = useState(false);
     const [engageYtVidTwo, setEngageYtVidTwo] = useState(false);
-    //const [engageHoldCoin, setEngageHoldCoin] = useState(false);
-    //const [engageHoldCoinChannel, setEngageHoldCoinChannel] = useState(false);
+    const [engageHoldCoin, setEngageHoldCoin] = useState(false);
+    const [engageHoldCoinChannel, setEngageHoldCoinChannel] = useState(false);
     const [engageFishCoin, setEngageFishCoin] = useState(false);
     const [engageFishCoinChannel, setEngageFishCoinChannel] = useState(false);
     const [engageYtVidThree, setEngageYtVidThree] = useState(false);
@@ -80,8 +80,8 @@ const Contest = () => {
     const [ytVidThreeDisabled, setYtVidThreeDisabled] = useState(false);
     const [joinGoatsDisabled, setJoinGoatsDisabled] = useState(false);
     //const [joinTonAiDisabled, setJoinTonAiDisabled] = useState(false);
-    //const [holdCoinDisabled, setHoldCoinDisabled] = useState(false);
-    //const [holdCoinChannelDisabled, setHoldCoinChannelDisabled] = useState(false);
+    const [holdCoinDisabled, setHoldCoinDisabled] = useState(false);
+    const [holdCoinChannelDisabled, setHoldCoinChannelDisabled] = useState(false);
     const [ytVidFourDisabled, setYtVidFourDisabled] = useState(false);
     const [ytVidFiveDisabled, setYtVidFiveDisabled] = useState(false);
     //const [pigsBotDisabled, setPigsBotDisabled] = useState(false);
@@ -697,7 +697,7 @@ const Contest = () => {
         }
     };
 
-    /*const claimHoldCoin = async () => {
+    const claimHoldCoin = async () => {
         setHoldCoinDisabled(true)
         const points = 2000;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
@@ -755,7 +755,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setHoldCoinChannelDisabled(false);
         }
-    };*/
+    };
 
     const claimFishCoin = async () => {
         setFishCoinDisabled(true)
@@ -2255,7 +2255,7 @@ const Contest = () => {
                                                     </button>
                                                 }
                                                 {
-                                                    !task.rewardClaimed && engageSendToBinance &&
+                                                    !task.rewardClaimed && engageSendToHamster &&
                                                     <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                         claimSendToHamster();
                                                     }} disabled={sendToHamsterDisabled}>
@@ -2571,7 +2571,7 @@ const Contest = () => {
                                             </div>
                                         </div>
                                     */}
-                                    {/*
+                                    {
                                         task.claimTreshold === 'hold-coin-bot' &&
                                         <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                             <div className='flex items-center'>
@@ -2652,7 +2652,7 @@ const Contest = () => {
                                                 }
                                             </div>
                                         </div>
-                                    */}
+                                    }
                                     {
                                         task.claimTreshold === 'fish-coin-bot' &&
                                         <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
