@@ -16,13 +16,13 @@ export default function AppRoutes() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Starter />} />
+                <Route path="/splash-screen" element={<Starter />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/leaderboard" element={<Stats />} />
                 <Route path="/invites" element={<Referral />} />
 
 
-                <Route path="/splash-screen" element={<SplashScreen />} />
+                <Route path="/" element={<SplashScreen />} />
                 <Route path="/character" element={<Character />} />
                 <Route path="/early-adopters" element={<EarlyAdopters />} />
                 <Route path="/congrats" element={<Congrats />} />
