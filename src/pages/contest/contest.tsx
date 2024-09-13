@@ -45,8 +45,8 @@ const Contest = () => {
     const [engageYtVidTwo, setEngageYtVidTwo] = useState(false);
     const [engageHoldCoin, setEngageHoldCoin] = useState(false);
     const [engageHoldCoinChannel, setEngageHoldCoinChannel] = useState(false);
-    const [engageFishCoin, setEngageFishCoin] = useState(false);
-    const [engageFishCoinChannel, setEngageFishCoinChannel] = useState(false);
+    //const [engageFishCoin, setEngageFishCoin] = useState(false);
+    //const [engageFishCoinChannel, setEngageFishCoinChannel] = useState(false);
     const [engageYtVidThree, setEngageYtVidThree] = useState(false);
     const [engageYtVidFour, setEngageYtVidFour] = useState(false);
     const [engageYtVidFive, setEngageYtVidFive] = useState(false);
@@ -55,6 +55,13 @@ const Contest = () => {
     const [engageAiDogsUgc, setEngageAiDogsUgc] = useState(false);
     const [engageSendToBinance, setEngageSendToBinance] = useState(false);
     const [engageSendToHamster, setEngageSendToHamster] = useState(false);
+    const [engagePiggy, setEngagePiggy] = useState(false);
+    const [engageDlCoin, setEngageDlCoin] = useState(false);
+    const [engageDlCoinChannel, setEngageDlCoinChannel] = useState(false);
+    const [engageGhostDrive, setEngageGhostDrive] = useState(false);
+    const [engageGhostDriveChannel, setEngageGhostDriveChannel] = useState(false);
+    const [engagePokemonBall, setEngagePokemonBall] = useState(false);
+    const [engagePokemonBallChannel, setEngagePokemonBallChannel] = useState(false);
     //const [engagePigsBot, setEngagePigsBot] = useState(false);
     //const [engagePigsChannel, setEngagePigsChannel] = useState(false);
     //const [engageTonPartyBot, setEngageTonPartyBot] = useState(false);
@@ -88,13 +95,20 @@ const Contest = () => {
     //const [pigsChannelDisabled, setPigsChannelDisabled] = useState(false);
     //const [tonPartyBotDisabled, setTonPartyBotDisabled] = useState(false);
     //const [tonPartyChannelDisabled, setTonPartyChannelDisabled] = useState(false);
-    const [fishCoinDisabled, setFishCoinDisabled] = useState(false);
-    const [fishChannelDisabled, setFishChannelDisabled] = useState(false);
+    //const [fishCoinDisabled, setFishCoinDisabled] = useState(false);
+    //const [fishChannelDisabled, setFishChannelDisabled] = useState(false);
     const [ytVidSixDisabled, setYtVidSixDisabled] = useState(false);
     const [tikTokAiDogsDisabled, setTikTokAiDogsDisabled] = useState(false);
     const [aiDogsUgcDisabled, setAiDogsUgcDisabled] = useState(false);
     const [sendToBinanceDisabled, setSendToBinanceDisabled] = useState(false);
     const [sendToHamsterDisabled, setSendToHamsterDisabled] = useState(false);
+    const [piggyDisabled, setPiggyDisabled] = useState(false);
+    const [dlCoinDisabled, setDlCoinDisabled] = useState(false);
+    const [dlCoinChannelDisabled, setDlCoinChannelDisabled] = useState(false);
+    const [ghostDriveDisabled, setGhostDriveDisabled] = useState(false);
+    const [ghostDriveChannelDisabled, setGhostDriveChannelDisabled] = useState(false);
+    const [pokemonBallDisabled, setPokemonBallDisabled] = useState(false);
+    const [pokemonBallChannelDisabled, setPokemonBallChannelDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
     const [pointsToday, setPointsToday] = useState(0);
@@ -757,7 +771,7 @@ const Contest = () => {
         }
     };
 
-    const claimFishCoin = async () => {
+    /*const claimFishCoin = async () => {
         setFishCoinDisabled(true)
         const points = 2000;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
@@ -815,7 +829,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setFishChannelDisabled(false);
         }
-    };
+    };*/
 
     const claimYtVidTwo = async () => {
         setYtVidTwoDisabled(true)
@@ -1330,6 +1344,218 @@ const Contest = () => {
             setSendToHamsterDisabled(false)
         }
     }
+
+    const claimPiggy = async () => {
+        setPiggyDisabled(true)
+        const points = 500;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'piggy-bot',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setPiggyDisabled(false)
+        }
+    }
+
+    
+    const claimDlCoin = async () => {
+        setDlCoinDisabled(true)
+        const points = 2000;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'dl-coin-bot',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setDlCoinDisabled(false);
+        }
+    };
+
+    const claimDlCoinChannel = async () => {
+        setDlCoinChannelDisabled(true)
+        const points = 150;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'dl-coin-channel',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setDlCoinChannelDisabled(false);
+        }
+    };
+
+    const claimGhostDrive = async () => {
+        setGhostDriveDisabled(true)
+        const points = 2000;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'ghost-drive-bot',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setGhostDriveDisabled(false);
+        }
+    };
+
+    const claimGhostDriveChannel = async () => {
+        setGhostDriveChannelDisabled(true)
+        const points = 500;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'ghost-drive-channel',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setGhostDriveChannelDisabled(false);
+        }
+    };
+
+    const claimPokemonBall = async () => {
+        setPokemonBallDisabled(true)
+        const points = 2000;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'pokemon-ball-bot',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+            sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setPokemonBallDisabled(false);
+        }
+    };
+
+    const claimPokemonBallChannel = async () => {
+        setPokemonBallChannelDisabled(true)
+        const points = 500;
+        const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
+            pointsNo: points,
+            user
+        })
+
+        const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
+            claimTreshold: 'pokemon-ball-channel',
+            user
+        })
+
+        if (updatePoints?.data?.success && updateSocial?.data?.success)  {
+        sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(updateSocial))
+            toast("Claimed successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setPointsToday(updatePoints?.data?.userData?.pointsToday);
+            setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+            setReferees(updatePoints?.data?.userData?.referralPoints);
+            setPokemonBallChannelDisabled(false);
+        }
+    };
+
 
     function rearrangeRewards(socialRewardDeets: any) {
         return socialRewardDeets.sort((a: any, b: any) => {
@@ -2653,7 +2879,7 @@ const Contest = () => {
                                             </div>
                                         </div>
                                     }
-                                    {
+                                    {/*
                                         task.claimTreshold === 'fish-coin-bot' &&
                                         <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                             <div className='flex items-center'>
@@ -2723,6 +2949,293 @@ const Contest = () => {
                                                     <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
                                                         claimFishCoinChannel();
                                                     }} disabled={fishChannelDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    */}
+                                    {
+                                        task.claimTreshold === 'piggy-bot' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                    <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Play PiggyPiggy</p>
+                                                    <span className='text-[#A6A6A6]'>+500 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engagePiggy &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {window.open('https://t.me/PiggyPiggyofficialbot/game?startapp=share_6106532625', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngagePiggy(true)
+                                                        }, 5000)
+                                                    }}>
+                                                        Start
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engagePiggy &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimPiggy();
+                                                    }} disabled={piggyDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'dl-coin-bot' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Play DLCoin</p>
+                                                    <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engageDlCoin &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/DLCoinBot/app?startapp=i_13628839653', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngageDlCoin(true)
+                                                        }, 5000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engageDlCoin &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimDlCoin();
+                                                    }} disabled={dlCoinDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'dl-coin-channel' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Join DlCoin Channel</p>
+                                                    <span className='text-[#A6A6A6]'>+500 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engageDlCoinChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/+DztFJQr8dPMyMTQ0', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngageDlCoinChannel(true)
+                                                        }, 5000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engageDlCoinChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimDlCoinChannel();
+                                                    }} disabled={dlCoinChannelDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'ghost-drive-bot' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Play Ghost Drive</p>
+                                                    <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engageGhostDrive &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/ghostdrive_bot?start=QCL7Yrigko', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngageGhostDrive(true)
+                                                        }, 5000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engageGhostDrive &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimGhostDrive();
+                                                    }} disabled={ghostDriveDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'ghost-drive-channel' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Ghost Drive Channel</p>
+                                                    <span className='text-[#A6A6A6]'>+500 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engageGhostDriveChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('http://t.me/ghostdrive_web3', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngageGhostDriveChannel(true)
+                                                        }, 5000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engageGhostDriveChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimGhostDriveChannel();
+                                                    }} disabled={ghostDriveChannelDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'pokemon-ball-bot' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Play Pokemon Ball</p>
+                                                    <span className='text-[#A6A6A6]'>+2000 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engagePokemonBall &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('http://t.me/PokemonBall_bot?start=6106532625', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngagePokemonBall(true)
+                                                        }, 5000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engagePokemonBall &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimPokemonBall();
+                                                    }} disabled={pokemonBallDisabled}>
+                                                        Claim
+                                                    </button>
+                                                }
+                                                {
+                                                    task.rewardClaimed &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} disabled={true}>
+                                                        Done
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        task.claimTreshold === 'pokemon-bot-channel' &&
+                                        <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
+                                            <div className='flex items-center'>
+                                                <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
+                                                <img className="w-full" src={logoBig} alt="" />
+                                                </div>
+                                                <div className='flex flex-col pl-5'>
+                                                    <p className='text-white text-bold taskTitle' onClick={() => {}}>Join Pokemon Ball Channel</p>
+                                                    <span className='text-[#A6A6A6]'>+500 $AIDOGS</span>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                {
+                                                    !task.rewardClaimed && !engagePokemonBallChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        window.open('https://t.me/+6dMVsdwxF0JiZmIy', '_blank');
+                                                        setTimeout(() => {
+                                                            setEngagePokemonBallChannel(true)
+                                                        }, 5000)
+                                                    }}>
+                                                        Join
+                                                    </button>
+                                                }
+                                                {
+                                                    !task.rewardClaimed && engagePokemonBallChannel &&
+                                                    <button className={`bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px] ${task.rewardClaimed && "opacity-50"}`} onClick={() => {
+                                                        claimPokemonBallChannel();
+                                                    }} disabled={pokemonBallChannelDisabled}>
                                                         Claim
                                                     </button>
                                                 }
