@@ -1248,7 +1248,7 @@ const HomeTab = () => {
         })
 
         const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-social-reward`, {
-            claimTreshold: 'pokemon-ball-channel',
+            claimTreshold: 'pokemon-bot-channel',
             user
         })
 
