@@ -39,11 +39,11 @@ const SplashScreen = () => {
           if (!getUserData?.data?.userData?.earlyAdopterBonusClaimed) {
             setTimeout(() => {
                 navigate(`/early-adopters`);
-            }, 5000);
+            }, 2000);
           } else {
             setTimeout(() => {
                 navigate(`/home`);
-            }, 5000);
+            }, 2000);
           }
         }
         if (user) {
