@@ -1,23 +1,23 @@
 
-import medal from "../../assets/img/medal.png";
+//import medal from "../../assets/img/medal.png";
 import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { capitalizeAllFirstLetters } from "../../utils/helpers";
+//import axios from "axios";
+//import { capitalizeAllFirstLetters } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import BottomSheet from "../../components/BottomSheet";
 
 const Stats = () => {
 
-    const colorCodes: string[] = ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"];
+    //const colorCodes: string[] = ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"];
 
     //const [usersIndex, setUserIndex] = useState(0)
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
-    const [leaderboardData, setLeaderboardData] = useState<any>([])
+    /*const [leaderboardData, setLeaderboardData] = useState<any>([])
     const [leaderboardLoading, setLeaderboardLoading] = useState<boolean>(false)
     const [username, setUserName] = useState('');
-    const [totalPoints, setTotalPoints] = useState(0);
+    const [totalPoints, setTotalPoints] = useState(0);*/
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const Stats = () => {
         }
     }, []);
 
-    useEffect (() => {
+    /*useEffect (() => {
         const fetchUserData = async () => {
             const getUserData =  await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
             console.log(getUserData?.data)
@@ -79,7 +79,7 @@ const Stats = () => {
 
     function sortArrayByPointsDescending(arr: any) {
         return arr.sort((a: any, b: any) => b.points - a.points);
-    }
+    }*/
 
     return (
         <section className="flex flex-col h-screen w-full bg-[#210133] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
@@ -91,7 +91,11 @@ const Stats = () => {
                             <BottomSheet isOpen={true} onClose={() => {
                                 navigate('/home')
                             }} bgColor="#180026" title="Leaderboard">
-                                <div className=" flex justify-between items-center px-5 py-3 w-full gap-5 mt-2">
+
+                                <div className="flex items-center justify-center text-center text-xl">
+                                    CURRENTLY UNDER MAINTENANCE......
+                                </div>
+                                {/*<div className=" flex justify-between items-center px-5 py-3 w-full gap-5 mt-2">
                                     <div className="flex gap-3 py-4 items-center">
                                         {!leaderboardLoading ? (
                                             <>
@@ -117,7 +121,6 @@ const Stats = () => {
                                         {leaderboardData.length > 0 ? (
                                             <>
                                                 <img className="w-[10vw]" src={medal} alt="" />
-                                                {/*<p className="text-[#FFFFFF] font-bold font-OpenSans text-xl">{medal}</p>*/}
                                             </>
                                         ) : (
                                             <span className="text-[#FFFFFF]">...</span>
@@ -156,7 +159,7 @@ const Stats = () => {
                                             ))
                                             : null}
                                     </div>
-                                </div>
+                                </div>*/}
                             </BottomSheet>
                         </div>
                     </div>

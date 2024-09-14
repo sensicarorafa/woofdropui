@@ -3,7 +3,7 @@ import logoBig from "../../assets/img/logobig.png";
 import Footer from "../../components/footer";
 //import { toast } from "react-hot-toast";
 import axios from "axios";
-import { capitalizeAllFirstLetters } from "../../utils/helpers";
+//import { capitalizeAllFirstLetters } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import medal from "../../assets/img/medal.png";
 import BottomSheet from "../../components/BottomSheet";
@@ -12,16 +12,16 @@ import CountdownTimer from "../../components/CountdownTimerTask"
 
 
 const Contest = () => {
-    const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
+    //const colorCodes = useMemo(() => ["#DFFF00", "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#40E0D0", "#6495ED", "#CCCCFF", "#000000", "#A6A6A6"], []);
     const getUserCookies = sessionStorage.getItem('authUserLoggedInAI');
     const getUserCookiesParsed = JSON.parse(getUserCookies as string);
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
-    const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
-    const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralContest : 0);
+    //const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
+    //const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralContest : 0);
     const [referralCode, setReferralCode] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralCode : '');
     const [socialTasks, setSocialTasks] = useState<any>(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.socialRewardDeets : []);
-    const [username, setUserName] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.username ? getUserCookiesParsed?.data?.userData?.user?.username : `${getUserCookiesParsed?.data?.userData?.user?.first_name ?  getUserCookiesParsed?.data?.userData?.user?.first_name : ''} ${getUserCookiesParsed?.data?.userData?.user?.last_name ? getUserCookiesParsed?.data?.userData?.user?.last_name : ''}` : '');
+    //const [username, setUserName] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.username ? getUserCookiesParsed?.data?.userData?.user?.username : `${getUserCookiesParsed?.data?.userData?.user?.first_name ?  getUserCookiesParsed?.data?.userData?.user?.first_name : ''} ${getUserCookiesParsed?.data?.userData?.user?.last_name ? getUserCookiesParsed?.data?.userData?.user?.last_name : ''}` : '');
     const [open, setOpenModal] = useState<boolean>(false);
     const [currentView, setCurrentView] = useState('AIDOGS');
     const [engageTwoFrens, setEngageTwoFrens] = useState(false);
@@ -200,7 +200,7 @@ const Contest = () => {
         }
     }, []);
 
-    useEffect (() => {
+    /*useEffect (() => {
         const fetchUserReferrals = async () => {
             const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
             console.log(getUserData?.data)
@@ -228,7 +228,7 @@ const Contest = () => {
         }
     }, [user])
 
-    /*const toggleModal = useCallback(() => {
+    const toggleModal = useCallback(() => {
         setOpenModal(prev => !prev);
     }, []);*/
 
@@ -236,9 +236,9 @@ const Contest = () => {
         setOpenModal(prev => !prev);
     }, []);
 
-    function sortArrayByPointsDescending(arr: any) {
+    /*function sortArrayByPointsDescending(arr: any) {
         return arr.sort((a: any, b: any) => b.points - a.points);
-    }
+    }*/
 
     const claimTg = async () => {
         setTgDisabled(true)
@@ -4881,87 +4881,91 @@ const Contest = () => {
                     {
                         currentView === 'Contest' &&
                         <>
-                        <div className=" flex justify-between items-center px-3 py-3 w-full gap-5 mt-2 border-b-[1px]">
-                            <div className="flex gap-3 py-4 items-center">
-                                {username && username.length > 0 ? (
+                            
+                            <div className="flex items-center justify-center text-center text-xl">
+                                CURRENTLY UNDER MAINTENANCE......
+                            </div>
+                            {/*<div className=" flex justify-between items-center px-3 py-3 w-full gap-5 mt-2 border-b-[1px]">
+                                <div className="flex gap-3 py-4 items-center">
+                                    {username && username.length > 0 ? (
+                                        <>
+                                            <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full">
+                                                <p className="text-[#FFFFFF] text-lg font-bold">
+                                                    {username?.charAt(0).toUpperCase() + username?.charAt(1).toUpperCase() }
+                                                </p>
+                                            </div>
+                                            <div className="flex flex-col justify-center">
+                                                <p className="text-[#FFFFFF] leading-none font-bold text-sm">
+                                                    {'You'}
+                                                </p>
+                                                <div className="flex gap-2 items-center mt-[-2px]">
+                                                    <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{parseInt(totalPoints.toLocaleString())} <span className="text-[#A6A6A6] text-sm">FRENS</span> </p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <span className="text-[#FFFFFF]">Loading</span>
+                                    )}
+                                </div>
+                                <div className="flex-col gap-1">
                                     <>
-                                        <div className="bg-[#314359] flex justify-center h-[45px] w-[45px] items-center px-3 py-3 rounded-full">
-                                            <p className="text-[#FFFFFF] text-lg font-bold">
-                                                {username?.charAt(0).toUpperCase() + username?.charAt(1).toUpperCase() }
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col justify-center">
-                                            <p className="text-[#FFFFFF] leading-none font-bold text-sm">
-                                                {'You'}
-                                            </p>
-                                            <div className="flex gap-2 items-center mt-[-2px]">
-                                                <p className="text-[#A6A6A6] pt-1 leading-none text-xl font-bold">{parseInt(totalPoints.toLocaleString())} <span className="text-[#A6A6A6] text-sm">FRENS</span> </p>
-                                            </div>
-                                        </div>
+                                        <img className="w-[10vw]" src={medal} alt="" />
                                     </>
-                                ) : (
-                                    <span className="text-[#FFFFFF]">Loading</span>
-                                )}
+                                </div>
                             </div>
-                            <div className="flex-col gap-1">
-                                <>
-                                    <img className="w-[10vw]" src={medal} alt="" />
-                                </>
-                            </div>
-                        </div>
-                        
-                        <div className="flex flex-col items-center justify-start w-full gap-5 relative">
-                            <div className="h-full w-full">
-                                {referralLeaderboard.length > 0
-                                    ? sortArrayByPointsDescending(referralLeaderboard).slice(0, 100).map((item: any, idx: any) => (
-                                        <div key={idx.toString()} className="border-b-[1px] flex justify-between items-center ps-3 pe-10 py-3">
-                                            <div className="flex">
-                                                <div className={`flex justify-center h-[45px] w-[45px]  items-center px-3 py-3 rounded-full`} style={{background:`${colorCodes[Math.floor(Math.random() * 10)]}`}}>
-                                                    <p className="text-[#FFFFFF] text-lg font-bold]">
-                                                        {item?.name.charAt(0).toUpperCase() + item?.name.charAt(1).toUpperCase()}
-                                                    </p>
-                                                </div>
-                                                <div className="pl-3">
-                                                    <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{capitalizeAllFirstLetters(item?.name)}</p>
-                                                    <p className="text-[#A6A6A6] text-nowrap text-left font-Rockwell">{`${parseInt(item.points)}`?.toLocaleString() } <span className="text-[#A6A6A6] text-sm">FRENS</span></p>
-                                                    {
-                                                        idx === 0 &&
-                                                        <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $1000</p>
-                                                    }
-                                                    {
-                                                        idx >= 1 && idx <= 9 &&
-                                                        <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $500</p>
-                                                    }
-                                                    {
-                                                        idx >= 10 && idx <= 29 &&
-                                                        <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $125</p>
-                                                    }
-                                                    {
-                                                        idx >= 30 && idx <= 49 &&
-                                                        <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $50</p>
-                                                    }
-                                                    {
-                                                        idx >= 49 &&
-                                                        <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $10</p>
-                                                    }
-                                                </div>
-                                            </div>
-
-
-
-                                            <div className=" flex justify-end items-center">
-                                                <>
-                                                    <div className=" flex w-full justify-end items-center small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
-                                                        <img className="" src={medal} alt="" />
-                                                        <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>
+                            
+                            <div className="flex flex-col items-center justify-start w-full gap-5 relative">
+                                <div className="h-full w-full">
+                                    {referralLeaderboard.length > 0
+                                        ? sortArrayByPointsDescending(referralLeaderboard).slice(0, 100).map((item: any, idx: any) => (
+                                            <div key={idx.toString()} className="border-b-[1px] flex justify-between items-center ps-3 pe-10 py-3">
+                                                <div className="flex">
+                                                    <div className={`flex justify-center h-[45px] w-[45px]  items-center px-3 py-3 rounded-full`} style={{background:`${colorCodes[Math.floor(Math.random() * 10)]}`}}>
+                                                        <p className="text-[#FFFFFF] text-lg font-bold]">
+                                                            {item?.name.charAt(0).toUpperCase() + item?.name.charAt(1).toUpperCase()}
+                                                        </p>
                                                     </div>
-                                                </>                                           
+                                                    <div className="pl-3">
+                                                        <p className="text-[#FFFFFF] w-[79px] font-Rockwell">{capitalizeAllFirstLetters(item?.name)}</p>
+                                                        <p className="text-[#A6A6A6] text-nowrap text-left font-Rockwell">{`${parseInt(item.points)}`?.toLocaleString() } <span className="text-[#A6A6A6] text-sm">FRENS</span></p>
+                                                        {
+                                                            idx === 0 &&
+                                                            <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $1000</p>
+                                                        }
+                                                        {
+                                                            idx >= 1 && idx <= 9 &&
+                                                            <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $500</p>
+                                                        }
+                                                        {
+                                                            idx >= 10 && idx <= 29 &&
+                                                            <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $125</p>
+                                                        }
+                                                        {
+                                                            idx >= 30 && idx <= 49 &&
+                                                            <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $50</p>
+                                                        }
+                                                        {
+                                                            idx >= 49 &&
+                                                            <p className="text-[#FFFFFF] text-xs font-Rockwell">Reward: $10</p>
+                                                        }
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div className=" flex justify-end items-center">
+                                                    <>
+                                                        <div className=" flex w-full justify-end items-center small-mobile:w-[26%] translate-x-[10px] mobile:w-[36%]">
+                                                            <img className="" src={medal} alt="" />
+                                                            <p className="text-[#FEC95E] font-OpenSans">#{idx + 1}</p>
+                                                        </div>
+                                                    </>                                           
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))
-                                    : null}
-                            </div>
-                        </div>
+                                        ))
+                                        : null}
+                                </div>
+                            </div>*/}
                         </>
                     }
                 </div>
