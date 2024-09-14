@@ -1929,7 +1929,6 @@ const Contest = () => {
     }, [referralLink]);
 
     const urlToMarketGift = `https://twitter.com/intent/tweet?text=${encodedToMarketText}`;
-    console.log("socialTasks", socialTasks)
 
     return (
         <section className="flex flex-col h-screen w-full bg-[#210133] overflow-hidden relative font-ZillaSlab text-xs small-mobile:text-base md:hidden">
