@@ -6,6 +6,10 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import logoBig from "../../assets/img/logobig.png";
+import Schedule from "../../assets/img/schedule.png";
+import lock from '../../assets/img/lock.png';
+import Trophy from "../../assets/img/trophy.png";
+import Game from "../../assets/img/game-controller.png";
 //import logoSm from "../../assets/img/logosm.svg";
 
 import Footer from "../footer";
@@ -14,7 +18,7 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import BottomSheet from '../BottomSheet';
 import Countdown from '../Countdown';
-import lock from '../../assets/img/lock.png';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -125,6 +129,8 @@ const HomeTab = () => {
     //const [openBirds, setOpenModalBirds] = useState<boolean>(false);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
 
+    const navigate = useNavigate();
+
     const handleOpenBottomSheet = () => {
         setBottomSheetOpen(true);
     };
@@ -142,6 +148,16 @@ const HomeTab = () => {
         window.open("https://x.com/aidogscomm", "_blank");
 
     };
+
+    const openYoutube = (e: React.MouseEvent) => {
+        e.preventDefault();
+        window.open("https://www.youtube.com/@aidogscomm", "_blank");
+
+    };
+
+    const goToSpecialTasks = () => {
+        navigate("/contest")
+    }
 
     const claimTg = async () => {
         setTgDisabled(true)
@@ -1880,7 +1896,7 @@ const HomeTab = () => {
                 <div className='bg-[#180026] rounded-md px-6 py-4'>
                     <Swiper
                         slidesPerView={3}
-                        spaceBetween={15}
+                        spaceBetween={5}
                         pagination={{
                             clickable: true,
                         }}
@@ -1888,62 +1904,103 @@ const HomeTab = () => {
                         className="mySwiper"
                     >
                         <SwiperSlide>
-                            <div className="flex h-[125px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-5">
-                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
-                                    <img className="w-full" src={logoBig} alt="" />
+                            <div className="flex w-[100px] overflow-hidden pt-5 relative h-[150px] flex-col rounded-lg justify-top align-center items-center text-white border-[#FFE2A7] border-[1px]">
+                                <div className=" w-[50%] small-mobile:w-[40%] mobile:w-[45%]">
+                                    <img className="w-full" src={Schedule} alt="" />
                                 </div>
-                                <div className='flex flex-col justify-center align-center items-center py-4'>
-                                    <p className='text-sm'>Daily Reward</p>
+                                <div className='flex flex-col justify-center align-center items-center py-2'>
+                                    <p className='text-sm small-mobile:text-[12px]'>Daily Check-in</p>
+                                    <p className='text-[10px] text-[#FEC95E]'>+15000 $AIDOGS</p>
                                 </div>
-                                <div className="flex flex-col rounded-lg bg-white/20 justify-center align-center m-auto items-center">
+
+                                <div className="flex flex-col absolute bottom-0  rounded-lg bg-white/20 justify-center align-center m-auto items-center w-full">
                                     {lastLogin &&
                                         <>{
                                             isTimeDifference24HoursOrMore(lastLogin) ?
-                                            <button className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button> : <Countdown targetTime={lastLogin} />                                          
+                                            <button className="bg-white w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button> : <Countdown targetTime={lastLogin} />                                          
                                         }</>
                                     }
+{/* 
+                                    <button className="bg-white bg-gradient-to-b from-[#F0D377] to-[#F1A35F] w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]" onClick={handleOpenBottomSheet}>
+                                        Claim
+                                    </button> */}
                                 </div>
                             </div>
                         </SwiperSlide>
+                        
                         <SwiperSlide>
-                            <div className='flex h-[125px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-5'>
-                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256S111 504 248 504 496 393 496 256 385 8 248 8zM363 176.7c-3.7 39.2-19.9 134.4-28.1 178.3-3.5 18.6-10.3 24.8-16.9 25.4-14.4 1.3-25.3-9.5-39.3-18.7-21.8-14.3-34.2-23.2-55.3-37.2-24.5-16.1-8.6-25 5.3-39.5 3.7-3.8 67.1-61.5 68.3-66.7 .2-.7 .3-3.1-1.2-4.4s-3.6-.8-5.1-.5q-3.3 .7-104.6 69.1-14.8 10.2-26.9 9.9c-8.9-.2-25.9-5-38.6-9.1-15.5-5-27.9-7.7-26.8-16.3q.8-6.7 18.5-13.7 108.4-47.2 144.6-62.3c68.9-28.6 83.2-33.6 92.5-33.8 2.1 0 6.6 .5 9.6 2.9a10.5 10.5 0 0 1 3.5 6.7A43.8 43.8 0 0 1 363 176.7z" /></svg>
+                            <div className='flex w-[100px] overflow-hidden relative  h-[150px] pt-5 flex-col rounded-lg justify-top align-center items-center text-white border-[#FFE2A7] border-[1px] '>
+                                <div className=" w-[50%] small-mobile:w-[40%] mobile:w-[45%]">
+                                    <img className="w-full" src={Trophy} alt="" />
                                 </div>
-                                <div className='flex flex-col justify-center align-center items-center py-4'>
-                                    <p className='text-sm'>Join Telegram</p>
+                                <div className='flex flex-col justify-center align-center items-center py-2'>
+                                    <p className='text-sm small-mobile:text-[12px]'>Special Tasks</p>
+                                    <p className='text-[10px] text-[#FEC95E]'>+21000 $AIDOGS</p>
+
                                 </div>
-                                <div className="flex flex-col rounded-lg bg-white/20 justify-center align-center m-auto items-center">
-                                    <button className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2 rounded-[1px]" onClick={() => {openTg()}}>
-                                        Join
+                                <div className="flex flex-col absolute bottom-0  rounded-lg bg-white/20 justify-center align-center m-auto items-center w-full">
+                                    <button className="bg-white bg-gradient-to-b from-[#F0D377] to-[#F1A35F] w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]" onClick={() => { goToSpecialTasks() }}>
+                                        Start
                                     </button>
                                 </div>
 
                             </div>
                         </SwiperSlide>
                         <SwiperSlide>
-                            <div className='flex h-[125px] flex-col rounded-lg justify-center align-center items-center text-white bg-white/15 py-5'>
-                                <div className=" w-[50%] small-mobile:w-[20%] mobile:w-[25%]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" width="20px" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
+                            <div className='flex w-[100px] overflow-hidden relative h-[150px] pt-5 flex-col rounded-lg justify-top align-center items-center text-white border-[#FFE2A7] border-[1px]'>
+                                <div className=" w-[50%] small-mobile:w-[40%] mobile:w-[45%]">
+                                    <img className="w-full" src={Game} alt="" />
                                 </div>
-                                <div className='flex flex-col justify-center align-center items-center py-4'>
-                                    <p className='text-sm'> Follow On X</p>
+                                <div className='flex flex-col justify-center align-center items-center py-2'>
+                                    <p className='text-sm small-mobile:text-[12px]'> Play Mini Games</p>
                                 </div>
-                                <div className="flex flex-col rounded-lg bg-white/20  justify-center align-center m-auto items-center">
 
 
-                                    <button
-                                        className="bg-white text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-4 py-2  rounded-[1px]"
-                                        onClick={(e) => openTwitter(e)}
-
-                                    >
-                                        Follow
+                                <div className="flex absolute bottom-0 flex-col rounded-lg bg-white/20 justify-center align-center m-auto items-center w-full">
+                                    <button className="bg-white bg-gradient-to-b from-[#F0D377] to-[#F1A35F] w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]">
+                                        Play
                                     </button>
                                 </div>
+
 
                             </div>
                         </SwiperSlide>
                     </Swiper>
+                </div>
+
+                
+                <div className='flex py-3 w-full justify-around'>
+                    <div className="flex bg-white w-[100px] overflow-hidden relative flex-col rounded-lg justify-top align-center items-center text-white border-[#FFE2A7] ">
+                        <button className="bg-white flex items-center text-[8px] font-OpenSans text-[rgba(0,0,0)] rounded-lg py-1 rounded-[1px]" onClick={() => { openTg() }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" viewBox="0 0 48 48">
+                                <linearGradient id="BiF7D16UlC0RZ_VqXJHnXa_oWiuH0jFiU0R_gr1" x1="9.858" x2="38.142" y1="9.858" y2="38.142" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#33bef0"></stop><stop offset="1" stop-color="#0a85d9"></stop></linearGradient><path fill="url(#BiF7D16UlC0RZ_VqXJHnXa_oWiuH0jFiU0R_gr1)" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path d="M10.119,23.466c8.155-3.695,17.733-7.704,19.208-8.284c3.252-1.279,4.67,0.028,4.448,2.113	c-0.273,2.555-1.567,9.99-2.363,15.317c-0.466,3.117-2.154,4.072-4.059,2.863c-1.445-0.917-6.413-4.17-7.72-5.282	c-0.891-0.758-1.512-1.608-0.88-2.474c0.185-0.253,0.658-0.763,0.921-1.017c1.319-1.278,1.141-1.553-0.454-0.412	c-0.19,0.136-1.292,0.935-1.745,1.237c-1.11,0.74-2.131,0.78-3.862,0.192c-1.416-0.481-2.776-0.852-3.634-1.223	C8.794,25.983,8.34,24.272,10.119,23.466z" opacity=".05"></path><path d="M10.836,23.591c7.572-3.385,16.884-7.264,18.246-7.813c3.264-1.318,4.465-0.536,4.114,2.011	c-0.326,2.358-1.483,9.654-2.294,14.545c-0.478,2.879-1.874,3.513-3.692,2.337c-1.139-0.734-5.723-3.754-6.835-4.633	c-0.86-0.679-1.751-1.463-0.71-2.598c0.348-0.379,2.27-2.234,3.707-3.614c0.833-0.801,0.536-1.196-0.469-0.508	c-1.843,1.263-4.858,3.262-5.396,3.625c-1.025,0.69-1.988,0.856-3.664,0.329c-1.321-0.416-2.597-0.819-3.262-1.078	C9.095,25.618,9.075,24.378,10.836,23.591z" opacity=".07"></path><path fill="#fff" d="M11.553,23.717c6.99-3.075,16.035-6.824,17.284-7.343c3.275-1.358,4.28-1.098,3.779,1.91	c-0.36,2.162-1.398,9.319-2.226,13.774c-0.491,2.642-1.593,2.955-3.325,1.812c-0.833-0.55-5.038-3.331-5.951-3.984	c-0.833-0.595-1.982-1.311-0.541-2.721c0.513-0.502,3.874-3.712,6.493-6.21c0.343-0.328-0.088-0.867-0.484-0.604	c-3.53,2.341-8.424,5.59-9.047,6.013c-0.941,0.639-1.845,0.932-3.467,0.466c-1.226-0.352-2.423-0.772-2.889-0.932	C9.384,25.282,9.81,24.484,11.553,23.717z"></path>
+                            </svg>
+                            &nbsp;
+
+                            Join Telegram
+                        </button>
+                    </div>
+                    <div className="flex bg-white w-[100px] overflow-hidden relative flex-col rounded-lg justify-top align-center items-center text-white border-[#FFE2A7] ">
+                        <button className="bg-white flex items-center text-[8px] font-OpenSans text-[rgba(0,0,0)] rounded-lg py-1 rounded-[1px]" onClick={(e) => openTwitter(e)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" viewBox="0 0 50 50">
+                                <path d="M 11 4 C 7.134 4 4 7.134 4 11 L 4 39 C 4 42.866 7.134 46 11 46 L 39 46 C 42.866 46 46 42.866 46 39 L 46 11 C 46 7.134 42.866 4 39 4 L 11 4 z M 13.085938 13 L 21.023438 13 L 26.660156 21.009766 L 33.5 13 L 36 13 L 27.789062 22.613281 L 37.914062 37 L 29.978516 37 L 23.4375 27.707031 L 15.5 37 L 13 37 L 22.308594 26.103516 L 13.085938 13 z M 16.914062 15 L 31.021484 35 L 34.085938 35 L 19.978516 15 L 16.914062 15 z"></path>
+                            </svg>
+                            &nbsp;
+
+                            Follow X
+                        </button>
+                    </div>
+                    <div className="flex bg-white w-[100px] overflow-hidden relative flex-col rounded-lg justify-top align-center items-center text-white border-[#FFE2A7] ">
+                        <button className="bg-white flex items-center text-[8px] font-OpenSans text-[rgba(0,0,0)] rounded-lg py-1 rounded-[1px]" onClick={(e) => openYoutube(e)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" viewBox="0 0 48 48">
+                                <path fill="#FF3D00" d="M43.2,33.9c-0.4,2.1-2.1,3.7-4.2,4c-3.3,0.5-8.8,1.1-15,1.1c-6.1,0-11.6-0.6-15-1.1c-2.1-0.3-3.8-1.9-4.2-4C4.4,31.6,4,28.2,4,24c0-4.2,0.4-7.6,0.8-9.9c0.4-2.1,2.1-3.7,4.2-4C12.3,9.6,17.8,9,24,9c6.2,0,11.6,0.6,15,1.1c2.1,0.3,3.8,1.9,4.2,4c0.4,2.3,0.9,5.7,0.9,9.9C44,28.2,43.6,31.6,43.2,33.9z"></path><path fill="#FFF" d="M20 31L20 17 32 24z"></path>
+                            </svg>
+                            &nbsp;
+
+                            Follow  Youtube
+                        </button>
+                    </div>
+
                 </div>
 
                 <div className="w-full flex flex-col pt-7 px-4 relative z-10 gap-5">

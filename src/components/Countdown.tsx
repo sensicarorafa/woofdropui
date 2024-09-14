@@ -33,7 +33,7 @@ const Countdown:FC<any> = ({ targetTime }) => {
       {timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0 ? (
         <></>
       ) : (
-        <div className="h-auto font-neuropol">
+        <div className="h-auto font-neuropol py-2">
             <div className="text-center text-white flex gap-5 px-4 justify-center items-center">
                 <div className="text-sm">
                 {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}
