@@ -1893,7 +1893,7 @@ const HomeTab = () => {
                     <p className="text-[#FFFFFF] text-4xl font-OpenSans font-bold">{totalPoints.toLocaleString()}</p>
                     <p className="text-[#A6A6A6] text-xl font-OpenSans font-semibold">$AIDOGS</p>
                 </div>
-                <div className='bg-[#180026] rounded-md px-6 py-4'>
+                <div className='bg-[#180026] rounded-md py-4'>
                     <Swiper
                         slidesPerView={3}
                         spaceBetween={5}

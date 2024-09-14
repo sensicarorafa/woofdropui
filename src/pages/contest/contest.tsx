@@ -1666,6 +1666,7 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setWhatsappStatusDisabled(false);
+            setOpenWhatsappStatusToggle((prevOpen) => !prevOpen);
         }
     };
     const claimWhatsappGroup = async (e: any) => {
@@ -1701,6 +1702,7 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setWhatsappGroupDisabled(false);
+            setOpenWhatsappGroupToggle((prevOpen) => !prevOpen);
         }
     };
     const claimInstagram = async (e: any) => {
@@ -1733,6 +1735,7 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setInstagramPostDisabled(false);
+            setOpenInstagramToggle((prevOpen) => !prevOpen);
         }
     };
     const claimFacebook = async (e: any) => {
@@ -1763,6 +1766,7 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setFacebookDisabled(false);
+            setOpenFacebookToggle((prevOpen) => !prevOpen);
         }
     };
     const claimTiktok = async (e: any) => {
@@ -1793,6 +1797,7 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setTiktokDisabled(false);
+            setOpenTiktokToggle((prevOpen) => !prevOpen);
         }
     };
     const claimSnapchat = async (e: any) => {
@@ -1823,6 +1828,7 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setSnapchatDisabled(false);
+            setOpenSnapchatToggle((prevOpen) => !prevOpen);
         }
     };
     const claimTelegramGroup = async (e: any) => {
@@ -1853,6 +1859,7 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setTelegramGroupDisabled(false);
+            setOpenTelegramGroupToggle((prevOpen) => !prevOpen);
         }
     };
     const claimFacebookPost = async (e: any) => {
@@ -1883,6 +1890,7 @@ const Contest = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setFacebookPostDisabled(false);
+            setOpenFacebookPostToggle((prevOpen) => !prevOpen);
         }
     };
 
