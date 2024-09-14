@@ -4883,7 +4883,7 @@ const Contest = () => {
                         currentView === 'Contest' &&
                         <>
                             
-                            <div className="flex items-center justify-center text-center text-xl">
+                            <div className="flex items-center justify-center text-center text-xl text-white my-auto">
                                 CURRENTLY UNDER MAINTENANCE......
                             </div>
                             {/*<div className=" flex justify-between items-center px-3 py-3 w-full gap-5 mt-2 border-b-[1px]">

@@ -92,7 +92,7 @@ const Stats = () => {
                                 navigate('/home')
                             }} bgColor="#180026" title="Leaderboard">
 
-                                <div className="flex items-center justify-center text-center text-xl">
+                                <div className="flex items-center justify-center text-center text-xl text-white my-auto">
                                     CURRENTLY UNDER MAINTENANCE......
                                 </div>
                                 {/*<div className=" flex justify-between items-center px-5 py-3 w-full gap-5 mt-2">
