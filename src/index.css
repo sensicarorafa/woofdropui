@@ -176,3 +176,57 @@
   .swiper-pagination {
     pointer-events: none !important;
   }
+
+  .modal_css {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 90vh;
+    background: #000000;
+    /* animation: slide_down 0.2s linear; */
+    transform: translateY(0);
+    transition: transform 0.5s ease-in;
+    padding: 30px;
+  }
+  .list-row {
+    list-style-type: disc;
+  }
+  li::marker {
+    color: #F19D5C;
+  }
+  input {
+    color: white;
+  }
+  ::placeholder {
+    color: white !important;
+    font-style: italic;
+    font-size: 10px;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  /* Custom button styling */
+  .custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    /* background-color: #3498db; */
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  /* Styling for the file name display */
+  .file-name {
+    margin-left: 10px;
+    font-family: Arial, sans-serif;
+  }
+
+
+    
+  .swiper-slide  {
+    display: flex !important;
+    justify-content: center !important;
+  }
