@@ -74,8 +74,8 @@ const HomeTab = () => {
     const [engageDlCoinChannel, setEngageDlCoinChannel] = useState(false);
     const [engageGhostDrive, setEngageGhostDrive] = useState(false);
     const [engageGhostDriveChannel, setEngageGhostDriveChannel] = useState(false);
-    const [engagePokemonBall, setEngagePokemonBall] = useState(false);
-    const [engagePokemonBallChannel, setEngagePokemonBallChannel] = useState(false);
+    //const [engagePokemonBall, setEngagePokemonBall] = useState(false);
+    //const [engagePokemonBallChannel, setEngagePokemonBallChannel] = useState(false);
     //const [engagePigsBot, setEngagePigsBot] = useState(false);
     //const [engagePigsChannel, setEngagePigsChannel] = useState(false);
     //const [engageTonPartyBot, setEngageTonPartyBot] = useState(false);
@@ -121,8 +121,8 @@ const HomeTab = () => {
     const [dlCoinChannelDisabled, setDlCoinChannelDisabled] = useState(false);
     const [ghostDriveDisabled, setGhostDriveDisabled] = useState(false);
     const [ghostDriveChannelDisabled, setGhostDriveChannelDisabled] = useState(false);
-    const [pokemonBallDisabled, setPokemonBallDisabled] = useState(false);
-    const [pokemonBallChannelDisabled, setPokemonBallChannelDisabled] = useState(false);
+    //const [pokemonBallDisabled, setPokemonBallDisabled] = useState(false);
+    //const [pokemonBallChannelDisabled, setPokemonBallChannelDisabled] = useState(false);
     const [tgStart, setTgStart] = useState(true);
     const [tgClaim, setTgClaim] = useState(false);
     const [open, setOpenModal] = useState<boolean>(false);
@@ -1223,7 +1223,7 @@ const HomeTab = () => {
         }
     };
 
-    const claimPokemonBall = async () => {
+    /*const claimPokemonBall = async () => {
         setPokemonBallDisabled(true)
         const points = 2000;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
@@ -1285,7 +1285,7 @@ const HomeTab = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setPokemonBallChannelDisabled(false);
         }
-    };
+    };*/
 
     const claimFollowBirds = async () => {
         setFollowBirdsDisabled(true)
@@ -3556,7 +3556,7 @@ const HomeTab = () => {
                                         </div>
                                     </div>
                                 }
-                                {
+                                {/*
                                     task.claimTreshold === 'pokemon-ball-bot' &&
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
@@ -3637,7 +3637,7 @@ const HomeTab = () => {
                                             }
                                         </div>
                                     </div>
-                                }
+                                */}
                                 {/*
                                     task.claimTreshold === 'pigs-bot' &&
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
