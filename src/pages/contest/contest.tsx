@@ -18,10 +18,10 @@ const Contest = () => {
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
     //const [referralLeaderboard, setReferralLeaderboard] = useState<any>([]);
-    //const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralContest : 0);
+    const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralContest : 0);
     const [referralCode, setReferralCode] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralCode : '');
     const [socialTasks, setSocialTasks] = useState<any>(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.socialRewardDeets : []);
-    //const [username, setUserName] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.username ? getUserCookiesParsed?.data?.userData?.user?.username : `${getUserCookiesParsed?.data?.userData?.user?.first_name ?  getUserCookiesParsed?.data?.userData?.user?.first_name : ''} ${getUserCookiesParsed?.data?.userData?.user?.last_name ? getUserCookiesParsed?.data?.userData?.user?.last_name : ''}` : '');
+    const [username, setUserName] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.username ? getUserCookiesParsed?.data?.userData?.user?.username : `${getUserCookiesParsed?.data?.userData?.user?.first_name ?  getUserCookiesParsed?.data?.userData?.user?.first_name : ''} ${getUserCookiesParsed?.data?.userData?.user?.last_name ? getUserCookiesParsed?.data?.userData?.user?.last_name : ''}` : '');
     const [open, setOpenModal] = useState<boolean>(false);
     const [currentView, setCurrentView] = useState('AIDOGS');
     const [engageTwoFrens, setEngageTwoFrens] = useState(false);
@@ -200,7 +200,7 @@ const Contest = () => {
         }
     }, []);
 
-    /*useEffect (() => {
+    useEffect (() => {
         const fetchUserReferrals = async () => {
             const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
             console.log(getUserData?.data)
@@ -208,8 +208,9 @@ const Contest = () => {
             setReferralCode(getUserData?.data?.userData?.referralCode);
             setSocialTasks(getUserData?.data?.userData?.socialRewardDeets);
             setUserName(getUserData?.data?.userData?.username ? getUserData?.data?.userData?.user?.username : `${getUserData?.data?.userData?.user?.first_name ?  getUserData?.data?.userData?.user?.first_name : ''} ${getUserData?.data?.userData?.user?.last_name ? getUserData?.data?.userData?.user?.last_name : ''}`);
+            console.log(totalPoints, username)
 
-            const getReferralsLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/referral-leaderboard-data`, {user})
+            /*const getReferralsLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/referral-leaderboard-data`, {user})
             console.log(getReferralsLeaderboard?.data)
             const sortedData = getReferralsLeaderboard.data.leaderboardData.map((board: any, index: number) => {
                 return {
@@ -219,7 +220,7 @@ const Contest = () => {
                     position: index + 1
                 }
                 })
-            setReferralLeaderboard(sortedData);
+            setReferralLeaderboard(sortedData);*/
         }
 
         if (user) {
@@ -228,7 +229,7 @@ const Contest = () => {
         }
     }, [user])
 
-    const toggleModal = useCallback(() => {
+    /*const toggleModal = useCallback(() => {
         setOpenModal(prev => !prev);
     }, []);*/
 
