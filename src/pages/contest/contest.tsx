@@ -56,7 +56,7 @@ const Contest = () => {
     const [engageAiDogsUgc, setEngageAiDogsUgc] = useState(false);
     const [engageSendToBinance, setEngageSendToBinance] = useState(false);
     const [engageSendToHamster, setEngageSendToHamster] = useState(false);
-    const [engagePiggy, setEngagePiggy] = useState(false);
+    //const [engagePiggy, setEngagePiggy] = useState(false);
     const [engageDlCoin, setEngageDlCoin] = useState(false);
     const [engageDlCoinChannel, setEngageDlCoinChannel] = useState(false);
     const [engageGhostDrive, setEngageGhostDrive] = useState(false);
@@ -103,7 +103,7 @@ const Contest = () => {
     const [aiDogsUgcDisabled, setAiDogsUgcDisabled] = useState(false);
     const [sendToBinanceDisabled, setSendToBinanceDisabled] = useState(false);
     const [sendToHamsterDisabled, setSendToHamsterDisabled] = useState(false);
-    const [piggyDisabled, setPiggyDisabled] = useState(false);
+    //const [piggyDisabled, setPiggyDisabled] = useState(false);
     const [dlCoinDisabled, setDlCoinDisabled] = useState(false);
     const [dlCoinChannelDisabled, setDlCoinChannelDisabled] = useState(false);
     const [ghostDriveDisabled, setGhostDriveDisabled] = useState(false);
@@ -145,34 +145,42 @@ const Contest = () => {
     const toggleWhatsappStatusOverlay = useCallback(() => {
         console.log(whatsappStatusDisabled)
         setOpenWhatsappStatusToggle((prevOpen) => !prevOpen);
+        setFile(null);
     }, []);
     const toggleWhatsappGroupOverlay = useCallback(() => {
         console.log(whatsappGroupDisabled)
         setOpenWhatsappGroupToggle((prevOpen) => !prevOpen);
+        setFile(null);
     }, []);
     const toggleInstagramOverlay = useCallback(() => {
         console.log(instagramPostDisabled)
         setOpenInstagramToggle((prevOpen) => !prevOpen);
+        setFile(null);
     }, []);
     const toggleFacebookOverlay = useCallback(() => {
         console.log(facebookDisabled)
         setOpenFacebookToggle((prevOpen) => !prevOpen);
+        setFile(null);
     }, []);
     const toggleTiktokOverlay = useCallback(() => {
         console.log(tiktokDisabled)
         setOpenTiktokToggle((prevOpen) => !prevOpen);
+        setFile(null);
     }, []);
     const toggleSnapchatOverlay = useCallback(() => {
         console.log(snapchatDisabled)
         setOpenSnapchatToggle((prevOpen) => !prevOpen);
+        setFile(null);
     }, []);
     const toggleTelegramGroupOverlay = useCallback(() => {
         console.log(telegramGroupDisabled)
         setOpenTelegramGroupToggle((prevOpen) => !prevOpen);
+        setFile(null);
     }, []);
     const toggleFacebookPostOverlay = useCallback(() => {
         console.log(facebookPostDisabled)
         setOpenFacebookPostToggle((prevOpen) => !prevOpen);
+        setFile(null);
     }, []);
 
 
@@ -1406,7 +1414,7 @@ const Contest = () => {
         }
     }
 
-    const claimPiggy = async () => {
+    /*const claimPiggy = async () => {
         setPiggyDisabled(true)
         const points = 500;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
@@ -1434,7 +1442,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setPiggyDisabled(false)
         }
-    }
+    }*/
 
     
     const claimDlCoin = async () => {
@@ -1668,6 +1676,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setWhatsappStatusDisabled(false);
             setOpenWhatsappStatusToggle((prevOpen) => !prevOpen);
+            setFile(null);
         }
     };
     const claimWhatsappGroup = async (e: any) => {
@@ -1704,6 +1713,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setWhatsappGroupDisabled(false);
             setOpenWhatsappGroupToggle((prevOpen) => !prevOpen);
+            setFile(null);
         }
     };
     const claimInstagram = async (e: any) => {
@@ -1737,6 +1747,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setInstagramPostDisabled(false);
             setOpenInstagramToggle((prevOpen) => !prevOpen);
+            setFile(null);
         }
     };
     const claimFacebook = async (e: any) => {
@@ -1768,6 +1779,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setFacebookDisabled(false);
             setOpenFacebookToggle((prevOpen) => !prevOpen);
+            setFile(null);
         }
     };
     const claimTiktok = async (e: any) => {
@@ -1799,6 +1811,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setTiktokDisabled(false);
             setOpenTiktokToggle((prevOpen) => !prevOpen);
+            setFile(null);
         }
     };
     const claimSnapchat = async (e: any) => {
@@ -1830,6 +1843,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setSnapchatDisabled(false);
             setOpenSnapchatToggle((prevOpen) => !prevOpen);
+            setFile(null);
         }
     };
     const claimTelegramGroup = async (e: any) => {
@@ -1861,6 +1875,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setTelegramGroupDisabled(false);
             setOpenTelegramGroupToggle((prevOpen) => !prevOpen);
+            setFile(null);
         }
     };
     const claimFacebookPost = async (e: any) => {
@@ -1892,6 +1907,7 @@ const Contest = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setFacebookPostDisabled(false);
             setOpenFacebookPostToggle((prevOpen) => !prevOpen);
+            setFile(null);
         }
     };
 
@@ -4422,7 +4438,7 @@ const Contest = () => {
                                             </div>
                                         </div>
                                     */}
-                                    {
+                                    {/*
                                         task.claimTreshold === 'piggy-bot' &&
                                         <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                             <div className='flex items-center'>
@@ -4462,7 +4478,7 @@ const Contest = () => {
                                                 }
                                             </div>
                                         </div>
-                                    }
+                                    */}
                                     {
                                         task.claimTreshold === 'dl-coin-bot' &&
                                         <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>

@@ -69,7 +69,7 @@ const HomeTab = () => {
     const [engageAiDogsUgc, setEngageAiDogsUgc] = useState(false);
     const [engageSendToBinance, setEngageSendToBinance] = useState(false);
     const [engageSendToHamster, setEngageSendToHamster] = useState(false);
-    const [engagePiggy, setEngagePiggy] = useState(false);
+    //const [engagePiggy, setEngagePiggy] = useState(false);
     const [engageDlCoin, setEngageDlCoin] = useState(false);
     const [engageDlCoinChannel, setEngageDlCoinChannel] = useState(false);
     const [engageGhostDrive, setEngageGhostDrive] = useState(false);
@@ -116,7 +116,7 @@ const HomeTab = () => {
     const [aiDogsUgcDisabled, setAiDogsUgcDisabled] = useState(false);
     const [sendToBinanceDisabled, setSendToBinanceDisabled] = useState(false);
     const [sendToHamsterDisabled, setSendToHamsterDisabled] = useState(false);
-    const [piggyDisabled, setPiggyDisabled] = useState(false);
+    //const [piggyDisabled, setPiggyDisabled] = useState(false);
     const [dlCoinDisabled, setDlCoinDisabled] = useState(false);
     const [dlCoinChannelDisabled, setDlCoinChannelDisabled] = useState(false);
     const [ghostDriveDisabled, setGhostDriveDisabled] = useState(false);
@@ -1062,7 +1062,7 @@ const HomeTab = () => {
         }
     }
 
-    const claimPiggy = async () => {
+    /*const claimPiggy = async () => {
         setPiggyDisabled(true)
         const points = 500;
         const updatePoints = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-points`, {
@@ -1092,7 +1092,7 @@ const HomeTab = () => {
             setReferees(updatePoints?.data?.userData?.referralPoints);
             setPiggyDisabled(false)
         }
-    }
+    }*/
 
     
     const claimDlCoin = async () => {
@@ -3351,7 +3351,7 @@ const HomeTab = () => {
                                         </div>
                                     </div>
                                 }
-                                {
+                                {/*
                                     task.claimTreshold === 'piggy-bot' &&
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
                                         <div className='flex items-center'>
@@ -3391,7 +3391,7 @@ const HomeTab = () => {
                                             }
                                         </div>
                                     </div>
-                                }
+                                */}
                                 {
                                     task.claimTreshold === 'dl-coin-bot' &&
                                     <div className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3'>
