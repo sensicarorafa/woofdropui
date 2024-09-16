@@ -1,4 +1,4 @@
-import React, { useCallback, /*useMemo*/ } from 'react';
+import React, { useCallback, useMemo, /*useMemo*/ } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -10,6 +10,9 @@ import Schedule from "../../assets/img/schedule.png";
 import lock from '../../assets/img/lock.png';
 import Trophy from "../../assets/img/trophy.png";
 import Game from "../../assets/img/game-controller.png";
+
+import Twitter from "../../assets/img/twitter.png";
+
 //import logoSm from "../../assets/img/logosm.svg";
 
 import Footer from "../footer";
@@ -28,6 +31,9 @@ const HomeTab = () => {
 
     const getUserCookies = sessionStorage.getItem('authUserLoggedInAI');
     const getUserCookiesParsed = JSON.parse(getUserCookies as string);
+    const getUserCookiesBoost = sessionStorage.getItem('authUserLoggedInBoost');
+    const getUserCookiesBoostParsed = JSON.parse(getUserCookiesBoost as string);
+
 
     const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.pointsNo : 0);
     const [socialTasks, setSocialTasks] = useState<any>(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.socialRewardDeets : []);
@@ -39,6 +45,48 @@ const HomeTab = () => {
     //const [engageTask, setEngageTask] = useState(false);
     const [open, setOpenModal] = useState<boolean>(false);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+
+
+      //Boost states
+    const [openModal, setModal] = useState(false);
+      const [engageMissionRt, setEngageMissionRt] = useState(() => {
+
+        const saved = sessionStorage.getItem('engageMissionRt')
+        return saved !== null ? JSON.parse(saved) : false;
+    });
+    const [engageMissionTweet, setEngageMissionTweet] = useState(
+        () => {
+
+            const saved = sessionStorage.getItem('engageMissionTweet')
+            return saved !== null ? JSON.parse(saved) : false;
+        });
+    const [boostCode, setBoostCode] = useState(
+        () => {
+
+            return localStorage.getItem('boostCode') || '';
+        });
+    const [refBoostCode, setRefBoostCode] = useState(
+        ''
+    );
+    const [totalBoostPoints, setTotalBoostPoints] = useState(getUserCookiesBoostParsed ? getUserCookiesBoostParsed?.data?.userData?.pointsNo : 0);
+    const [boostReferralPoints, setBoostReferralPoints] = useState(getUserCookiesBoostParsed ? getUserCookiesBoostParsed?.data?.userData?.referralPoints : 0);
+    const [boostActivated, setBoostActivated] = useState(getUserCookiesBoostParsed ? getUserCookiesBoostParsed?.data?.userData?.boostActivated : false);
+    const [totalBoostParticipants, setTotalBoostParticipants] = useState(getUserCookiesBoostParsed ? getUserCookiesBoostParsed?.data?.userData?.boostActivated : 0);
+    const [userRank, setUserRank] = useState(getUserCookiesBoostParsed ? getUserCookiesBoostParsed?.data?.userData?.boostActivated : false);
+
+    useEffect(() => {
+        sessionStorage.setItem('engageMissionRt', JSON.stringify(engageMissionRt));
+    }, [engageMissionRt]);
+    useEffect(() => {
+        sessionStorage.setItem('engageMissionTweet', JSON.stringify(engageMissionTweet));
+    }, [engageMissionTweet]);
+
+    const encodedTextMission = useMemo(() => {
+        const text = `Are you a Catizen??\r\n\nGain more on $AIDOGS by completing mission.\r\n\nUse my Boost key here: ${boostCode}.\r\n\n  \r\n\n #DOGS #Crypto #AIDOGS`;
+        return encodeURIComponent(text);
+    }, [boostCode]);
+
+    const urlMissionTweet = `https://twitter.com/intent/tweet?text=${encodedTextMission}`;
 
     const navigate = useNavigate();
 
@@ -406,27 +454,104 @@ const HomeTab = () => {
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
 
+
     useEffect(() => {
         // Ensure the Telegram Web Apps SDK is ready
         Telegram.WebApp.ready();
-    
+
         // Access the user information
         const userInfo = Telegram.WebApp.initDataUnsafe.user;
-    
+
         // Check if the user information is available
         if (userInfo) {
-          console.log({userInfo, url: window.location.href});
-          setUser(userInfo);
+            console.log({ userInfo, url: window.location.href });
+            setUser(userInfo);
+            function generateRandomCode() {
+                // Function to generate random letters
+                const generateRandomLetters = () => {
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+                    let result = '';
+                    for (let i = 0; i < 4; i++) {
+                        result += letters.charAt(Math.floor(Math.random() * letters.length));
+                    }
+                    return result;
+                };
+
+                // Function to generate random numbers
+                const generateRandomNumbers = () => {
+                    let result = '';
+                    for (let i = 0; i < 4; i++) {
+                        result += Math.floor(Math.random() * 10); // Generates a number between 0 and 9
+                    }
+                    return result;
+                };
+
+                // Combine letters and numbers, then shuffle
+                const shuffle = (string: any) => {
+                    return string.split('').sort(() => Math.random() - 0.5).join('');
+                };
+
+                const letters = generateRandomLetters();
+                const numbers = generateRandomNumbers();
+                const combined = letters + numbers;
+                const randomCode = shuffle(combined);
+
+                return randomCode;
+            }
+            const randomCode = generateRandomCode();
+            if (!boostCode || localStorage.getItem("boostCode") == null) {
+                localStorage.setItem("boostCode", randomCode)
+                setBoostCode(randomCode)
+            }
+
+            console.log("randomCode", randomCode)
         } else {
-          console.log('No user information available.');
-          setUser({
-            allows_write_to_pm: true,
-            first_name: "Qanda",
-            id: 1354055384,
-            language_code: "en",
-            last_name: "Sensei",
-            username: "qandasensei"
-          })
+            console.log('No user information available.');
+            setUser({
+                allows_write_to_pm: true,
+                first_name: "Qanda",
+                id: Math.floor(100000000 + Math.random() * 900000000),
+                language_code: "en",
+                last_name: "Sensei",
+                username: "qandasensei"
+            })
+            function generateRandomCode() {
+                // Function to generate random letters
+                const generateRandomLetters = () => {
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+                    let result = '';
+                    for (let i = 0; i < 4; i++) {
+                        result += letters.charAt(Math.floor(Math.random() * letters.length));
+                    }
+                    return result;
+                };
+
+                // Function to generate random numbers
+                const generateRandomNumbers = () => {
+                    let result = '';
+                    for (let i = 0; i < 4; i++) {
+                        result += Math.floor(Math.random() * 10); // Generates a number between 0 and 9
+                    }
+                    return result;
+                };
+
+                // Combine letters and numbers, then shuffle
+                const shuffle = (string: any) => {
+                    return string.split('').sort(() => Math.random() - 0.5).join('');
+                };
+
+                const letters = generateRandomLetters();
+                const numbers = generateRandomNumbers();
+                const combined = letters + numbers;
+                const randomCode = shuffle(combined);
+
+                return randomCode;
+            }
+            const randomCode = generateRandomCode();
+            if (!boostCode || localStorage.getItem("boostCode") == null) {
+                localStorage.setItem("boostCode", randomCode)
+                setBoostCode(randomCode)
+            }
         }
     }, []);
 
@@ -444,10 +569,34 @@ const HomeTab = () => {
             console.log(referralCode)
         }
 
+        const fetchBoostUserData = async () => {
+            const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data/boost-data`, { user })
+            console.log(getUserData?.data)
+            setTotalBoostPoints(getUserData?.data?.userData?.pointsNo);
+            setBoostReferralPoints(getUserData?.data?.userData?.referralPoints);
+            if(getUserData?.data?.userData?.boostCode) {
+                setBoostCode(getUserData?.data?.userData?.boostCode);
+            }
+        
+            setBoostActivated(getUserData?.data?.userData?.boostActivated);
+            setUserRank(getUserData?.data?.userRank);
+
+        }
+        const fetchBoostData = async () => {
+            const getBoostData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-boost-participants`, { user })
+            console.log(getBoostData?.data)
+            setTotalBoostParticipants(getBoostData?.data?.boostData?.count);
+         
+        }
+
         if (user) {
           fetchUserData();
+          fetchBoostUserData()
+          fetchBoostData()
         }
     }, [user])
+
+
     
     /*const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${referralCode}`;
     const encodedText = useMemo(() => {
@@ -535,8 +684,233 @@ const HomeTab = () => {
     }
       
 
+// boost functions
+
+
+const toggleBoostOverlay = useCallback(() => {
+    if(boostActivated){
+        setModal((prevOpen) => !prevOpen);
+    } else {
+        if (!engageMissionRt || !engageMissionTweet) {
+            toast("Complete all missions to proceed!", {
+                className: "",
+                duration: 799,
+                style: {
+                    background: "#363636",
+                    color: "#fff",
+                },
+            });
+        } else {
+            setModal((prevOpen) => !prevOpen);
+
+        }
+    }
+
+}, [engageMissionRt, engageMissionTweet, boostActivated]);
+
+const copyToClipboard = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    const text = `CATI-${boostCode}`;
+    navigator.clipboard.writeText(text as string);
+    toast("Copied to clipboard!", {
+        className: "",
+        duration: 799,
+        style: {
+            background: "#363636",
+            color: "#fff",
+        },
+    });
+}, []);
+
+
+
+
+
+
+
+const handleReferrerBoostCode = (e: any) => {
+    console.log("ref", e.target.value.split("-")[1])
+    setRefBoostCode(e.target.value.split("-")[1])
+
+
+}
+useEffect(() => {
+    console.log("tro", refBoostCode, boostCode)
+
+    if (boostCode == refBoostCode) {
+        console.log("tro", refBoostCode, boostCode)
+        toast("You cannot use your boost code", {
+            className: "",
+            duration: 799,
+            style: {
+                background: "#363636",
+                color: "#fff",
+            },
+        });
+    }
+
+}, [refBoostCode, boostCode])
+
+const claimBoost = async () => {
+
+    if (boostCode == refBoostCode) {
+        console.log("tro", refBoostCode, boostCode)
+        toast("You cannot use your boost key", {
+            className: "",
+            duration: 799,
+            style: {
+                background: "#363636",
+                color: "#fff",
+            },
+        });
+    } else {
+        if (refBoostCode.length != 8) {
+            toast("Referrer's Boost key must be 8 character", {
+                className: "",
+                duration: 799,
+                style: {
+                    background: "#363636",
+                    color: "#fff",
+                },
+            });
+        } else {
+
+            const updateBoostLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/activate-boost`, {
+                user,
+                boostCode,
+                refBoostCode
+            })
+
+            const getBoostData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-boost-participants`, { user })
+            console.log(getBoostData?.data)
+            setTotalBoostParticipants(getBoostData?.data?.boostData?.count);
+
+
+
+
+            if (updateBoostLeaderboard?.data?.success) {
+
+                sessionStorage.setItem('authUserLoggedInBoost', JSON.stringify(updateBoostLeaderboard))
+
+                toast(`${updateBoostLeaderboard?.data?.message}`, {
+                    className: "",
+                    duration: 799,
+                    style: {
+                        background: "#363636",
+                        color: "#fff",
+                    },
+                });
+                setTotalBoostPoints(updateBoostLeaderboard?.data?.userData?.pointsNo);
+                setBoostReferralPoints(updateBoostLeaderboard?.data?.userData?.referralPoints);
+                setBoostCode(updateBoostLeaderboard?.data?.userData?.boostCode);
+                setBoostActivated(updateBoostLeaderboard?.data?.userData?.boostActivated);
+        setUserRank(updateBoostLeaderboard?.data?.userRank);
+        setModal(false)
+                console.log("updateBoostLeaderboard", updateBoostLeaderboard)
+
+
+
+            }
+        }
+    }
+}
+const cantClaimBoost = async () => {
+
+    toast("Boost already activated", {
+        className: "",
+        duration: 799,
+        style: {
+            background: "#363636",
+            color: "#fff",
+        },
+    });
+}
+
+
+
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
+                {/* boost */}
+
+                {openModal &&
+
+<div className=" modal_css   flex flex-col justify-around z-[100] overflow-scroll" >
+    <p className="text-xs flex justify-end cursor-pointer w-auto text-white" onClick={toggleBoostOverlay}>Close</p>
+    <p className=" flex justify-center items-center  text-xl text-[#FEC95E] ">You're ranked #{userRank || "0"}</p>
+    <p className=" flex justify-center items-center text-white text-md">Keep boosting your rank</p>
+    <div className='flex items-center align-center my-4'>
+        <div className='w-1/2 rounded-lg border-[#FEC95E] text-[#FEC95E] py-2 text-center border-[1px]'>
+            <p className='font-thin text-sm'>keyHolders</p>
+            <p className='text-md leading-5'>{boostReferralPoints || 0} People</p>
+        </div>
+        &nbsp;
+        &nbsp;
+        <div
+            className="w-1/2 flex flex-col py-2 bg-gradient-to-r mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] text-lg text-black rounded-lg  rounded-[1px]"
+
+
+        >
+            <p className='font-thin text-sm'>Boost Vault</p>
+            <p className='text-md leading-5'>{totalBoostPoints?.toLocaleString() || 0} $AIDOGS</p>
+
+        </div>
+    </div>
+    <div className="bg-gradient-to-b relative border-4 border-[#CFA2CA] from-[#883E92] to-[#210133] p-7 pt-14 rounded-lg">
+
+        <div className="bg-[#210133] p-5 rounded-lg">
+            <p className="text-lg text-white py-3 px-3 ">Enter Referrers Boost Key to Claim 7,000 $AIDOGS</p>
+
+            <input type="text" className="form-input px-4 py-2 my-3 border-[1px] border-white text-center w-full bg-transparent rounded-lg" placeholder={`Paste referrer's boost key here`} onChange={(e) => handleReferrerBoostCode(e)} />
+           {boostActivated && <button
+                className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
+                disabled={true}
+                onClick={cantClaimBoost}
+
+            >
+                Claim
+            </button>}
+           {!boostActivated && <button
+                className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
+
+                onClick={claimBoost}
+
+            >
+             Claim
+            </button>}
+
+
+        </div>
+        <form>
+            <div className='px-2'>
+                <div
+                    className="bg-transparent relative w-full  border-white border-[1px] my-4 mx-auto py-2 flex items-center font-OpenSans text-md text-white rounded-lg px-2  rounded-[1px]"
+
+
+                >
+                    CATI-{boostCode}
+                    <div className='absolute flex items-center py-1 right-0 w-1/2 pl-2 px-1 bg-white text-black rounded-lg'>
+                        <span className='text-sm whitespace-nowrap' onClick={copyToClipboard}>
+                            Copy my key
+                        </span>
+                        <svg width="50px" viewBox="-6.96 -6.96 37.92 37.92" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#32dc7c"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 11C6 8.17157 6 6.75736 6.87868 5.87868C7.75736 5 9.17157 5 12 5H15C17.8284 5 19.2426 5 20.1213 5.87868C21 6.75736 21 8.17157 21 11V16C21 18.8284 21 20.2426 20.1213 21.1213C19.2426 22 17.8284 22 15 22H12C9.17157 22 7.75736 22 6.87868 21.1213C6 20.2426 6 18.8284 6 16V11Z" stroke="#000000" stroke-width="0.144"></path> <path d="M6 19C4.34315 19 3 17.6569 3 16V10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H15C16.6569 2 18 3.34315 18 5" stroke="#000000" stroke-width="0.144"></path> </g></svg>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </form>
+        <p className="text-white text-sm text-center leading-[12px] italic">
+            You get 2800 $AIDOGS every time your key is used
+        </p>
+    </div>
+
+
+
+</div>
+}
+{/* boost */}
             {open && 
             <div className='absolute m-auto bg-[#210133] bg-opacity-95 flex items-center h-[100%] w-full top-0  z-[100]'  onClick={closeModal}>
                 <div className='flex relative m-auto flex-col justify-center bg-[#80808059] h-[370px] w-[90%] rounded-lg '>
@@ -726,7 +1100,143 @@ const HomeTab = () => {
                     </div>
 
                 </div>
+  {/* boost */}
+  <div className='flex flex-col py-3 w-[90%] m-auto justify-around'>
+                    <div className="bg-cover relative bg-center h-[200px] w-full mb-3 campaign_banner rounded-lg">
+                        <div className='absolute bottom-0 text-white text-[12px] bg-opacity-20 px-3 py-2 left-0 w-full bg-black'>
+                            <p className='leading-4'>$AIDOG Mission</p>
+                            <p className='leading-4'>Complete the tasks to claim 7k $AIDOGS </p>
+                            <p className='leading-4'>Earn 2.8k $AIDOGS whenever your key is used</p>
+                        </div>
 
+                    </div>
+                    <div>
+                        <div className='flex justify-between py-3 w-full items-center  rounded-md '>
+                            <div className='flex items-center'>
+                                <div className=" w-[50%] bg-white p-[3px] small-mobile:w-[9%] rounded-full mobile:w-[12%]">
+                                    <img src={Twitter} />
+
+                                </div>
+                                <div className='flex flex-col pl-5'>
+                                    <p className='text-white text-bold taskTitle'>RT & Tag 3 Frens</p>
+
+                                </div>
+                            </div>
+                            <div className="">
+
+                                {!engageMissionRt &&
+
+                                    <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
+                                        onClick={() => {
+                                            window.open('https://x.com/aidogscomm', '_blank');
+                                            setTimeout(() => {
+                                                setEngageMissionRt(true)
+                                            }, 5000)
+                                        }}
+                                    >
+                                        Do
+                                    </button>
+                                }
+                                {engageMissionRt &&
+
+                                    <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
+                                        onClick={() => {
+                                            window.open('https://x.com/aidogscomm', '_blank');
+                                            setTimeout(() => {
+                                                setEngageMissionRt(true)
+                                            }, 5000)
+                                        }}
+                                    >
+                                        Done
+                                    </button>
+                                }
+
+
+
+                            </div>
+                        </div>
+                        <div className='flex justify-between py-3 w-full items-center  rounded-md '>
+                            <div className='flex items-center'>
+                                <div className=" w-[50%] bg-white p-[3px] small-mobile:w-[8%] rounded-full mobile:w-[11%]">
+                                    <img src={Twitter} />
+
+                                </div>
+                                <div className='flex flex-col pl-5'>
+                                    <p className='text-white text-bold taskTitle'>Tweet your Boost Key</p>
+
+                                </div>
+                            </div>
+                            <div className="">
+
+                                {
+                                    !engageMissionTweet &&
+
+                                    <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
+                                        onClick={() => {
+                                            window.open(urlMissionTweet, '_blank');
+                                            setTimeout(() => {
+                                                setEngageMissionTweet(true)
+                                            }, 5000)
+                                        }}
+                                    >
+                                        Do
+                                    </button>
+                                }
+
+                                {
+                                    engageMissionTweet &&
+
+                                    <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
+                                        onClick={() => {
+                                            window.open('https://x.com/aidogscomm', '_blank');
+                                            setTimeout(() => {
+                                                setEngageMissionTweet(true)
+                                            }, 5000)
+                                        }}
+                                    >
+                                        Done
+                                    </button>
+                                }
+
+                            </div>
+                        </div>
+                        {/* <div className='flex justify-between py-3 w-full items-center  rounded-md'>
+                            <div className='flex items-center'>
+                                <div className=" w-[50%] bg-white p-[3px] small-mobile:w-[8%] rounded-full mobile:w-[11%]">
+                                    <img src={Instagram} />
+
+                                </div>
+                                <div className='flex flex-col pl-5'>
+                                    <p className='text-white text-bold taskTitle'>Post an Instagram Story</p>
+
+                                </div>
+                            </div>
+                            <div className="">
+
+                                {
+
+                                    <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}>
+                                        Do
+                                    </button>
+                                }
+
+                            </div>
+                        </div> */}
+                    </div>
+                    <div className='flex w-full py-1 '>
+                        <button className={`bg-transparent text-white border-white border-[1px] w-1/3 text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg py-1 rounded-[1px]`}>
+                            <span className='text-[8px]'>Participants</span>
+                            <span className='text-[12] block'>{totalBoostParticipants?.toLocaleString() || 0}</span>
+                        </button>&nbsp;
+                        <button className={`bg-white w-2/3 text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
+                            onClick={toggleBoostOverlay}
+                        // disabled={!engageMissionRt || !engageMissionTweet}
+
+                        >
+                            Participate
+                        </button>
+                    </div>
+                </div>
                 <div className="w-full flex flex-col pt-7 px-4 relative z-10 gap-5">
                     <p className='text-white text-xl pb-5'>Tasks</p>
 
