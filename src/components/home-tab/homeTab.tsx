@@ -437,7 +437,7 @@ const HomeTab = () => {
     }, []);*/
 
     function rearrangeRewards(socialRewardDeets: any) {
-        return socialRewardDeets.sort((a: any, b: any) => {
+        return socialRewardDeets?.sort((a: any, b: any) => {
             // Sort by rewardClaimed field; false comes before true
             if (a.rewardClaimed === b.rewardClaimed) {
                 return 0;
@@ -510,7 +510,7 @@ const HomeTab = () => {
             setUser({
                 allows_write_to_pm: true,
                 first_name: "Qanda",
-                id: Math.floor(100000000 + Math.random() * 900000000),
+                id: 1354055384,
                 language_code: "en",
                 last_name: "Sensei",
                 username: "qandasensei"
@@ -574,9 +574,9 @@ const HomeTab = () => {
             console.log(getUserData?.data)
             setTotalBoostPoints(getUserData?.data?.userData?.pointsNo);
             setBoostReferralPoints(getUserData?.data?.userData?.referralPoints);
-            if(getUserData?.data?.userData?.boostCode) {
-                setBoostCode(getUserData?.data?.userData?.boostCode);
-            }
+            // if(getUserData?.data?.userData?.boostCode) {
+            //     setBoostCode(getUserData?.data?.userData?.boostCode);
+            // }
         
             setBoostActivated(getUserData?.data?.userData?.boostActivated);
             setUserRank(getUserData?.data?.userRank);
@@ -810,6 +810,18 @@ const claimBoost = async () => {
 
 
 
+            }
+
+            if (updateBoostLeaderboard?.data?.error) {
+
+                toast(`${updateBoostLeaderboard?.data?.message}`, {
+                    className: "",
+                    duration: 799,
+                    style: {
+                        background: "#363636",
+                        color: "#fff",
+                    },
+                });
             }
         }
     }
@@ -1226,7 +1238,7 @@ const cantClaimBoost = async () => {
                     <div className='flex w-full py-1 '>
                         <button className={`bg-transparent text-white border-white border-[1px] w-1/3 text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg py-1 rounded-[1px]`}>
                             <span className='text-[8px]'>Participants</span>
-                            <span className='text-[12] block'>{totalBoostParticipants?.toLocaleString() || 0}</span>
+                            <span className='text-[12] block'>{Number(totalBoostParticipants)?.toLocaleString() || 0}</span>
                         </button>&nbsp;
                         <button className={`bg-white w-2/3 text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
                             onClick={toggleBoostOverlay}
@@ -1269,7 +1281,7 @@ const cantClaimBoost = async () => {
                 
                 <div className="my-4 grid grid-cols-4">
                     {
-                        dailyLoginTasks.map((task: any, idx: any) => (
+                        dailyLoginTasks?.map((task: any, idx: any) => (
                             idx !== 7 && idx !== 8 && idx !== 9 &&
                             <div className={`relative flex flex-col gap-1 rounded-lg ${isFirstUnclaimedReward(dailyLoginTasks, idx) && !task.rewardClaimed ? 'border border-white bg-[#C8D5ED]' : 'bg-[#C8D5ED]'} text-white mx-1 my-3 p-1 cursor-pointer`} onClick={() => dailyTasksClaimInit(task, idx)}>
                                 <p className={`text-center text-white text-xs absolute top-[-2vh] left-1/2 transform ${isFirstUnclaimedReward(dailyLoginTasks, idx) && !task.rewardClaimed ? 'bg-[#3F015F] bg-opacity-85' : 'bg-[#3F015F]'} -translate-x-1/2 w-[80%] mx-auto px-2 py-1 rounded-md`}>Day {idx + 1}</p>

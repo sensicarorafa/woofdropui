@@ -230,3 +230,8 @@
     display: flex !important;
     justify-content: center !important;
   }
+
+  .bg-cover {
+    background: url(./assets/img/missionbanner.png);
+    background-size: cover;
+  }
