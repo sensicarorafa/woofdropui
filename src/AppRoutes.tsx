@@ -22,7 +22,7 @@ export default function AppRoutes() {
                 <Route path="/invites" element={<Referral />} />
 
 
-                <Route path="/" element={<SplashScreen />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/character" element={<Character />} />
                 <Route path="/early-adopters" element={<EarlyAdopters />} />
                 <Route path="/congrats" element={<Congrats />} />
