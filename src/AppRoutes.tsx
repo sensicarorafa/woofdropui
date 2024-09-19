@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SplashScreen from "./pages/splash-screen/splashScreen";
+// import SplashScreen from "./pages/splash-screen/splashScreen";
 import EarlyAdopters from "./pages/early-adopters/earlyAdopters";
 import Stats from "./pages/stats/stats";
 import PowerUp from "./pages/power-up/powerUp";
