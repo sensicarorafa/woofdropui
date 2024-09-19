@@ -23,7 +23,7 @@ const TaskComponent:FC<any> = ({ tasks, updateTaskStatus }) => {
     return (
         <div>
             {tasks.map((task: any) => (
-                !task.rewardClaimed && task.taskUrl.length > 0 && task.taskStatus !== 'paused' &&
+                !task?.rewardClaimed && task?.taskUrl?.length > 0 && task?.taskStatus !== 'paused' &&
                 <div key={task.claimTreshold} className='flex justify-between py-2 w-full items-center bg-white/20 rounded-md px-3 my-3'>
                     <div className='flex items-center'>
                         <div className=" w-[50%] small-mobile:w-[5%] mobile:w-[8%]">
