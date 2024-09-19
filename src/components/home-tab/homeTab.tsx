@@ -847,8 +847,8 @@ const HomeTab = () => {
     }
 
 
-    const [caption, setCaption] = useState('I love this');
-    const [media, setMedia] = useState<any>(null);
+    const caption = 'I love this';
+  
   
 
   
@@ -856,7 +856,7 @@ const HomeTab = () => {
     const handleShareStory = async () => {
 
         const formData = new FormData();
-        formData.append('media', media);
+   
         formData.append('caption', caption);
 
         const shareStory = await axios.post(`${import.meta.env.VITE_APP_URL}/share-story`, {
