@@ -847,7 +847,7 @@ const HomeTab = () => {
     }
 
 
-    const caption = 'I love this';
+    const newCaption = 'I love this';
   
   
 
@@ -857,10 +857,14 @@ const HomeTab = () => {
 
         const formData = new FormData();
    
-        formData.append('caption', caption);
+        formData.append('caption', newCaption);
 
-        const shareStory = await axios.post(`${import.meta.env.VITE_APP_URL}/share-story`, {
-            caption
+        // const shareStory = await axios.post(`${import.meta.env.VITE_APP_URL}/share-story`, {
+        //     caption
+            
+        // })
+        const shareStory = await axios.post(`${import.meta.env.VITE_APP_URL}/editStory`, {
+        newCaption
             
         })
 
