@@ -463,10 +463,10 @@ const HomeTab = () => {
 
         // Access the user information
         const userInfo = Telegram.WebApp.initDataUnsafe.user;
-    // Ensure the Telegram WebApp SDK is available
-    if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.ready();
-      }
+        // Ensure the Telegram WebApp SDK is available
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.ready();
+        }
         // Check if the user information is available
         if (userInfo) {
             console.log({ userInfo, url: window.location.href });
@@ -850,10 +850,10 @@ const HomeTab = () => {
     }
 
 
-      
-  
 
-  
+
+
+
     // const handleShareToStory = () => {
     //     if (window.Telegram && window.Telegram.WebApp) {
     //       try {
@@ -875,24 +875,32 @@ const HomeTab = () => {
     //       console.error('Telegram WebApp is not initialized');
     //     }
     //   };
-      
+
 
     function handleShareToStory(mediaUrl: string, caption: string) {
-              //   @ts-ignore
-        if (typeof window.TelegramWebviewProxy !== 'undefined') {
-          const eventType = 'web_app_share_to_story';
-          const eventData = {
-            mediaUrl,
-            caption,
-          };
+        // Usage example
+        if (window.Telegram && window.Telegram.WebApp) {
+
             //   @ts-ignore
-          window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
-          console.log('Shared to story successfully');
+            if (typeof window.TelegramWebviewProxy !== 'undefined') {
+                const eventType = 'web_app_share_to_story';
+                const eventData = {
+                    mediaUrl,
+                    caption,
+                };
+                //   @ts-ignore
+                window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
+                console.log('Shared to story successfully');
+            } else {
+                console.error('TelegramWebviewProxy is not available. Ensure you are running in Telegram WebView.');
+            }
         } else {
-          console.error('TelegramWebviewProxy is not available. Ensure you are running in Telegram WebView.');
+            console.warn('Not running in Telegram WebView.');
         }
-      }
-      
+
+    }
+
+
 
 
     return (
@@ -989,13 +997,13 @@ const HomeTab = () => {
                         >
                             <p className="text-lg text-white py-3 px-3 ">Share to your Tekegram Story</p>
                             <div>
-                           
+
                             </div>
                             <button
                                 className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
 
-                                onClick={() => handleShareToStory('https://major.bot/stories/others.mp4', 'My Caption')}
-                                
+                                onClick={() => handleShareToStory('https://asset.cloudinary.com/doyovxikn/9089c9b4911224a6d1bc71d518142a0a', 'My Caption')}
+
 
                             >
                                 Share
