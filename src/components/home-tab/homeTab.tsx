@@ -463,7 +463,10 @@ const HomeTab = () => {
 
         // Access the user information
         const userInfo = Telegram.WebApp.initDataUnsafe.user;
-
+    // Ensure the Telegram WebApp SDK is available
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+      }
         // Check if the user information is available
         if (userInfo) {
             console.log({ userInfo, url: window.location.href });
@@ -847,63 +850,31 @@ const HomeTab = () => {
     }
 
 
-    const newCaption = 'I love this';
   
   
 
   
-
-    const handleShareStory =  () => {
-        window.open(`https://t.me/share/story?text=${encodeURIComponent(newCaption)}`, '_blank');
-
-       
-        const formData = new FormData();
-   
-        formData.append('caption', newCaption);
-
-        // const shareStory = await axios.post(`${import.meta.env.VITE_APP_URL}/share-story`, {
-        //     caption
-            
-        // })
-        // const shareStory = await axios.post(`${import.meta.env.VITE_APP_URL}/editStory`, {
-        // newCaption
-            
-        // })
-
-
-        // console.log("getStoryData",shareStory, shareStory?.data)
-
-
-        // if (shareStory?.data?.success) {
-
-         
-
-        //     toast(`${shareStory?.data?.message}`, {
-        //         className: "",
-        //         duration: 799,
-        //         style: {
-        //             background: "#363636",
-        //             color: "#fff",
-        //         },
-        //     });
-
-        //     setOpenStatusModal(false)
-
-
-        // }
-
-        // if (shareStory?.data?.error) {
-
-        //     toast(`${shareStory?.data?.message}`, {
-        //         className: "",
-        //         duration: 799,
-        //         style: {
-        //             background: "#363636",
-        //             color: "#fff",
-        //         },
-        //     });
-        // }
-    }
+    const handleShareToStory = () => {
+        if (window.Telegram && window.Telegram.WebApp) {
+          try {
+            const storyData = {
+              media: {
+                type: 'photo',
+                file: 'https://example.com/image.png',
+              },
+              caption: 'Check out this cool image!',
+              link: 'https://example.com',
+            };
+        
+            window.Telegram.WebApp.postEvent('web_app_share_to_story', storyData);
+          } catch (error) {
+            console.error('Error sharing story:', error);
+          }
+        } else {
+          console.error('Telegram WebApp is not initialized');
+        }
+      };
+      
 
 
 
@@ -1007,7 +978,7 @@ const HomeTab = () => {
                             <button
                                 className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
 
-                                onClick={handleShareStory}
+                                onClick={handleShareToStory}
 
                             >
                                 Share
