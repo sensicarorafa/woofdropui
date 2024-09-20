@@ -853,8 +853,10 @@ const HomeTab = () => {
 
   
 
-    const handleShareStory = async () => {
+    const handleShareStory =  () => {
+        window.open(`https://t.me/share/story?text=${encodeURIComponent(newCaption)}`, '_blank');
 
+       
         const formData = new FormData();
    
         formData.append('caption', newCaption);
@@ -863,44 +865,44 @@ const HomeTab = () => {
         //     caption
             
         // })
-        const shareStory = await axios.post(`${import.meta.env.VITE_APP_URL}/editStory`, {
-        newCaption
+        // const shareStory = await axios.post(`${import.meta.env.VITE_APP_URL}/editStory`, {
+        // newCaption
             
-        })
+        // })
 
 
-        console.log("getStoryData",shareStory, shareStory?.data)
+        // console.log("getStoryData",shareStory, shareStory?.data)
 
 
-        if (shareStory?.data?.success) {
+        // if (shareStory?.data?.success) {
 
-            // sessionStorage.setItem('authUserLoggedInBoost', JSON.stringify())
+         
 
-            toast(`${shareStory?.data?.message}`, {
-                className: "",
-                duration: 799,
-                style: {
-                    background: "#363636",
-                    color: "#fff",
-                },
-            });
+        //     toast(`${shareStory?.data?.message}`, {
+        //         className: "",
+        //         duration: 799,
+        //         style: {
+        //             background: "#363636",
+        //             color: "#fff",
+        //         },
+        //     });
 
-            setOpenStatusModal(false)
+        //     setOpenStatusModal(false)
 
 
-        }
+        // }
 
-        if (shareStory?.data?.error) {
+        // if (shareStory?.data?.error) {
 
-            toast(`${shareStory?.data?.message}`, {
-                className: "",
-                duration: 799,
-                style: {
-                    background: "#363636",
-                    color: "#fff",
-                },
-            });
-        }
+        //     toast(`${shareStory?.data?.message}`, {
+        //         className: "",
+        //         duration: 799,
+        //         style: {
+        //             background: "#363636",
+        //             color: "#fff",
+        //         },
+        //     });
+        // }
     }
 
 
