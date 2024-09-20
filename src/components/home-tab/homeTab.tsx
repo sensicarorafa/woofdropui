@@ -455,6 +455,7 @@ const HomeTab = () => {
 
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
+  
 
 
     useEffect(() => {
@@ -463,10 +464,16 @@ const HomeTab = () => {
 
         // Access the user information
         const userInfo = Telegram.WebApp.initDataUnsafe.user;
-    // Ensure the Telegram WebApp SDK is available
-    // if (window.Telegram && window.Telegram.WebApp) {
-    //     window.Telegram.WebApp.ready();
-    //   }
+
+        if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
+            // @ts-ignore
+            window.Telegram.WebApp.init();  // Initialize the WebApp
+            console.log('Telegram WebApp initialized.');
+          } else {
+            console.log('Not running inside Telegram WebView.');
+         
+          }
+
         // Check if the user information is available
         if (userInfo) {
             console.log({ userInfo, url: window.location.href });
