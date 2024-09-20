@@ -849,69 +849,9 @@ const HomeTab = () => {
 
     }
 
+
+      
   
-    interface PostEventCallback {
-        (error?: any): void;
-      }
-      
-      interface EventData {
-        [key: string]: any;
-      }
-      
-      function postEvent(
-        eventType: string,
-        callback: PostEventCallback = () => {}, // Optional callback with default value
-        eventData: EventData = {} // Optional eventData with default value
-      ): void {
-        console.log('[Telegram.WebView] > postEvent', eventType, eventData);
-      
-        try {
-          // If TelegramWebviewProxy is available, use it to post the event
-        //   @ts-ignore
-          if (typeof window.TelegramWebviewProxy !== 'undefined') {
-        //   @ts-ignore
-
-            window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
-            callback();
-          }
-          // If running in a Windows environment where external notify is available
-        //   @ts-ignore
-
-          else if (window.external && typeof window.external.notify === 'function') {
-        //   @ts-ignore
-
-            window.external.notify(JSON.stringify({ eventType, eventData }));
-            callback();
-          }
-          // If running inside an iframe, use postMessage to communicate the event
-          else if (window !== window.parent) {
-            const trustedTarget = 'https://web.telegram.org'; // Trusted target URL
-            window.parent.postMessage(JSON.stringify({ eventType, eventData }), trustedTarget);
-            callback();
-          }
-          // If no method is available, return an error
-          else {
-            throw new Error('No available method to post event.');
-          }
-        } catch (error) {
-          console.error('Error posting event:', error);
-          callback(error);
-        }
-      }
-      
-      
-      const handleShareToStory = (mediaUrl: string, caption: string) => {
-        const eventType = 'web_app_share_to_story';  // Define the event type
-        const eventData = { mediaUrl, caption };     // Data for the event
-      
-        postEvent(eventType, (error) => {
-          if (error) {
-            console.error('Failed to post event:', error);
-          } else {
-            console.log('Event posted successfully!');
-          }
-        }, eventData);
-      };
 
   
     // const handleShareToStory = () => {
@@ -937,8 +877,22 @@ const HomeTab = () => {
     //   };
       
 
-
-
+    function handleShareToStory(mediaUrl: string, caption: string) {
+              //   @ts-ignore
+        if (typeof window.TelegramWebviewProxy !== 'undefined') {
+          const eventType = 'web_app_share_to_story';
+          const eventData = {
+            mediaUrl,
+            caption,
+          };
+            //   @ts-ignore
+          window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
+          console.log('Shared to story successfully');
+        } else {
+          console.error('TelegramWebviewProxy is not available. Ensure you are running in Telegram WebView.');
+        }
+      }
+      
 
 
     return (
