@@ -969,8 +969,8 @@ const HomeTab = () => {
           // @ts-ignore
           if (typeof window.Telegram.WebApp.shareToStory === 'function') {
             const storyParams = {
-              mediaUrl, // URL to the media (image, video, etc.)
-              caption  // Optional caption for the story
+              mediaUrl: String(mediaUrl), // URL to the media (image, video, etc.)
+              text: String(caption)  // Optional caption for the story
             };
 
             console.log('Story Params:', storyParams);
