@@ -950,7 +950,8 @@ const HomeTab = () => {
     //     }
     //   };
 
-    const mediaUrl = "https://res.cloudinary.com/doyovxikn/image/upload/v1710522836/John_o7sr2x.png"
+    // const mediaUrl = "https://res.cloudinary.com/doyovxikn/image/upload/v1710522836/John_o7sr2x.png"
+    const mediaUrl = "https://aidogsuiwebpage.onrender.com/aidogs.png"
     const caption = "i love this"
     
 
