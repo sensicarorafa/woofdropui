@@ -464,7 +464,8 @@ const HomeTab = () => {
 
         // Access the user information
         const userInfo = Telegram.WebApp.initDataUnsafe.user;
-        if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
+        // if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined')
+        if (window.Telegram && window.Telegram.WebApp) {
             console.log('Running inside Telegram WebView.');
             // window.Telegram.WebApp.init();  // Safe to call init
             Telegram.WebApp.ready();
