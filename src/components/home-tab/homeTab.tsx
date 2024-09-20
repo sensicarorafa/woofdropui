@@ -859,44 +859,46 @@ const HomeTab = () => {
    
  
   
-    const handleShareToStory = () => {
-        if (window.Telegram && window.Telegram.WebApp) {
-          try {
-            const storyData = {
-              media: {
-                type: 'photo',
-                file: 'https://res.cloudinary.com/doyovxikn/image/upload/v1710522836/John_o7sr2x.png',
-              },
-              caption: 'Check out this cool image!',
-              link: 'https://example.com',
-            };
-        // @ts-ignore
-            window.Telegram.WebApp?.postEvent('web_app_share_to_story', storyData);
+    // const handleShareToStory = () => {
+    //     if (window.Telegram && window.Telegram.WebApp) {
+    //       try {
+    //         const storyData = {
+    //           media: {
+    //             type: 'photo',
+    //             file: 'https://res.cloudinary.com/doyovxikn/image/upload/v1710522836/John_o7sr2x.png',
+    //           },
+    //           caption: 'Check out this cool image!',
+    //           link: 'https://example.com',
+    //         };
+    //     // @ts-ignore
+    //         window.Telegram.WebApp?.postEvent('web_app_share_to_story', storyData);
            
-          } catch (error) {
-            console.error('Error sharing story:', error);
-          }
-        } else {
-          console.error('Telegram WebApp is not initialized');
-        }
-      };
-      
-
-    // function handleShareToStory(mediaUrl: string, caption: string) {
-    //           //   @ts-ignore
-    //     if (typeof window.TelegramWebviewProxy !== 'undefined') {
-    //       const eventType = 'web_app_share_to_story';
-    //       const eventData = {
-    //         mediaUrl,
-    //         caption,
-    //       };
-    //         //   @ts-ignore
-    //       window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
-    //       console.log('Shared to story successfully');
+    //       } catch (error) {
+    //         console.error('Error sharing story:', error);
+    //       }
     //     } else {
-    //       console.error('TelegramWebviewProxy is not available. Ensure you are running in Telegram WebView.');
+    //       console.error('Telegram WebApp is not initialized');
     //     }
-    //   }
+    //   };
+      
+const mediaUrl = "https://res.cloudinary.com/doyovxikn/image/upload/v1710522836/John_o7sr2x.png"
+const caption = "i love this"
+
+    function handleShareToStory(mediaUrl: string, caption: string) {
+              //   @ts-ignore
+        if (typeof window.TelegramWebviewProxy !== 'undefined') {
+          const eventType = 'web_app_share_to_story';
+          const eventData = {
+            mediaUrl,
+            caption,
+          };
+            //   @ts-ignore
+          window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
+          console.log('Shared to story successfully');
+        } else {
+          console.error('TelegramWebviewProxy is not available. Ensure you are running in Telegram WebView.');
+        }
+      }
       
 
     //   function handleShareToStory(mediaUrl: string, caption: string) {
@@ -949,6 +951,9 @@ const HomeTab = () => {
     //       console.error('Not running inside Telegram WebView.');
     //     }
     //   };
+
+
+
 
     // function handleShareToStory(caption:any) {
     //     // Check if Telegram's WebApp object is available
@@ -1081,7 +1086,7 @@ const HomeTab = () => {
                             <button
                                 className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
 
-                                onClick={() => handleShareToStory()}
+                                onClick={() => handleShareToStory(mediaUrl, caption)}
                                 
 
                             >
