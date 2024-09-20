@@ -1040,7 +1040,7 @@ const HomeTab = () => {
                             <button
                                 className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
 
-                                onClick={() => handleShareToStory('https://example.com/image.jpg', 'My Caption')}
+                                onClick={() => handleShareToStory('https://asset.cloudinary.com/doyovxikn/9089c9b4911224a6d1bc71d518142a0a', 'My Caption')}
                                 
 
                             >
