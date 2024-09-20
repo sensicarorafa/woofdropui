@@ -968,9 +968,11 @@ const HomeTab = () => {
           // @ts-ignore
           if (typeof window.Telegram.WebApp.shareToStory === 'function') {
             const storyParams = {
-              mediaUrl: mediaUrl, // URL to the media (image, video, etc.)
-              caption: caption,   // Optional caption for the story
+              mediaUrl, // URL to the media (image, video, etc.)
+              caption  // Optional caption for the story
             };
+
+            console.log('Story Params:', storyParams);
         // @ts-ignore
             window.Telegram.WebApp.shareToStory(storyParams)
               .then(() => {
