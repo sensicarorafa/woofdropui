@@ -950,7 +950,7 @@ const HomeTab = () => {
     //     }
     //   };
 
-    function handleShareToStory(mediaUrl:any, caption:any) {
+    function handleShareToStory(mediaUrl:string, caption:any) {
         // Check if Telegram's WebApp object is available
         if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
           console.log('Running inside Telegram WebView.');
@@ -963,7 +963,7 @@ const HomeTab = () => {
           // @ts-ignore
           if (typeof window.Telegram.WebApp.shareToStory === 'function') {
             const storyParams = {
-              mediaUrl: mediaUrl, // URL to the media (image, video, etc.)
+              mediaUrl: "https://res.cloudinary.com/doyovxikn/image/upload/v1710522836/John_o7sr2x.png", // URL to the media (image, video, etc.)
               caption: caption,   // Optional caption for the story
             };
         // @ts-ignore
