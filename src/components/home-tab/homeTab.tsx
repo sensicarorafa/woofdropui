@@ -849,31 +849,92 @@ const HomeTab = () => {
 
     }
 
+  
+    interface PostEventCallback {
+        (error?: any): void;
+      }
+      
+      interface EventData {
+        [key: string]: any;
+      }
+      
+      function postEvent(
+        eventType: string,
+        callback: PostEventCallback = () => {}, // Optional callback with default value
+        eventData: EventData = {} // Optional eventData with default value
+      ): void {
+        console.log('[Telegram.WebView] > postEvent', eventType, eventData);
+      
+        try {
+          // If TelegramWebviewProxy is available, use it to post the event
+        //   @ts-ignore
+          if (typeof window.TelegramWebviewProxy !== 'undefined') {
+        //   @ts-ignore
 
-  
-  
-
-  
-    const handleShareToStory = () => {
-        if (window.Telegram && window.Telegram.WebApp) {
-          try {
-            const storyData = {
-              media: {
-                type: 'photo',
-                file: 'https://example.com/image.png',
-              },
-              caption: 'Check out this cool image!',
-              link: 'https://example.com',
-            };
-        // @ts-ignore
-            window.Telegram.WebApp?.postEvent('web_app_share_to_story', storyData);
-          } catch (error) {
-            console.error('Error sharing story:', error);
+            window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
+            callback();
           }
-        } else {
-          console.error('Telegram WebApp is not initialized');
+          // If running in a Windows environment where external notify is available
+        //   @ts-ignore
+
+          else if (window.external && typeof window.external.notify === 'function') {
+        //   @ts-ignore
+
+            window.external.notify(JSON.stringify({ eventType, eventData }));
+            callback();
+          }
+          // If running inside an iframe, use postMessage to communicate the event
+          else if (window !== window.parent) {
+            const trustedTarget = 'https://web.telegram.org'; // Trusted target URL
+            window.parent.postMessage(JSON.stringify({ eventType, eventData }), trustedTarget);
+            callback();
+          }
+          // If no method is available, return an error
+          else {
+            throw new Error('No available method to post event.');
+          }
+        } catch (error) {
+          console.error('Error posting event:', error);
+          callback(error);
         }
+      }
+      
+      
+      const handleShareToStory = (mediaUrl: string, caption: string) => {
+        const eventType = 'web_app_share_to_story';  // Define the event type
+        const eventData = { mediaUrl, caption };     // Data for the event
+      
+        postEvent(eventType, (error) => {
+          if (error) {
+            console.error('Failed to post event:', error);
+          } else {
+            console.log('Event posted successfully!');
+          }
+        }, eventData);
       };
+
+  
+    // const handleShareToStory = () => {
+    //     if (window.Telegram && window.Telegram.WebApp) {
+    //       try {
+    //         const storyData = {
+    //           media: {
+    //             type: 'photo',
+    //             file: 'https://example.com/image.png',
+    //           },
+    //           caption: 'Check out this cool image!',
+    //           link: 'https://example.com',
+    //         };
+    //     // @ts-ignore
+    //         // window.Telegram.WebApp?.postEvent('web_app_share_to_story', storyData);
+    //         window.;
+    //       } catch (error) {
+    //         console.error('Error sharing story:', error);
+    //       }
+    //     } else {
+    //       console.error('Telegram WebApp is not initialized');
+    //     }
+    //   };
       
 
 
@@ -970,7 +1031,8 @@ const HomeTab = () => {
 
                     <div className="bg-gradient-to-b relative border-4 border-[#CFA2CA] from-[#883E92] to-[#210133] p-7 pt-14 rounded-lg">
 
-                        <div className="bg-[#210133] p-1 rounded-lg">
+                        <div className="bg-[#210133] p-1 rounded-lg"
+                        >
                             <p className="text-lg text-white py-3 px-3 ">Share to your Tekegram Story</p>
                             <div>
                            
@@ -978,7 +1040,8 @@ const HomeTab = () => {
                             <button
                                 className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
 
-                                onClick={handleShareToStory}
+                                onClick={() => handleShareToStory('https://example.com/image.jpg', 'My Caption')}
+                                
 
                             >
                                 Share
