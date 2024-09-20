@@ -923,7 +923,7 @@ const HomeTab = () => {
     //       console.error('Not running inside Telegram WebView. Telegram-specific features are unavailable.');
     //     }
     //   }
-    const mediaUrl = 'https://example.com/image.png';
+    const mediaUrl = 'https://major.bot/stories/others.mp4';
     const caption = 'Check out my story!';
 
     // const handleShareToStory = (mediaUrl:any, caption:any) => {
@@ -956,9 +956,7 @@ const HomeTab = () => {
           console.log('Running inside Telegram WebView.');
           window.Telegram.WebApp.ready();
 
-           // Check the version of the Telegram WebApp
-              // @ts-ignore
-    // const appVersion = window.Telegram.WebApp.version || 'unknown';
+ 
 
     // console.log(`Telegram WebApp version: ${appVersion}`);
           // Now use the shareToStory method if it's available
