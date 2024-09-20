@@ -962,14 +962,14 @@ const HomeTab = () => {
           console.log('Running inside Telegram WebView.');
           window.Telegram.WebApp.ready();
 
- 
+          const encodedMediaUrl = encodeURIComponent(mediaUrl);
 
     // console.log(`Telegram WebApp version: ${appVersion}`);
           // Now use the shareToStory method if it's available
           // @ts-ignore
           if (typeof window.Telegram.WebApp.shareToStory === 'function') {
             const storyParams = {
-              mediaUrl: String(mediaUrl), // URL to the media (image, video, etc.)
+              mediaUrl: encodedMediaUrl, // URL to the media (image, video, etc.)
               text: String(caption)  // Optional caption for the story
             };
 
