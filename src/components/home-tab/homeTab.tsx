@@ -950,7 +950,7 @@ const HomeTab = () => {
     //     }
     //   };
 
-    function handleShareToStory(mediaUrl:string, caption:any) {
+    function handleShareToStory(caption:any) {
         // Check if Telegram's WebApp object is available
         if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
           console.log('Running inside Telegram WebView.');
@@ -1081,7 +1081,7 @@ const HomeTab = () => {
                             <button
                                 className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
 
-                                onClick={() => handleShareToStory(mediaUrl, caption)}
+                                onClick={() => handleShareToStory(caption)}
                                 
 
                             >
