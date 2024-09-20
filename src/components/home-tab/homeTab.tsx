@@ -865,8 +865,8 @@ const HomeTab = () => {
               caption: 'Check out this cool image!',
               link: 'https://example.com',
             };
-        
-            window.Telegram.WebApp.postEvent('web_app_share_to_story', storyData);
+        // @ts-ignore
+            window.Telegram.WebApp?.postEvent('web_app_share_to_story', storyData);
           } catch (error) {
             console.error('Error sharing story:', error);
           }
