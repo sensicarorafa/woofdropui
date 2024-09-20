@@ -923,7 +923,7 @@ const HomeTab = () => {
     //       console.error('Not running inside Telegram WebView. Telegram-specific features are unavailable.');
     //     }
     //   }
-    const mediaUrl = 'https://res.cloudinary.com/doyovxikn/image/upload/v1710522836/John_o7sr2x.png';
+    // const mediaUrl = 'https://res.cloudinary.com/doyovxikn/image/upload/v1710522836/John_o7sr2x.png';
     const caption = 'Check out my story!';
 
     // const handleShareToStory = (mediaUrl:any, caption:any) => {
