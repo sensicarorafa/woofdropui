@@ -464,8 +464,8 @@ const HomeTab = () => {
 
         // Access the user information
         const userInfo = Telegram.WebApp.initDataUnsafe.user;
-        // if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined')
-        if (window.Telegram && window.Telegram.WebApp) {
+        if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined'){
+      
             console.log('Running inside Telegram WebView.');
             // window.Telegram.WebApp.init();  // Safe to call init
             Telegram.WebApp.ready();
@@ -926,57 +926,63 @@ const HomeTab = () => {
     const mediaUrl = 'https://example.com/image.png';
     const caption = 'Check out my story!';
 
-    const handleShareToStory = (mediaUrl:any, caption:any) => {
-        if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
-          console.log('Running inside Telegram WebView.');
-        
-          window.Telegram.WebApp.ready();
-          
-          // Now use shareToStory
-          const eventType = 'web_app_share_to_story';
-          const eventData = { mediaUrl, caption };
-        //   @ts-ignore
-
-          if (typeof window.TelegramWebviewProxy !== 'undefined') {
-        //   @ts-ignore
-
-            window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
-            console.log('Shared to story successfully');
-          } else {
-            console.error('TelegramWebviewProxy is not available.');
-          }
-        } else {
-          console.error('Not running inside Telegram WebView.');
-        }
-      };
-
-    // function handleShareToStory(mediaUrl:any, caption:any) {
-    //     // Check if Telegram's WebApp object is available
+    // const handleShareToStory = (mediaUrl:any, caption:any) => {
     //     if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
     //       console.log('Running inside Telegram WebView.');
-      
-    //       // Now use the shareToStory method if it's available
-    //       // @ts-ignore
-    //       if (typeof window.Telegram.WebApp.shareToStory === 'function') {
-    //         const storyParams = {
-    //           mediaUrl: mediaUrl, // URL to the media (image, video, etc.)
-    //           caption: caption,   // Optional caption for the story
-    //         };
-    //     // @ts-ignore
-    //         window.Telegram.WebApp.shareToStory(storyParams)
-    //           .then(() => {
-    //             console.log('Story shared successfully');
-    //           })  // @ts-ignore
-    //           .catch((error) => {
-    //             console.error('Failed to share thxe story:', error);
-    //           });
+        
+    //       window.Telegram.WebApp.ready();
+          
+    //       // Now use shareToStory
+    //       const eventType = 'web_app_share_to_story';
+    //       const eventData = { mediaUrl, caption };
+    //     //   @ts-ignore
+
+    //       if (typeof window.TelegramWebviewProxy !== 'undefined') {
+    //     //   @ts-ignore
+
+    //         window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
+    //         console.log('Shared to story successfully');
     //       } else {
-    //         console.error('shareToStory method is not available.');
+    //         console.error('TelegramWebviewProxy is not available.');
     //       }
     //     } else {
-    //       console.error('Not running inside Telegram WebView. Telegram-specific features are unavailable.');
+    //       console.error('Not running inside Telegram WebView.');
     //     }
-    //   }
+    //   };
+
+    function handleShareToStory(mediaUrl:any, caption:any) {
+        // Check if Telegram's WebApp object is available
+        if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
+          console.log('Running inside Telegram WebView.');
+          window.Telegram.WebApp.ready();
+
+           // Check the version of the Telegram WebApp
+              // @ts-ignore
+    // const appVersion = window.Telegram.WebApp.version || 'unknown';
+
+    // console.log(`Telegram WebApp version: ${appVersion}`);
+          // Now use the shareToStory method if it's available
+          // @ts-ignore
+          if (typeof window.Telegram.WebApp.shareToStory === 'function') {
+            const storyParams = {
+              mediaUrl: mediaUrl, // URL to the media (image, video, etc.)
+              caption: caption,   // Optional caption for the story
+            };
+        // @ts-ignore
+            window.Telegram.WebApp.shareToStory(storyParams)
+              .then(() => {
+                console.log('Story shared successfully');
+              })  // @ts-ignore
+              .catch((error) => {
+                console.error('Failed to share thxe story:', error);
+              });
+          } else {
+            console.error('shareToStory method is not available.');
+          }
+        } else {
+          console.error('Not running inside Telegram WebView. Telegram-specific features are unavailable.');
+        }
+      }
       
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
