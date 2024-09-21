@@ -555,7 +555,7 @@ const HomeTab = () => {
             // if(getUserData?.data?.userData?.boostCode) {
             //     setBoostCode(getUserData?.data?.userData?.boostCode);
             // }
-
+          
             setBoostActivated(getUserData?.data?.userData?.boostActivated);
             setUserRank(getUserData?.data?.userRank);
 
