@@ -38,7 +38,7 @@ const SplashScreen = () => {
         const fetchUserData = async () => {
           const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, {user})
           sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(getUserData))
-          sessionStorage.setItem('referralLink', `${import.meta.env.VITE_TEST_BOT_URL}?start=${getUserData?.data?.userData?.referralCode}`)
+          sessionStorage.setItem('referralLink', `${import.meta.env.VITE_TEST_BOT_URL}?startapp=${getUserData?.data?.userData?.referralCode}`)
           if (!getUserData?.data?.userData?.earlyAdopterBonusClaimed) {
             setTimeout(() => {
                 navigate(`/early-adopters`);
