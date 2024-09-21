@@ -461,6 +461,38 @@ const HomeTab = () => {
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
   
 
+    const generateRandomCode = () => {
+        // Function to generate random letters
+        const generateRandomLetters = () => {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            let result = '';
+            for (let i = 0; i < 4; i++) {
+                result += letters.charAt(Math.floor(Math.random() * letters.length));
+            }
+            return result;
+        };
+
+        // Function to generate random numbers
+        const generateRandomNumbers = () => {
+            let result = '';
+            for (let i = 0; i < 4; i++) {
+                result += Math.floor(Math.random() * 10); // Generates a number between 0 and 9
+            }
+            return result;
+        };
+
+        // Combine letters and numbers, then shuffle
+        const shuffle = (string: any) => {
+            return string.split('').sort(() => Math.random() - 0.5).join('');
+        };
+
+        const letters = generateRandomLetters();
+        const numbers = generateRandomNumbers();
+        const combined = letters + numbers;
+        const randomCode = shuffle(combined);
+
+        return randomCode;
+    };
 
     useEffect(() => {
         // Ensure the Telegram Web Apps SDK is ready
@@ -468,58 +500,15 @@ const HomeTab = () => {
 
         // Access the user information
         const userInfo = Telegram.WebApp.initDataUnsafe.user;
-        if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined'){
-      
-            console.log('Running inside Telegram WebView.');
-            // window.Telegram.WebApp.init();  // Safe to call init
-            Telegram.WebApp.ready();
-          } else {
-            console.log('Not running inside Telegram WebView.');
-          }
+        
   
         // Check if the user information is available
         if (userInfo) {
             console.log({ userInfo, url: window.location.href });
             setUser(userInfo);
-            function generateRandomCode() {
-                // Function to generate random letters
-                const generateRandomLetters = () => {
-                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-                    let result = '';
-                    for (let i = 0; i < 4; i++) {
-                        result += letters.charAt(Math.floor(Math.random() * letters.length));
-                    }
-                    return result;
-                };
+      
 
-                // Function to generate random numbers
-                const generateRandomNumbers = () => {
-                    let result = '';
-                    for (let i = 0; i < 4; i++) {
-                        result += Math.floor(Math.random() * 10); // Generates a number between 0 and 9
-                    }
-                    return result;
-                };
-
-                // Combine letters and numbers, then shuffle
-                const shuffle = (string: any) => {
-                    return string.split('').sort(() => Math.random() - 0.5).join('');
-                };
-
-                const letters = generateRandomLetters();
-                const numbers = generateRandomNumbers();
-                const combined = letters + numbers;
-                const randomCode = shuffle(combined);
-
-                return randomCode;
-            }
-            const randomCode = generateRandomCode();
-            if (!boostCode || localStorage.getItem("boostCode") == null) {
-                localStorage.setItem("boostCode", randomCode)
-                setBoostCode(randomCode)
-            }
-
-            console.log("randomCode", randomCode)
+           
         } else {
             console.log('No user information available.');
             setUser({
@@ -530,44 +519,18 @@ const HomeTab = () => {
                 last_name: "Sensei",
                 username: "qandasensei"
             })
-            function generateRandomCode() {
-                // Function to generate random letters
-                const generateRandomLetters = () => {
-                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-                    let result = '';
-                    for (let i = 0; i < 4; i++) {
-                        result += letters.charAt(Math.floor(Math.random() * letters.length));
-                    }
-                    return result;
-                };
-
-                // Function to generate random numbers
-                const generateRandomNumbers = () => {
-                    let result = '';
-                    for (let i = 0; i < 4; i++) {
-                        result += Math.floor(Math.random() * 10); // Generates a number between 0 and 9
-                    }
-                    return result;
-                };
-
-                // Combine letters and numbers, then shuffle
-                const shuffle = (string: any) => {
-                    return string.split('').sort(() => Math.random() - 0.5).join('');
-                };
-
-                const letters = generateRandomLetters();
-                const numbers = generateRandomNumbers();
-                const combined = letters + numbers;
-                const randomCode = shuffle(combined);
-
-                return randomCode;
-            }
-            const randomCode = generateRandomCode();
-            if (!boostCode || localStorage.getItem("boostCode") == null) {
-                localStorage.setItem("boostCode", randomCode)
-                setBoostCode(randomCode)
-            }
+        
         }
+
+        const savedBoostCode = localStorage.getItem('boostCode');
+        if (!savedBoostCode) {
+            const randomCode = generateRandomCode();
+            setBoostCode(randomCode);
+            localStorage.setItem('boostCode', randomCode);
+        } else {
+            setBoostCode(savedBoostCode);
+        }
+
     }, []);
 
     useEffect(() => {

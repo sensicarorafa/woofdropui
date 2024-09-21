@@ -29,6 +29,12 @@ const SplashScreen = () => {
             username: "qandasensei"
           })
         }
+        if(localStorage.getItem("boostCode")) {
+          localStorage.removeItem("boostCode")
+
+        }
+       
+  
     }, []);
 
     useEffect (() => {
