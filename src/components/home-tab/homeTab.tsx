@@ -755,6 +755,10 @@ const HomeTab = () => {
             } else {
                 let boostCodeCopy = localStorage.getItem('boostCode') || boostCode || ''
 
+                console.log("before sending",    user,
+                boostCodeCopy,
+                refBoostCode)
+
                 const updateBoostLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/activate-boost`, {
                     user,
                     boostCode:boostCodeCopy,
@@ -1025,7 +1029,7 @@ const HomeTab = () => {
 
 
                                 >
-                                    HMSTR-{boostCode }
+                                    HMSTR-{localStorage.getItem("boostCode") || boostCode }
                                     <div className='absolute flex items-center py-1 right-0 w-1/2 pl-2 px-1 bg-white text-black rounded-lg'>
                                         <span className='text-sm whitespace-nowrap' onClick={copyToClipboard}>
                                             Copy my key
