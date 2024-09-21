@@ -837,6 +837,13 @@ const HomeTab = () => {
                             color: "#fff",
                         },
                     });
+                    setBoostCode(updateBoostLeaderboard?.data?.userData?.boostCode);
+                 
+                        setBoostCode( localStorage.getItem("boostCode") || "" );
+
+               
+                 
+
                 }
             }
         }
@@ -1033,7 +1040,7 @@ const HomeTab = () => {
                                 onClick={cantClaimBoost}
 
                             >
-                                Claim
+                                Claimed
                             </button>}
                             {!boostActivated && <button
                                 className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
@@ -1053,7 +1060,7 @@ const HomeTab = () => {
 
 
                                 >
-                                    HMSTR-{boostCode}
+                                    HMSTR-{boostCode }
                                     <div className='absolute flex items-center py-1 right-0 w-1/2 pl-2 px-1 bg-white text-black rounded-lg'>
                                         <span className='text-sm whitespace-nowrap' onClick={copyToClipboard}>
                                             Copy my key
