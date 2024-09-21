@@ -84,11 +84,15 @@ const HomeTab = () => {
     }, [engageMissionTweet]);
 
     const encodedTextMission = useMemo(() => {
-        const text = `Are you a Catizen??\r\n\nGain more on $AIDOGS by completing mission.\r\n\nUse my Boost key here: ${boostCode}.\r\n\n  \r\n\n #DOGS #Crypto #AIDOGS`;
+        const text = `Claimed 10,000 $AIDOGS as a CEO on #Hamster_Kombat!🐹\r\n\nIf you're a @Hamster_Kombat CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\r\n\nNew to AiDogs? join and start earning👇`;
         return encodeURIComponent(text);
     }, [boostCode]);
 
     const urlMissionTweet = `https://twitter.com/intent/tweet?text=${encodedTextMission}`;
+
+    
+        
+      
 
     const navigate = useNavigate();
 
@@ -1049,7 +1053,7 @@ const HomeTab = () => {
 
 
                                 >
-                                    CATI-{boostCode}
+                                    HMSTR-{boostCode}
                                     <div className='absolute flex items-center py-1 right-0 w-1/2 pl-2 px-1 bg-white text-black rounded-lg'>
                                         <span className='text-sm whitespace-nowrap' onClick={copyToClipboard}>
                                             Copy my key
@@ -1082,7 +1086,7 @@ const HomeTab = () => {
 
                         <div className="bg-[#210133] p-1 rounded-lg"
                         >
-                            <p className="text-lg text-white py-3 px-3 ">Share to your Tekegram Story</p>
+                            <p className="text-lg text-white py-3 px-3 ">Share to your Telegram Story</p>
                             <div>
                            
                             </div>
@@ -1385,7 +1389,7 @@ const HomeTab = () => {
 
                                     <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
                                         onClick={() => {
-                                            window.open('https://x.com/aidogscomm', '_blank');
+                                            window.open(urlMissionTweet, '_blank');
                                             setTimeout(() => {
                                                 setEngageMissionTweet(true)
                                             }, 5000)
@@ -1397,7 +1401,7 @@ const HomeTab = () => {
 
                             </div>
                         </div>
-                        <div className='flex justify-between py-3 w-full items-center  rounded-md'>
+                        {/* <div className='flex justify-between py-3 w-full items-center  rounded-md'>
                             <div className='flex items-center'>
                                 <div className=" w-[50%] bg-white p-[3px] small-mobile:w-[8%] rounded-full mobile:w-[11%]">
                                     <img src={TgLogo} />
@@ -1422,7 +1426,7 @@ const HomeTab = () => {
                                 }
 
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className='flex w-full py-1 '>
                         <button className={`bg-transparent text-white border-white border-[1px] w-1/3 text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg py-1 rounded-[1px]`}>
