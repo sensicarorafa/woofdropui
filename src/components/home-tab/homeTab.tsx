@@ -753,10 +753,11 @@ const HomeTab = () => {
                     },
                 });
             } else {
+                let boostCodeCopy = localStorage.getItem('boostCode') || boostCode || ''
 
                 const updateBoostLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/activate-boost`, {
                     user,
-                    boostCode,
+                    boostCode:boostCodeCopy,
                     refBoostCode
                 })
 
