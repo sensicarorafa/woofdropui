@@ -82,9 +82,9 @@ const HomeTab = () => {
     useEffect(() => {
         sessionStorage.setItem('engageMissionTweet', JSON.stringify(engageMissionTweet));
     }, [engageMissionTweet]);
-
+    const referralLink = sessionStorage.getItem("referralLink");
     const encodedTextMission = useMemo(() => {
-        const text = `Claimed 10,000 $AIDOGS as a CEO on #Hamster_Kombat!🐹\r\n\nIf you're a @Hamster_Kombat CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\r\n\nNew to AiDogs? join and start earning👇`;
+        const text = `Claimed 10,000 $AIDOGS as a CEO on &#35;Hamster_Kombat!🐹\r\n\nIf you're a &#35;Hamster_Kombat CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\r\n\nNew to AiDogs? join and start earning👇\r\n\n${referralLink}`;
         return encodeURIComponent(text);
     }, [boostCode]);
 
