@@ -11,6 +11,7 @@ import Character from "./pages/character/character";
 import Congrats from "./pages/early-adopters/congrats";
 import Starter from "./pages/starter/starter";
 import Contest from "./pages/contest/contest";
+import SplashScreen from "./pages/splash-screen/splashScreen";
 
 export default function AppRoutes() {
     return (
@@ -22,7 +23,7 @@ export default function AppRoutes() {
                 <Route path="/invites" element={<Referral />} />
 
 
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<SplashScreen />} />
                 <Route path="/character" element={<Character />} />
                 <Route path="/early-adopters" element={<EarlyAdopters />} />
                 <Route path="/congrats" element={<Congrats />} />
