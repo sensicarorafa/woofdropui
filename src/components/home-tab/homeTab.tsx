@@ -802,9 +802,9 @@ const HomeTab = () => {
                             color: "#fff",
                         },
                     });
-                    setBoostCode(updateBoostLeaderboard?.data?.userData?.boostCode);
+                    // setBoostCode(updateBoostLeaderboard?.data?.userData?.boostCode);
                  
-                        setBoostCode( localStorage.getItem("boostCode") || "" );
+                        setBoostCode(localStorage.getItem("boostCode") || "" );
 
                
                  
