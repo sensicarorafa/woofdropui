@@ -12,7 +12,7 @@ import Trophy from "../../assets/img/trophy.png";
 import Game from "../../assets/img/game-controller.png";
 
 import Twitter from "../../assets/img/twitter.png";
-import TgLogo from "../../assets/img/telegram.png";
+// import TgLogo from "../../assets/img/telegram.png";
 
 //import logoSm from "../../assets/img/logosm.svg";
 
