@@ -725,7 +725,7 @@ const HomeTab = () => {
 
     const copyToClipboard = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
-        const text = `CATI-${boostCode}`;
+        const text = `HMSTR-${boostCode}`;
         navigator.clipboard.writeText(text as string);
         toast("Copied to clipboard!", {
             className: "",
