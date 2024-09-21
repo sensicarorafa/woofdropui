@@ -29,10 +29,7 @@ const SplashScreen = () => {
             username: "qandasensei"
           })
         }
-        if(localStorage.getItem("boostCode")) {
-          localStorage.removeItem("boostCode")
-
-        }
+   
        
   
     }, []);
@@ -52,8 +49,28 @@ const SplashScreen = () => {
             }, 2000);
           }
         }
+
+        const fetchBoostUserData = async () => {
+          const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data/boost-data`, { user })
+          console.log(getUserData?.data)
+    
+      
+
+          if (getUserData?.data?.success) {
+
+     
+            localStorage.setItem('boostCode',  getUserData?.data?.userData?.boostCode)
+
+
+        } else {
+          localStorage.removeItem('boostCode')
+        }
+       
+
+      }
         if (user) {
           fetchUserData();
+          fetchBoostUserData()
         }
     }, [user])
 
