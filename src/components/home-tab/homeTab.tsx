@@ -96,7 +96,7 @@ const HomeTab = () => {
         const referralLink = sessionStorage.getItem("referralLink");
         console.log("referralLinkhome", referralLink)
         const text = `Claimed 10,000 $AIDOGS as a CEO on %23Hamster_Kombat!🐹%0D%0A%0D%0AIf you're a %23Hamster CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}`;
-        return (text);
+        return encodeURIComponent(text);
     }, [boostCode]);
 
     console.log("encodedTextMission", encodedTextMission)
