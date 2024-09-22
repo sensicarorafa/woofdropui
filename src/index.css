@@ -232,6 +232,7 @@
   }
 
   .bg-cover {
-    background: url(./assets/img/missionbanner.png);
+    background: url(./assets/img/hamsterbanner.png);
     background-size: cover;
+    opacity: 0.8;
   }

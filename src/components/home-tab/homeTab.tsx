@@ -12,7 +12,7 @@ import Trophy from "../../assets/img/trophy.png";
 import Game from "../../assets/img/game-controller.png";
 
 import Twitter from "../../assets/img/twitter.png";
-// import TgLogo from "../../assets/img/telegram.png";
+import TgLogo from "../../assets/img/telegram.png";
 
 //import logoSm from "../../assets/img/logosm.svg";
 
@@ -62,6 +62,12 @@ const HomeTab = () => {
             const saved = sessionStorage.getItem('engageMissionTweet')
             return saved !== null ? JSON.parse(saved) : false;
         });
+    const [engageMissionTg, setEngageMissionTg] = useState(
+        () => {
+
+            const saved = sessionStorage.getItem('engageMissionTweet')
+            return saved !== null ? JSON.parse(saved) : false;
+        });
     const [boostCode, setBoostCode] = useState(
         () => {
 
@@ -86,13 +92,14 @@ const HomeTab = () => {
     const encodedTextMission = useMemo(() => {
         const referralLink = sessionStorage.getItem("referralLink");
         console.log("referralLinkhome", referralLink)
-        const text = `Claimed 10,000 $AIDOGS as a CEO on %23Hamster_Kombat!🐹\r\n\nIf you're a %23Hamster_Kombat CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\r\n\nNew to AiDogs? join and start earning👇\r\n\n${referralLink}`;
-        return encodeURIComponent(text);
+        const text = `Claimed 10,000 $AIDOGS as a CEO on %23Hamster_Kombat!🐹\r\n\nIf you're a %23Hamster CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\r\n\nNew to AiDogs? join and start earning👇\r\n\n${referralLink}`;
+        return (text);
     }, [boostCode]);
 
     console.log("encodedTextMission", encodedTextMission)
 
     const urlMissionTweet = `https://twitter.com/intent/tweet?text=${encodedTextMission}`;
+
 
     
         
@@ -671,7 +678,7 @@ const HomeTab = () => {
         if (boostActivated) {
             setModal((prevOpen) => !prevOpen);
         } else {
-            if (!engageMissionRt || !engageMissionTweet) {
+            if (!engageMissionRt || !engageMissionTweet || !engageMissionTg ) {
                 toast("Complete all missions to proceed!", {
                     className: "",
                     duration: 799,
@@ -1282,10 +1289,12 @@ const HomeTab = () => {
                 {/* boost */}
                 <div className='flex flex-col py-3 w-[90%] m-auto justify-around'>
                     <div className="bg-cover relative bg-center h-[200px] w-full mb-3 campaign_banner rounded-lg">
-                        <div className='absolute bottom-0 text-white text-[12px] bg-opacity-20 px-3 py-2 left-0 w-full bg-black'>
-                            <p className='leading-4'>$AIDOG Mission</p>
-                            <p className='leading-4'>Complete the tasks to claim 7k $AIDOGS </p>
-                            <p className='leading-4'>Earn 2.8k $AIDOGS whenever your key is used</p>
+                        <div className='absolute bottom-0 text-white text-[12px] bg-opacity-70 px-3 py-2 left-0 w-full bg-black'>
+                            <p className='leading-4'>AIDOGS BONUS FOR HAMSTER KOMBAT USERS </p>
+                            <p className='leading-4'>Claim 7k $AIDOGS for tasks. </p>
+                            <p className='leading-4'>Get 2.8k $AIDOGS each time your key is used</p>
+
+                        
                         </div>
 
                     </div>
@@ -1379,7 +1388,7 @@ const HomeTab = () => {
 
                             </div>
                         </div>
-                        {/* <div className='flex justify-between py-3 w-full items-center  rounded-md'>
+                        <div className='flex justify-between py-3 w-full items-center  rounded-md'>
                             <div className='flex items-center'>
                                 <div className=" w-[50%] bg-white p-[3px] small-mobile:w-[8%] rounded-full mobile:w-[11%]">
                                     <img src={TgLogo} />
@@ -1388,23 +1397,44 @@ const HomeTab = () => {
                                 <div className='flex flex-col pl-5'>
                                     <p className='text-white text-bold taskTitle'
 
-                                    >Post an Telegram Story</p>
+                                    >Join Telegram Channel</p>
 
                                 </div>
                             </div>
                             <div className="">
 
-                                {
+                            {
+                                    !engageMissionTg &&
 
                                     <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
-                                        onClick={toggleTgStatusModal}
+                                        onClick={() => {
+                                            window.open('https://t.me/aidogs_community', '_blank');
+                                            setTimeout(() => {
+                                                setEngageMissionTg(true)
+                                            }, 5000)
+                                        }}
                                     >
                                         Do
                                     </button>
                                 }
 
+                                {
+                                    engageMissionTg &&
+
+                                    <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
+                                        onClick={() => {
+                                            window.open('https://t.me/aidogs_community', '_blank');
+                                            setTimeout(() => {
+                                                setEngageMissionTg(true)
+                                            }, 5000)
+                                        }}
+                                    >
+                                        Done
+                                    </button>
+                                }
+
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                     <div className='flex w-full py-1 '>
                         <button className={`bg-transparent text-white border-white border-[1px] w-1/3 text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg py-1 rounded-[1px]`}>
