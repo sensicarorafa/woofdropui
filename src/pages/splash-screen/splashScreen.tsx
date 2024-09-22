@@ -50,29 +50,29 @@ const SplashScreen = () => {
           }
         }
 
-      //   const fetchBoostUserData = async () => {
-      //     const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data/boost-data`, { user })
-      //     console.log(getUserData?.data)
+        const fetchBoostUserData = async () => {
+          const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data/boost-data`, { user })
+          console.log(getUserData?.data)
     
       
 
-      //     if (getUserData?.data?.success) {
+          if (getUserData?.data?.success) {
 
-      //       sessionStorage.setItem('authUserLoggedInBoost', JSON.stringify(getUserData))
+            sessionStorage.setItem('authUserLoggedInBoost', JSON.stringify(getUserData))
      
-      //       localStorage.setItem('boostCode',  getUserData?.data?.userData?.boostCode)
+            localStorage.setItem('boostCode',  getUserData?.data?.userData?.boostCode)
             
 
 
-      //   } else {
-      //     localStorage.removeItem('boostCode')
-      //   }
+        } else {
+          localStorage.removeItem('boostCode')
+        }
        
 
-      // }
+      }
         if (user) {
           fetchUserData();
-          // fetchBoostUserData()
+          fetchBoostUserData()
         }
     }, [user])
 
