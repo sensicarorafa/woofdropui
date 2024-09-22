@@ -49,6 +49,8 @@ const HomeTab = () => {
 
 
     //Boost states
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const [openModal, setModal] = useState(false);
     const [openStatusModal, setOpenStatusModal] = useState(false);
     const [engageMissionRt, setEngageMissionRt] = useState(() => {
@@ -743,7 +745,7 @@ const HomeTab = () => {
     }, [refBoostCode, boostCode])
 
     const claimBoost = async () => {
-
+        setIsLoading(true)
         if (boostCode == refBoostCode) {
             console.log("tro", refBoostCode, boostCode)
             toast("You cannot use your boost key", {
@@ -827,6 +829,9 @@ const HomeTab = () => {
 
                 }
             }
+
+        setIsLoading(false)
+
         }
     }
     const cantClaimBoost = async () => {
@@ -1029,7 +1034,7 @@ const HomeTab = () => {
                                 onClick={claimBoost}
 
                             >
-                                Claim
+                              {isLoading ? <>Claiming...</>  : <>Claim</>}
                             </button>}
 
 
@@ -1325,7 +1330,7 @@ const HomeTab = () => {
                                             }, 5000)
                                         }}
                                     >
-                                        Do
+                                            {boostActivated ? <>Done</> : <>Do</> }
                                     </button>
                                 }
                                 {engageMissionRt &&
@@ -1370,7 +1375,7 @@ const HomeTab = () => {
                                             }, 5000)
                                         }}
                                     >
-                                        Do
+                                            {boostActivated ? <>Done</> : <>Do</> }
                                     </button>
                                 }
 
@@ -1418,6 +1423,7 @@ const HomeTab = () => {
                                         }}
                                     >
                                         Do
+                                        {boostActivated ? <>Done</> : <>Do</> }
                                     </button>
                                 }
 
