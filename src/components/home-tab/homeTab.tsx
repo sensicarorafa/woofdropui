@@ -93,12 +93,39 @@ const HomeTab = () => {
     useEffect(() => {
         sessionStorage.setItem('engageMissionTg', JSON.stringify(engageMissionTg));
     }, [engageMissionTg]);
+
+    function getDeviceType() {
+        // @ts-ignore
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    
+        // Check for iOS devices
+        // @ts-ignore
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            return 'iOS';
+        }
+    
+        // Check for Android devices
+        if (/android/i.test(userAgent)) {
+            return 'Android';
+        }
+    
+        // Other devices (including desktops)
+        return 'Other';
+    }
+    
   
     const encodedTextMission = useMemo(() => {
+        const deviceType = getDeviceType();
         const referralLink = sessionStorage.getItem("referralLink");
         console.log("referralLinkhome", referralLink)
-        // const text = `Claimed 7,000 $AIDOGS as a CEO on %23Hamster_Kombat!🐹%0D%0A%0D%0AIf you're a %23Hamster CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}`;
-        const text = `Claimed 7,000 $AIDOGS as a CEO on #Hamster_Kombat!🐹\n\nIf you're a #Hamster CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\n\nNew to AiDogs? join and start earning👇\n\n${referralLink}`;
+        let text
+        if (deviceType === 'iOS') {
+         text = `Claimed 7,000 $AIDOGS as a CEO on #Hamster_Kombat!🐹\n\nIf you're a #Hamster CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\n\nNew to AiDogs? join and start earning👇\n\n${referralLink}`;
+
+        } else {
+         text = `Claimed 7,000 $AIDOGS as a CEO on %23Hamster_Kombat!🐹%0D%0A%0D%0AIf you're a %23Hamster CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}`;
+
+        }
         return encodeURIComponent(text);
     }, [boostCode]);
 
