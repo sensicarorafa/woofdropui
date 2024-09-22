@@ -58,8 +58,10 @@ const SplashScreen = () => {
 
           if (getUserData?.data?.success) {
 
+            sessionStorage.setItem('authUserLoggedInBoost', JSON.stringify(getUserData))
      
             localStorage.setItem('boostCode',  getUserData?.data?.userData?.boostCode)
+            
 
 
         } else {

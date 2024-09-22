@@ -556,9 +556,7 @@ const HomeTab = () => {
             console.log(getUserData?.data)
             setTotalBoostPoints(getUserData?.data?.userData?.pointsNo);
             setBoostReferralPoints(getUserData?.data?.userData?.referralPoints);
-            // if(getUserData?.data?.userData?.boostCode) {
-            //     setBoostCode(getUserData?.data?.userData?.boostCode);
-            // }
+       
           
             setBoostActivated(getUserData?.data?.userData?.boostActivated);
             setUserRank(getUserData?.data?.userRank);
