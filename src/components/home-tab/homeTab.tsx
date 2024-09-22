@@ -97,7 +97,8 @@ const HomeTab = () => {
     const encodedTextMission = useMemo(() => {
         const referralLink = sessionStorage.getItem("referralLink");
         console.log("referralLinkhome", referralLink)
-        const text = `Claimed 7,000 $AIDOGS as a CEO on %23Hamster_Kombat!🐹%0D%0A%0D%0AIf you're a %23Hamster CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}`;
+        // const text = `Claimed 7,000 $AIDOGS as a CEO on %23Hamster_Kombat!🐹%0D%0A%0D%0AIf you're a %23Hamster CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}`;
+        const text = `Claimed 7,000 $AIDOGS as a CEO on #Hamster_Kombat!🐹\n\nIf you're a #Hamster CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\n\nNew to AiDogs? join and start earning👇\n\n${referralLink}`;
         return encodeURIComponent(text);
     }, [boostCode]);
 
@@ -1338,7 +1339,9 @@ const HomeTab = () => {
                                     <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
                                         onClick={() => {
                                             window.open('https://x.com/aidogscomm', '_blank');
+                                          
                                             setTimeout(() => {
+
                                                 setEngageMissionRt(true)
                                             }, 5000)
                                         }}
