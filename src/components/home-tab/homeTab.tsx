@@ -1422,7 +1422,7 @@ const HomeTab = () => {
                                             }, 5000)
                                         }}
                                     >
-                                        Do
+                                        
                                         {boostActivated ? <>Done</> : <>Do</> }
                                     </button>
                                 }
