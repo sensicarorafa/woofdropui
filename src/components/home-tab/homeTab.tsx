@@ -65,7 +65,7 @@ const HomeTab = () => {
     const [engageMissionTg, setEngageMissionTg] = useState(
         () => {
 
-            const saved = sessionStorage.getItem('engageMissionTweet')
+            const saved = sessionStorage.getItem('engageMissionTg')
             return saved !== null ? JSON.parse(saved) : false;
         });
     const [boostCode, setBoostCode] = useState(
@@ -88,6 +88,9 @@ const HomeTab = () => {
     useEffect(() => {
         sessionStorage.setItem('engageMissionTweet', JSON.stringify(engageMissionTweet));
     }, [engageMissionTweet]);
+    useEffect(() => {
+        sessionStorage.setItem('engageMissionTg', JSON.stringify(engageMissionTg));
+    }, [engageMissionTg]);
   
     const encodedTextMission = useMemo(() => {
         const referralLink = sessionStorage.getItem("referralLink");
@@ -525,7 +528,7 @@ const HomeTab = () => {
             setUser({
                 allows_write_to_pm: true,
                 first_name: "Qanda",
-                id: 6489531324,
+                id: 6489231324,
                 language_code: "en",
                 last_name: "Sensei",
                 username: "qandasensei"
@@ -693,7 +696,7 @@ const HomeTab = () => {
             }
         }
 
-    }, [engageMissionRt, engageMissionTweet, boostActivated]);
+    }, [engageMissionRt, engageMissionTweet,engageMissionTg, boostActivated]);
 
     const copyToClipboard = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
