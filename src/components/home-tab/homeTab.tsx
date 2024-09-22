@@ -86,7 +86,7 @@ const HomeTab = () => {
     const encodedTextMission = useMemo(() => {
         const referralLink = sessionStorage.getItem("referralLink");
         console.log("referralLinkhome", referralLink)
-        const text = `Claimed 10,000 $AIDOGS as a CEO on #Hamster_Kombat!🐹\r\n\nIf you're a #Hamster_Kombat CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\r\n\nNew to AiDogs? join and start earning👇\r\n\n${referralLink}`;
+        const text = `Claimed 10,000 $AIDOGS as a CEO on %23Hamster_Kombat!🐹\r\n\nIf you're a %23Hamster_Kombat CEO, grab your free 10,000 $AIDOGS using my Boost Key "HMSTR-${boostCode}"\r\n\nNew to AiDogs? join and start earning👇\r\n\n${referralLink}`;
         return encodeURIComponent(text);
     }, [boostCode]);
 
@@ -1416,7 +1416,7 @@ const HomeTab = () => {
                         // disabled={!engageMissionRt || !engageMissionTweet}
 
                         >
-                            Participate
+                          {boostActivated ? <>View</> : <>Participate</> }
                         </button>
                     </div>
                 </div>
