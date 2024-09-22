@@ -123,7 +123,7 @@ const HomeTab = () => {
          text = `Claimed 7,000 $AIDOGS as a CEO on Hamster Kombat!🐹\n\nIf you're a Hamster CEO, grab your free 7k $AIDOGS bonus using my Boost Key "HMSTR-${boostCode}"\n\nNew to AiDogs? join and start earning👇\n\n${referralLink}\n\n#Hamster_Kombat #hamster $HMSTR`;
 
         } else {
-         text = `Claimed 7,000 $AIDOGS as a CEO on Hamster Kombat!🐹%0D%0A%0D%0AIf you're a Hamster CEO, grab your free 7k $AIDOGS bonus using my Boost Key "HMSTR-${boostCode}"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}\n\n%23Hamster_Kombat %23hamster $HMSTR`;
+         text = `Claimed 7,000 $AIDOGS as a CEO on Hamster Kombat!🐹%0D%0A%0D%0AIf you're a Hamster CEO, grab your free 7k $AIDOGS bonus using my Boost Key "HMSTR-${boostCode}"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}%0D%0A%0D%0A%23Hamster_Kombat %23hamster $HMSTR`;
 
         }
         return encodeURIComponent(text);
