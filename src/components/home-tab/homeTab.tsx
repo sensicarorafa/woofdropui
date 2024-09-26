@@ -786,6 +786,37 @@ const HomeTab = () => {
         }
 
     }, [refBoostCode, boostCode])
+    useEffect(() => {
+        const lastTrueIndex = dailyLoginTasks
+            .map((reward: any) => reward.rewardClaimed)
+            .lastIndexOf(true);
+
+        console.log('lastTrueIndex', lastTrueIndex)
+
+        const updateDailyClaim = async () => {
+
+            const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-next-login`, {
+                user
+            }) 
+
+            if(updateSocial?.data?.success) {
+                setTotalPoints(updateSocial?.data?.userData?.pointsNo);
+                setPointsToday(updateSocial?.data?.userData?.pointsToday);
+                setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+                setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
+                setLastLogin(updateSocial?.data?.userData?.lastLogin);
+                setNextLogin(updateSocial?.data?.userData?.nextLogin);
+                setReferees(updateSocial?.data?.userData?.referralPoints);
+            }
+
+        }
+
+
+        if(lastTrueIndex == 6) {
+            updateDailyClaim()
+        }
+
+    }, [dailyLoginTasks])
 
     const claimBoost = async () => {
         setIsLoading(true)
