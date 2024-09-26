@@ -43,6 +43,7 @@ const HomeTab = () => {
     const [pointsToday, setPointsToday] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.pointsToday : 0);
     const [referees, setReferees] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralPoints : 0);
     const [lastLogin, setLastLogin] = useState<any>(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.lastLogin : null)
+    const [nextLogin, setNextLogin] = useState<any>(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.nextLogin : null)
     //const [engageTask, setEngageTask] = useState(false);
     const [open, setOpenModal] = useState<boolean>(false);
     const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
@@ -97,33 +98,33 @@ const HomeTab = () => {
     function getDeviceType() {
         // @ts-ignore
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    
+
         // Check for iOS devices
         // @ts-ignore
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
             return 'iOS';
         }
-    
+
         // Check for Android devices
         if (/android/i.test(userAgent)) {
             return 'Android';
         }
-    
+
         // Other devices (including desktops)
         return 'Other';
     }
-    
-  
+
+
     const encodedTextMission = useMemo(() => {
         const deviceType = getDeviceType();
         const referralLink = sessionStorage.getItem("referralLink");
         console.log("referralLinkhome", referralLink)
         let text
         if (deviceType === 'iOS') {
-         text = `Claimed 7,000 $AIDOGS as a CEO on Hamster Kombat!🐹\n\nIf you're a Hamster CEO, grab your free 7k $AIDOGS bonus using my Boost Key "HMSTR-${boostCode}"\n\nNew to AiDogs? join and start earning👇\n\n${referralLink}\n\n#Hamster_Kombat #hamster $HMSTR`;
+            text = `Claimed 7,000 $AIDOGS as a CEO on Hamster Kombat!🐹\n\nIf you're a Hamster CEO, grab your free 7k $AIDOGS bonus using my Boost Key "HMSTR-${boostCode}"\n\nNew to AiDogs? join and start earning👇\n\n${referralLink}\n\n#Hamster_Kombat #hamster $HMSTR`;
 
         } else {
-         text = `Claimed 7,000 $AIDOGS as a CEO on Hamster Kombat!🐹%0D%0A%0D%0AIf you're a Hamster CEO, grab your free 7k $AIDOGS bonus using my Boost Key "HMSTR-${boostCode}"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}%0D%0A%0D%0A%23Hamster_Kombat %23hamster $HMSTR`;
+            text = `Claimed 7,000 $AIDOGS as a CEO on Hamster Kombat!🐹%0D%0A%0D%0AIf you're a Hamster CEO, grab your free 7k $AIDOGS bonus using my Boost Key "HMSTR-${boostCode}"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}%0D%0A%0D%0A%23Hamster_Kombat %23hamster $HMSTR`;
 
         }
         return encodeURIComponent(text);
@@ -134,9 +135,9 @@ const HomeTab = () => {
     const urlMissionTweet = `https://twitter.com/intent/tweet?text=${encodedTextMission}`;
 
 
-    
-        
-      
+
+
+
 
     const navigate = useNavigate();
 
@@ -469,6 +470,7 @@ const HomeTab = () => {
             setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
             setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
             setLastLogin(updateSocial?.data?.userData?.lastLogin);
+            setNextLogin(updateSocial?.data?.userData?.nextLogin);
             setReferees(updateSocial?.data?.userData?.referralPoints);
             handleCloseBottomSheet();
         }
@@ -503,7 +505,7 @@ const HomeTab = () => {
 
 
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
-  
+
 
     const generateRandomCode = () => {
         // Function to generate random letters
@@ -544,26 +546,26 @@ const HomeTab = () => {
 
         // Access the user information
         const userInfo = Telegram.WebApp.initDataUnsafe.user;
-        
-  
+
+
         // Check if the user information is available
         if (userInfo) {
             console.log({ userInfo, url: window.location.href });
             setUser(userInfo);
-      
 
-           
+
+
         } else {
             console.log('No user information available.');
             setUser({
                 allows_write_to_pm: true,
                 first_name: "Qanda",
-                id: 6489231324,
+                id: 1354055384,
                 language_code: "en",
                 last_name: "Sensei",
                 username: "qandasensei"
             })
-        
+
         }
 
         const savedBoostCode = localStorage.getItem('boostCode');
@@ -588,6 +590,7 @@ const HomeTab = () => {
             setReferees(getUserData?.data?.userData?.referralPoints);
             setReferralCode(getUserData?.data?.userData?.referralCode);
             setLastLogin(getUserData?.data?.userData?.lastLogin);
+            setNextLogin(getUserData?.data?.userData?.nextLogin);
             console.log(referralCode)
         }
 
@@ -596,8 +599,8 @@ const HomeTab = () => {
             console.log(getUserData?.data)
             setTotalBoostPoints(getUserData?.data?.userData?.pointsNo);
             setBoostReferralPoints(getUserData?.data?.userData?.referralPoints);
-       
-          
+
+
             setBoostActivated(getUserData?.data?.userData?.boostActivated);
             setUserRank(getUserData?.data?.userRank);
 
@@ -666,7 +669,19 @@ const HomeTab = () => {
         const hoursDifference = timeDifference / (1000 * 60 * 60); // 1000 ms * 60 sec * 60 min = 1 hour
 
         // Return true if the difference is greater than or equal to 24 hours, else false
-        return hoursDifference >= 24;
+        return hoursDifference >= 0.01;
+    }
+
+    function isNextLogin(nextTime: any) {
+        // Convert the past time from the argument to a Date object
+        const nextDate: any = new Date(nextTime);
+
+        // Get the current date and time
+        const currentDate: any = new Date();
+
+
+        // Return true if the difference is greater than or equal to 24 hours, else false
+        return currentDate <= nextDate;
     }
 
     const dailyTasksClaimInit = (task: any, idx: number) => {
@@ -711,7 +726,7 @@ const HomeTab = () => {
         if (boostActivated) {
             setModal((prevOpen) => !prevOpen);
         } else {
-            if (!engageMissionRt || !engageMissionTweet || !engageMissionTg ) {
+            if (!engageMissionRt || !engageMissionTweet || !engageMissionTg) {
                 toast("Complete all missions to proceed!", {
                     className: "",
                     duration: 799,
@@ -726,7 +741,7 @@ const HomeTab = () => {
             }
         }
 
-    }, [engageMissionRt, engageMissionTweet,engageMissionTg, boostActivated]);
+    }, [engageMissionRt, engageMissionTweet, engageMissionTg, boostActivated]);
 
     const copyToClipboard = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
@@ -797,13 +812,13 @@ const HomeTab = () => {
             } else {
                 let boostCodeCopy = localStorage.getItem('boostCode') || boostCode || ''
 
-                console.log("before sending",    user,
-                boostCodeCopy,
-                refBoostCode)
+                console.log("before sending", user,
+                    boostCodeCopy,
+                    refBoostCode)
 
                 const updateBoostLeaderboard = await axios.post(`${import.meta.env.VITE_APP_URL}/activate-boost`, {
                     user,
-                    boostCode:boostCodeCopy,
+                    boostCode: boostCodeCopy,
                     refBoostCode
                 })
 
@@ -849,16 +864,16 @@ const HomeTab = () => {
                         },
                     });
                     // setBoostCode(updateBoostLeaderboard?.data?.userData?.boostCode);
-                 
-                        setBoostCode(localStorage.getItem("boostCode") || "" );
 
-               
-                 
+                    setBoostCode(localStorage.getItem("boostCode") || "");
+
+
+
 
                 }
             }
 
-        setIsLoading(false)
+            setIsLoading(false)
 
         }
     }
@@ -880,10 +895,10 @@ const HomeTab = () => {
 
     }
 
-  
-   
- 
-  
+
+
+
+
     // const handleShareToStory = () => {
     //     if (window.Telegram && window.Telegram.WebApp) {
     //       try {
@@ -897,7 +912,7 @@ const HomeTab = () => {
     //         };
     //     // @ts-ignore
     //         window.Telegram.WebApp?.postEvent('web_app_share_to_story', storyData);
-           
+
     //       } catch (error) {
     //         console.error('Error sharing story:', error);
     //       }
@@ -905,7 +920,7 @@ const HomeTab = () => {
     //       console.error('Telegram WebApp is not initialized');
     //     }
     //   };
-      
+
 
     // function handleShareToStory(mediaUrl: string, caption: string) {
     //           //   @ts-ignore
@@ -922,13 +937,13 @@ const HomeTab = () => {
     //       console.error('TelegramWebviewProxy is not available. Ensure you are running in Telegram WebView.');
     //     }
     //   }
-      
+
 
     //   function handleShareToStory(mediaUrl: string, caption: string) {
     //     // Check if Telegram's WebApp object is available
     //     if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
     //       console.log('Running inside Telegram WebView.');
-      
+
     //       // Now check if TelegramWebviewProxy is available
     //       // @ts-ignore
     //       if (typeof window.TelegramWebviewProxy !== 'undefined') {
@@ -937,7 +952,7 @@ const HomeTab = () => {
     //           mediaUrl,
     //           caption,
     //         };
-      
+
     //         // @ts-ignore
     //         window.TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
     //         console.log('Shared to story successfully');
@@ -954,9 +969,9 @@ const HomeTab = () => {
     // const handleShareToStory = (mediaUrl:any, caption:any) => {
     //     if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
     //       console.log('Running inside Telegram WebView.');
-        
+
     //       window.Telegram.WebApp.ready();
-          
+
     //       // Now use shareToStory
     //       const eventType = 'web_app_share_to_story';
     //       const eventData = { mediaUrl, caption };
@@ -978,47 +993,47 @@ const HomeTab = () => {
     // const mediaUrl = "https://res.cloudinary.com/doyovxikn/image/upload/v1710522836/John_o7sr2x.png"
     const mediaUrl = "https://aidogsuiwebpage.onrender.com/aidogs.png"
     const caption = "i love this"
-    
 
 
-    function handleShareToStory(mediaUrl:string, caption:string) {
+
+    function handleShareToStory(mediaUrl: string, caption: string) {
         // Check if Telegram's WebApp object is available
         if (typeof window.Telegram !== 'undefined' && typeof window.Telegram.WebApp !== 'undefined') {
-          console.log('Running inside Telegram WebView.');
-          window.Telegram.WebApp.ready();
+            console.log('Running inside Telegram WebView.');
+            window.Telegram.WebApp.ready();
 
-          const encodedMediaUrl = encodeURIComponent(mediaUrl);
+            const encodedMediaUrl = encodeURIComponent(mediaUrl);
 
-    // console.log(`Telegram WebApp version: ${appVersion}`);
-          // Now use the shareToStory method if it's available
-          // @ts-ignore
-          if (typeof window.Telegram.WebApp.shareToStory === 'function') {
-            const storyParams = {
-              media_url: encodedMediaUrl, // URL to the media (image, video, etc.)
-              text: String(caption)  // Optional caption for the story
-            };
+            // console.log(`Telegram WebApp version: ${appVersion}`);
+            // Now use the shareToStory method if it's available
+            // @ts-ignore
+            if (typeof window.Telegram.WebApp.shareToStory === 'function') {
+                const storyParams = {
+                    media_url: encodedMediaUrl, // URL to the media (image, video, etc.)
+                    text: String(caption)  // Optional caption for the story
+                };
 
-            console.log('Story Params:', storyParams);
-        // @ts-ignore
-            window.Telegram.WebApp.shareToStory(storyParams)
-              .then(() => {
-                console.log('Story shared successfully');
-              })  // @ts-ignore
-              .catch((error) => {
-                console.error('Failed to share thxe story:', error);
-              });
-          } else {
-            console.error('shareToStory method is not available.');
-          }
+                console.log('Story Params:', storyParams);
+                // @ts-ignore
+                window.Telegram.WebApp.shareToStory(storyParams)
+                    .then(() => {
+                        console.log('Story shared successfully');
+                    })  // @ts-ignore
+                    .catch((error) => {
+                        console.error('Failed to share thxe story:', error);
+                    });
+            } else {
+                console.error('shareToStory method is not available.');
+            }
         } else {
-          console.error('Not running inside Telegram WebView. Telegram-specific features are unavailable.');
+            console.error('Not running inside Telegram WebView. Telegram-specific features are unavailable.');
         }
-      }
-      
+    }
+
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
             {/* boost */}
-        
+
             {openModal &&
 
                 <div className=" modal_css   flex flex-col justify-around z-[100] overflow-scroll" >
@@ -1062,7 +1077,7 @@ const HomeTab = () => {
                                 onClick={claimBoost}
 
                             >
-                              {isLoading ? <>Claiming...</>  : <>Claim</>}
+                                {isLoading ? <>Claiming...</> : <>Claim</>}
                             </button>}
 
 
@@ -1074,7 +1089,7 @@ const HomeTab = () => {
 
 
                                 >
-                                    HMSTR-{localStorage.getItem("boostCode") || boostCode }
+                                    HMSTR-{localStorage.getItem("boostCode") || boostCode}
                                     <div className='absolute flex items-center py-1 right-0 w-1/2 pl-2 px-1 bg-white text-black rounded-lg'>
                                         <span className='text-sm whitespace-nowrap' onClick={copyToClipboard}>
                                             Copy my key
@@ -1109,13 +1124,13 @@ const HomeTab = () => {
                         >
                             <p className="text-lg text-white py-3 px-3 ">Share to your Telegram Story</p>
                             <div>
-                           
+
                             </div>
                             <button
                                 className="w-full flex bg-gradient-to-r my-4 mx-auto items-center justify-center from-[#F19D5C] to-[#F0E580] font-OpenSans text-lg text-black rounded-lg  py-2 rounded-[1px]"
 
                                 onClick={() => handleShareToStory(mediaUrl, caption)}
-                                
+
 
                             >
                                 Share
@@ -1235,10 +1250,21 @@ const HomeTab = () => {
 
                                 <div className="flex flex-col absolute bottom-0  rounded-lg bg-white/20 justify-center align-center m-auto items-center w-full">
                                     {lastLogin &&
-                                        <>{
-                                            isTimeDifference24HoursOrMore(lastLogin) ?
-                                                <button className="bg-white w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button> : <Countdown targetTime={lastLogin} />
-                                        }</>
+                                        <>{isNextLogin(nextLogin) ?
+                                            <Countdown targetTime={nextLogin} />
+                                            :
+
+
+                                            <>{
+                                                isTimeDifference24HoursOrMore(lastLogin) ?
+
+
+                                                    <button className="bg-white w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button> : <Countdown targetTime={lastLogin} />
+                                            }
+                                            </>
+                                        }
+
+                                        </>
                                     }
                                     {/* 
                                     <button className="bg-white bg-gradient-to-b from-[#F0D377] to-[#F1A35F] w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]" onClick={handleOpenBottomSheet}>
@@ -1330,7 +1356,7 @@ const HomeTab = () => {
                             <p className='leading-4'>Claim 7k $AIDOGS for tasks. </p>
                             <p className='leading-4'>Get 2.8k $AIDOGS each time your key is used</p>
 
-                        
+
                         </div>
 
                     </div>
@@ -1358,7 +1384,7 @@ const HomeTab = () => {
                                             }, 5000)
                                         }}
                                     >
-                                            {boostActivated ? <>Done</> : <>Do</> }
+                                        {boostActivated ? <>Done</> : <>Do</>}
                                     </button>
                                 }
                                 {engageMissionRt &&
@@ -1366,7 +1392,7 @@ const HomeTab = () => {
                                     <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
                                         onClick={() => {
                                             window.open('https://x.com/aidogscomm', '_blank');
-                                          
+
                                             setTimeout(() => {
 
                                                 setEngageMissionRt(true)
@@ -1405,7 +1431,7 @@ const HomeTab = () => {
                                             }, 5000)
                                         }}
                                     >
-                                            {boostActivated ? <>Done</> : <>Do</> }
+                                        {boostActivated ? <>Done</> : <>Do</>}
                                     </button>
                                 }
 
@@ -1441,7 +1467,7 @@ const HomeTab = () => {
                             </div>
                             <div className="">
 
-                            {
+                                {
                                     !engageMissionTg &&
 
                                     <button className={`bg-[#F0D377] text-xs font-OpenSans text-[rgba(0,0,0)] rounded-lg px-8 py-2 rounded-[1px]`}
@@ -1452,8 +1478,8 @@ const HomeTab = () => {
                                             }, 5000)
                                         }}
                                     >
-                                        
-                                        {boostActivated ? <>Done</> : <>Do</> }
+
+                                        {boostActivated ? <>Done</> : <>Do</>}
                                     </button>
                                 }
 
@@ -1485,7 +1511,7 @@ const HomeTab = () => {
                         // disabled={!engageMissionRt || !engageMissionTweet}
 
                         >
-                          {boostActivated ? <>View</> : <>Participate</> }
+                            {boostActivated ? <>View</> : <>Participate</>}
                         </button>
                     </div>
                 </div>
@@ -1526,6 +1552,7 @@ const HomeTab = () => {
                             <div className={`relative flex flex-col gap-1 rounded-lg ${isFirstUnclaimedReward(dailyLoginTasks, idx) && !task.rewardClaimed ? 'border border-white bg-[#C8D5ED]' : 'bg-[#C8D5ED]'} text-white mx-1 my-3 p-1 cursor-pointer`} onClick={() => dailyTasksClaimInit(task, idx)}>
                                 <p className={`text-center text-white text-xs absolute top-[-2vh] left-1/2 transform ${isFirstUnclaimedReward(dailyLoginTasks, idx) && !task.rewardClaimed ? 'bg-[#3F015F] bg-opacity-85' : 'bg-[#3F015F]'} -translate-x-1/2 w-[80%] mx-auto px-2 py-1 rounded-md`}>Day {idx + 1}</p>
                                 <div className="flex justify-center items-center w-[40%] mx-auto mt-4">
+
                                     {
                                         task.rewardClaimed &&
                                         <svg xmlns="http://www.w3.org/2000/svg" width="34.151" height="35.176" viewBox="0 0 49.914 45.791">
@@ -1551,25 +1578,55 @@ const HomeTab = () => {
                                             </g>
                                         </svg>
                                     }
-                                    {
-                                        isFirstUnclaimedReward(dailyLoginTasks, idx) && !task.rewardClaimed &&
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="34.151" height="35.176" viewBox="0 0 34.151 35.176">
-                                            <g id="Group_2132" data-name="Group 2132" transform="translate(-148.237 -172.082)">
-                                                <path id="Path_611" data-name="Path 611" d="M279.436,263.05a17.076,17.076,0,1,0,17.076,17.076A17.094,17.094,0,0,0,279.436,263.05Z" transform="translate(-114.123 -89.943)" fill="#d4923a" />
-                                                <path id="Path_612" data-name="Path 612" d="M304.7,279.1a16.051,16.051,0,1,1-16.051-16.051A16.052,16.052,0,0,1,304.7,279.1Z" transform="translate(-123.339 -89.943)" fill="#f8e75d" />
-                                                <path id="Path_613" data-name="Path 613" d="M318,295.789a3.01,3.01,0,0,1-6.02,0,2.971,2.971,0,0,1,.044-.512,16.1,16.1,0,0,1,2.751-2.489c.071,0,.143-.008.215-.008A3.01,3.01,0,0,1,318,295.79Z" transform="translate(-158.78 -116.699)" fill="#fbfadf" />
-                                                <path id="Path_614" data-name="Path 614" d="M304.7,423.55a16.051,16.051,0,0,1-32.1,0Z" transform="translate(-123.339 -234.391)" fill="#f6c22e" />
-                                                <path id="Path_615" data-name="Path 615" d="M340.214,319.052A11.612,11.612,0,1,1,328.6,307.44,11.613,11.613,0,0,1,340.214,319.052Z" transform="translate(-163.289 -129.893)" fill="#f47d35" />
-                                                <path id="Path_616" data-name="Path 616" d="M317.3,335.135A11.612,11.612,0,1,1,328.881,345.9,11.612,11.612,0,0,1,317.3,335.135Z" transform="translate(-163.568 -145.13)" fill="#f89f32" />
-                                                <path id="Path_617" data-name="Path 617" d="M370.09,350.366a1.351,1.351,0,0,0-1.066-.87q-1.931-.309-3.854-.606c-.586-1.15-1.171-2.305-1.742-3.459a1.254,1.254,0,0,0-2.269,0c-.571,1.154-1.155,2.309-1.742,3.459q-1.923.3-3.854.606a1.351,1.351,0,0,0-1.066.87,1.172,1.172,0,0,0,.316,1.27c.927.863,1.868,1.747,2.808,2.641-.2,1.245-.392,2.486-.558,3.721a1.359,1.359,0,0,0,.552,1.255,1.252,1.252,0,0,0,1.332.144c1.1-.561,2.215-1.146,3.346-1.743,1.132.6,2.249,1.181,3.346,1.742a1.177,1.177,0,0,0,.581.13,1.332,1.332,0,0,0,.752-.274,1.362,1.362,0,0,0,.553-1.255q-.251-1.854-.559-3.721c.941-.894,1.881-1.778,2.808-2.641a1.172,1.172,0,0,0,.316-1.27Z" transform="translate(-196.98 -163.436)" fill="#fcf054" />
-                                                <path id="Path_618" data-name="Path 618" d="M279.436,252.8a17.076,17.076,0,1,0,17.076,17.077A17.1,17.1,0,0,0,279.436,252.8Zm0,1.025a16.051,16.051,0,1,1-16.051,16.051A16.051,16.051,0,0,1,279.436,253.825Z" transform="translate(-114.123 -80.718)" fill="#d4923a" />
+                                    {isNextLogin(nextLogin) ?
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="34.151" height="35.176" viewBox="0 0 49.914 45.791">
+                                            <g id="Group_2130" data-name="Group 2130" transform="translate(-40.356 -168.605)">
+                                                <path id="Path_621" data-name="Path 621" d="M5.888,168.115a3.092,3.092,0,0,0,1.129.412,3.856,3.856,0,0,0,1.317-.017,3.25,3.25,0,0,0,.97-.331,2.846,2.846,0,0,0,.724-.529,3.337,3.337,0,0,0,.468-.613,2.228,2.228,0,0,0,.256-.588,1.1,1.1,0,0,0,.033-.453.49.49,0,0,0-.2-.3.446.446,0,0,0-.364-.1.683.683,0,0,0-.328.191,4.025,4.025,0,0,0-.335.351,1.96,1.96,0,0,1-.438.37,1.6,1.6,0,0,1-.606.239,1.406,1.406,0,0,1-.819-.084,1.442,1.442,0,0,1-.619-.507,1.981,1.981,0,0,1-.326-.814,2.212,2.212,0,0,1,.082-1.143.813.813,0,0,1,.615-.606.554.554,0,0,1,.392.068.41.41,0,0,1,.211.291,1.142,1.142,0,0,1-.089.454,1.117,1.117,0,0,0-.082.5.647.647,0,0,0,.382.508,1.117,1.117,0,0,0,.673.082,1.266,1.266,0,0,0,.926-.653,1.652,1.652,0,0,0,.2-1.127,1.451,1.451,0,0,0-.519-.868,2.384,2.384,0,0,0-1.075-.5,3.575,3.575,0,0,0-1.353-.009,3.144,3.144,0,0,0-2.1,1.229A3.063,3.063,0,0,0,4.555,166a3.368,3.368,0,0,0,.479,1.267,2.717,2.717,0,0,0,.853.851Z" transform="translate(36.521 29.953)" fill="#e2e2e2" />
+                                                <path id="Path_622" data-name="Path 622" d="M52.571,155.963a1.849,1.849,0,0,1,.435.631,3.855,3.855,0,0,1,.3,1.687,1.632,1.632,0,0,1-.2.711.66.66,0,0,1-.472.357.646.646,0,0,1-.548-.178,1.718,1.718,0,0,1-.434-.6,3.354,3.354,0,0,1-.249-.816,3.446,3.446,0,0,1-.044-.87,2.015,2.015,0,0,1,.2-.747.621.621,0,0,1,.446-.371.64.64,0,0,1,.559.194Zm-2.878-.256a3.094,3.094,0,0,0-.462,2.434,3.207,3.207,0,0,0,.706,1.574,2.726,2.726,0,0,0,1.3.855,3.755,3.755,0,0,0,3.14-.555,2.755,2.755,0,0,0,.937-1.247,3.179,3.179,0,0,0,.13-1.722,3.091,3.091,0,0,0-1.272-2.129,3.441,3.441,0,0,0-4.48.788Z" transform="translate(-1.647 36.688)" fill="#e2e2e2" />
+                                                <path id="Path_623" data-name="Path 623" d="M100.395,149.192a.981.981,0,0,0,.69.1q1.1-.194.953-1.073l-.679-3.854a1.641,1.641,0,0,0-.3-.737,1.021,1.021,0,0,0-.526-.364,1.58,1.58,0,0,0-.706-.017,1.225,1.225,0,0,0-1.066.846l-.808,2.773-1.646-2.387a1.81,1.81,0,0,0-.252-.261.871.871,0,0,0-.342-.159,1.169,1.169,0,0,0-.5-.009,1.373,1.373,0,0,0-.985.53,1.511,1.511,0,0,0-.128,1.082l.682,3.863a.969.969,0,0,0,.3.647.8.8,0,0,0,.6.073.7.7,0,0,0,.486-.268.784.784,0,0,0,.074-.588l-.443-2.508,1.357,1.688a4.27,4.27,0,0,0,.632.634.652.652,0,0,0,.514.115.632.632,0,0,0,.36-.186,1.154,1.154,0,0,0,.23-.456l.708-2.464.409,2.322a.917.917,0,0,0,.386.658Z" transform="translate(-40.009 46.246)" fill="#e2e2e2" />
+                                                <path id="Path_624" data-name="Path 624" d="M151.643,140.065a.683.683,0,0,1-.189.348,1.057,1.057,0,0,1-.323.213,2.033,2.033,0,0,1-.431.121l-.344-1.949a3.06,3.06,0,0,1,.505-.057.912.912,0,0,1,.358.068.523.523,0,0,1,.268.249,1.724,1.724,0,0,1,.153.507,1.271,1.271,0,0,1,0,.5Zm1.021-2.236a2.7,2.7,0,0,0-.922-.284,3.553,3.553,0,0,0-1.091.032l-1.577.278a1.137,1.137,0,0,0-.725.4,1.04,1.04,0,0,0-.151.854l.66,3.74a1.483,1.483,0,0,0,.431.942,1.057,1.057,0,0,0,.855.137,1.041,1.041,0,0,0,.762-.449,1.581,1.581,0,0,0,.086-1.07l-.087-.5.505-.089a3.748,3.748,0,0,0,1.3-.466,2.23,2.23,0,0,0,.835-.865,1.746,1.746,0,0,0,.17-1.158,2.192,2.192,0,0,0-.364-.9,1.942,1.942,0,0,0-.682-.6Z" transform="translate(-86.232 51.116)" fill="#e2e2e2" />
+                                                <path id="Path_625" data-name="Path 625" d="M189.464,132.775a1.3,1.3,0,0,0-.819-.057.956.956,0,0,0-.674.425,1.1,1.1,0,0,0-.14.814l.661,3.748a1.829,1.829,0,0,0,.253.714.785.785,0,0,0,.441.329,1.611,1.611,0,0,0,.677.013l2.313-.408a1.622,1.622,0,0,0,.754-.278.678.678,0,0,0,.13-.663.749.749,0,0,0-.318-.584,1.309,1.309,0,0,0-.749-.023l-1.515.267-.626-3.552a.98.98,0,0,0-.392-.744Z" transform="translate(-120.099 55.246)" fill="#e2e2e2" />
+                                                <path id="Path_626" data-name="Path 626" d="M226.194,124.57a1.272,1.272,0,0,0,.686-.281.8.8,0,0,0-.233-1.114,1.5,1.5,0,0,0-.8-.025l-2.871.507a.932.932,0,0,0-.823,1.241l.66,3.739a1.547,1.547,0,0,0,.418.945.982.982,0,0,0,.816.144l2.871-.507a1.433,1.433,0,0,0,.737-.3.669.669,0,0,0,.147-.638.59.59,0,0,0-.309-.481,1.344,1.344,0,0,0-.738-.02l-1.924.331-.166-.939,1.435-.253a1.508,1.508,0,0,0,.682-.252.46.46,0,0,0,.15-.469.632.632,0,0,0-.281-.481,1.112,1.112,0,0,0-.686-.033l-1.523.269-.184-1.037,1.931-.341Z" transform="translate(-149.419 63.423)" fill="#e2e2e2" />
+                                                <path id="Path_627" data-name="Path 627" d="M259.345,116.251a2.166,2.166,0,0,0-.581.17.617.617,0,0,0-.293.284.759.759,0,0,0-.035.453.694.694,0,0,0,.39.58,1.6,1.6,0,0,0,.868.029l.753-.133.594,3.267a1.621,1.621,0,0,0,.418.945.952.952,0,0,0,.807.146,1.248,1.248,0,0,0,.551-.216.794.794,0,0,0,.268-.472,2.141,2.141,0,0,0-.018-.823l-.565-3.207.824-.146a2,2,0,0,0,.537-.159.66.66,0,0,0,.3-.285.735.735,0,0,0,.048-.479.759.759,0,0,0-.329-.572,1.173,1.173,0,0,0-.749-.051l-3.793.669Z" transform="translate(-180.424 69.884)" fill="#e2e2e2" />
+                                                <path id="Path_628" data-name="Path 628" d="M307.127,113.766a1.343,1.343,0,0,0-.738-.02l-1.924.331-.166-.939,1.436-.253a1.508,1.508,0,0,0,.682-.252.46.46,0,0,0,.15-.469.631.631,0,0,0-.281-.481,1.112,1.112,0,0,0-.686-.034l-1.523.269-.183-1.037,1.931-.341a1.272,1.272,0,0,0,.686-.281.8.8,0,0,0-.233-1.114,1.5,1.5,0,0,0-.8-.025l-2.871.507a.931.931,0,0,0-.823,1.241l.66,3.739a1.547,1.547,0,0,0,.418.945.982.982,0,0,0,.816.144l2.871-.507a1.409,1.409,0,0,0,.737-.3.667.667,0,0,0,.147-.638.592.592,0,0,0-.309-.481Z" transform="translate(-217.451 75.41)" fill="#e2e2e2" />
+                                                <path id="Path_629" data-name="Path 629" d="M75.678,190.745q.677.044,1.363.038a18.46,18.46,0,0,0,3.009-.278l.214-.042q.507-.1,1-.218a18.37,18.37,0,0,0,2.032-.629c.218-.082.437-.167.651-.258s.4-.17.594-.261q.4-.181.778-.383c.144-.076.288-.151.43-.232a18.22,18.22,0,0,0,1.777-1.127c.389-.28.76-.578,1.126-.886.433-.366.852-.746,1.248-1.148a18.031,18.031,0,0,0,1.369-1.558,18.369,18.369,0,0,0,3.7-8.513l-.724.128a17.616,17.616,0,0,1-1.522,4.745c-.2.414-.414.821-.645,1.218-.134.229-.271.453-.415.674q-.43.664-.918,1.29a17.733,17.733,0,0,1-2.769,2.831l-.033.026c-.313.255-.636.5-.967.731l-.184.127c-.287.2-.58.383-.878.562q-.336.2-.683.39-.693.376-1.426.69a17.566,17.566,0,0,1-2.2.772q-.441.125-.894.226c-.261.058-.524.112-.791.159a17.464,17.464,0,0,1-1.981.233c-.218.013-.437.022-.655.028l-.277.006A17.813,17.813,0,0,1,75.06,190h0a17.7,17.7,0,0,1-13.525-8.847l-.724.128a18.439,18.439,0,0,0,10.854,8.751,18.2,18.2,0,0,0,3.268.657c.248.026.5.048.747.064Z" transform="translate(-11.597 18.878)" fill="#e2e2e2" />
+                                                <path id="Path_630" data-name="Path 630" d="M75.69,35.783c-.418-.29-.849-.561-1.289-.817q-.478-.277-.974-.524c-.112-.057-.227-.112-.341-.166-.36-.17-.724-.334-1.094-.481-.218-.087-.437-.17-.66-.248a18.263,18.263,0,0,0-12.2.006c-.218.077-.437.157-.651.243q-.568.227-1.114.486c-.147.07-.293.143-.438.216q-.247.125-.489.258a18.364,18.364,0,0,0-1.588.982l-.15.1a18.236,18.236,0,0,0-2.776,2.413q-.629.669-1.188,1.4a18.085,18.085,0,0,0-1.043,1.5,18.324,18.324,0,0,0-2.555,6.875l.724-.128A17.659,17.659,0,0,1,62.185,33.462h0c.548-.1,1.1-.163,1.639-.208q.5-.042,1-.054c.523-.013,1.043,0,1.558.029a17.443,17.443,0,0,1,3.268.526,17.72,17.72,0,0,1,10.932,8.376L81.306,42A18.382,18.382,0,0,0,75.69,35.78Z" transform="translate(0.083 140.837)" fill="#e2e2e2" />
+                                                <path id="Path_631" data-name="Path 631" d="M51.844,186.916a19.784,19.784,0,0,1-21-10.389l-3.34.588c.513.615,1.512.974,1.908,1.64.468.786.17,2.091.727,2.808s1.9.762,2.536,1.407.664,1.987,1.376,2.552,2.023.285,2.8.762,1.117,1.771,1.946,2.151,2.029-.205,2.9.073,1.5,1.452,2.4,1.623,1.917-.687,2.831-.626,1.806,1.047,2.724,1c.9-.049,1.691-1.127,2.6-1.288s2.022.581,2.882.32c.88-.267,1.394-1.5,2.22-1.867s2.1.083,2.875-.38.987-1.793,1.7-2.346,2.054-.422,2.7-1.06.527-1.975,1.092-2.687,1.892-.9,2.368-1.673.041-2.041.421-2.869,1.624-1.32,1.9-2.189-.449-1.988-.278-2.887c.144-.76.961-1.44,1.232-2.193l-3.34.588a19.782,19.782,0,0,1-16.183,16.946Z" transform="translate(16.862 23.893)" fill="#e2e2e2" />
+                                                <path id="Path_632" data-name="Path 632" d="M33.373,3.594h0a19.872,19.872,0,0,1,4.253-.287c.2.007.4.019.6.033a19.644,19.644,0,0,1,3.159.485A19.8,19.8,0,0,1,54.374,13.98l3.338-.588c-.514-.613-1.51-.973-1.907-1.637-.468-.786-.17-2.091-.725-2.808s-1.9-.76-2.536-1.407-.664-1.987-1.376-2.552-2.023-.285-2.8-.762-1.117-1.771-1.944-2.151S44.4,2.28,43.526,2,42.021.55,41.121.379s-1.917.687-2.831.626-1.806-1.046-2.724-1c-.9.05-1.691,1.127-2.6,1.288S30.945.716,30.084.977c-.88.267-1.394,1.5-2.22,1.867s-2.1-.083-2.875.379S24,5.015,23.287,5.569s-2.054.422-2.7,1.06S20.06,8.6,19.5,9.316s-1.893.9-2.37,1.673-.041,2.041-.421,2.869-1.623,1.32-1.9,2.189.45,1.988.278,2.887c-.144.759-.958,1.439-1.231,2.191l3.34-.588A19.783,19.783,0,0,1,33.373,3.594Z" transform="translate(28.524 168.597)" fill="#e2e2e2" />
+                                                <path id="Path_633" data-name="Path 633" d="M12.84,170.713l47.9-8.445-.17-.969-47.9,8.446Z" transform="translate(29.532 30.797)" fill="#e2e2e2" />
+                                                <path id="Path_634" data-name="Path 634" d="M47.9,89.47l-2.017.355h0l-3.34.59v0h0v0l-1.509.265-.724.128v0h0v0L7.59,96.579h0l-.724.128v0h0v0l-1.509.265h0l-3.341.59v0L0,97.915l.17.967,47.9-8.445Z" transform="translate(40.356 92.165)" fill="#e2e2e2" />
+                                                <path id="Path_635" data-name="Path 635" d="M146.146,71.5l-1.006-.211a.624.624,0,0,1-.415-.316l-.527-.958a.584.584,0,0,0-1.105.2l-.168,1.081a.624.624,0,0,1-.281.438l-.874.543a.669.669,0,0,0,.211,1.2l1.006.211A.624.624,0,0,1,143.4,74l.529.958a.584.584,0,0,0,1.105-.2l.167-1.081a.62.62,0,0,1,.283-.438l.874-.543a.67.67,0,0,0-.211-1.2Z" transform="translate(-80.517 109.068)" fill="#e2e2e2" />
+                                                <path id="Path_636" data-name="Path 636" d="M104.989,92.164l-.692-.146a.425.425,0,0,1-.284-.217l-.363-.658a.4.4,0,0,0-.76.134l-.115.743a.429.429,0,0,1-.194.3l-.6.373a.461.461,0,0,0,.146.824l.692.146a.432.432,0,0,1,.285.217l.363.658a.4.4,0,0,0,.76-.134l.115-.743a.432.432,0,0,1,.194-.3l.6-.374a.46.46,0,0,0-.146-.824Z" transform="translate(-46.602 90.929)" fill="#e2e2e2" />
+                                                <path id="Path_637" data-name="Path 637" d="M197.778,74.7l-.692-.146a.432.432,0,0,1-.285-.217l-.363-.66a.4.4,0,0,0-.76.134l-.115.743a.429.429,0,0,1-.194.3l-.6.373a.46.46,0,0,0,.146.824l.692.146a.432.432,0,0,1,.285.217l.363.66a.4.4,0,0,0,.76-.134l.115-.743a.429.429,0,0,1,.194-.3l.6-.374a.46.46,0,0,0-.146-.824Z" transform="translate(-125.874 105.852)" fill="#e2e2e2" />
+                                                <path id="Path_638" data-name="Path 638" d="M175.988,222.988l-.692-.146a.432.432,0,0,1-.285-.217l-.363-.66a.4.4,0,0,0-.76.134l-.115.743a.425.425,0,0,1-.194.3l-.6.373a.46.46,0,0,0,.146.824l.692.146a.429.429,0,0,1,.284.217l.363.66a.4.4,0,0,0,.76-.134l.115-.744a.428.428,0,0,1,.194-.3l.6-.373a.46.46,0,0,0-.146-.824Z" transform="translate(-107.258 -20.84)" fill="#e2e2e2" />
                                             </g>
-                                        </svg>
+                                        </svg> : <>
+
+                                            {
+                                                //FOR THE ACTIVE DAY
+                                                isFirstUnclaimedReward(dailyLoginTasks, idx) && !task.rewardClaimed &&
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="34.151" height="35.176" viewBox="0 0 34.151 35.176">
+                                                    <g id="Group_2132" data-name="Group 2132" transform="translate(-148.237 -172.082)">
+                                                        <path id="Path_611" data-name="Path 611" d="M279.436,263.05a17.076,17.076,0,1,0,17.076,17.076A17.094,17.094,0,0,0,279.436,263.05Z" transform="translate(-114.123 -89.943)" fill="#d4923a" />
+                                                        <path id="Path_612" data-name="Path 612" d="M304.7,279.1a16.051,16.051,0,1,1-16.051-16.051A16.052,16.052,0,0,1,304.7,279.1Z" transform="translate(-123.339 -89.943)" fill="#f8e75d" />
+                                                        <path id="Path_613" data-name="Path 613" d="M318,295.789a3.01,3.01,0,0,1-6.02,0,2.971,2.971,0,0,1,.044-.512,16.1,16.1,0,0,1,2.751-2.489c.071,0,.143-.008.215-.008A3.01,3.01,0,0,1,318,295.79Z" transform="translate(-158.78 -116.699)" fill="#fbfadf" />
+                                                        <path id="Path_614" data-name="Path 614" d="M304.7,423.55a16.051,16.051,0,0,1-32.1,0Z" transform="translate(-123.339 -234.391)" fill="#f6c22e" />
+                                                        <path id="Path_615" data-name="Path 615" d="M340.214,319.052A11.612,11.612,0,1,1,328.6,307.44,11.613,11.613,0,0,1,340.214,319.052Z" transform="translate(-163.289 -129.893)" fill="#f47d35" />
+                                                        <path id="Path_616" data-name="Path 616" d="M317.3,335.135A11.612,11.612,0,1,1,328.881,345.9,11.612,11.612,0,0,1,317.3,335.135Z" transform="translate(-163.568 -145.13)" fill="#f89f32" />
+                                                        <path id="Path_617" data-name="Path 617" d="M370.09,350.366a1.351,1.351,0,0,0-1.066-.87q-1.931-.309-3.854-.606c-.586-1.15-1.171-2.305-1.742-3.459a1.254,1.254,0,0,0-2.269,0c-.571,1.154-1.155,2.309-1.742,3.459q-1.923.3-3.854.606a1.351,1.351,0,0,0-1.066.87,1.172,1.172,0,0,0,.316,1.27c.927.863,1.868,1.747,2.808,2.641-.2,1.245-.392,2.486-.558,3.721a1.359,1.359,0,0,0,.552,1.255,1.252,1.252,0,0,0,1.332.144c1.1-.561,2.215-1.146,3.346-1.743,1.132.6,2.249,1.181,3.346,1.742a1.177,1.177,0,0,0,.581.13,1.332,1.332,0,0,0,.752-.274,1.362,1.362,0,0,0,.553-1.255q-.251-1.854-.559-3.721c.941-.894,1.881-1.778,2.808-2.641a1.172,1.172,0,0,0,.316-1.27Z" transform="translate(-196.98 -163.436)" fill="#fcf054" />
+                                                        <path id="Path_618" data-name="Path 618" d="M279.436,252.8a17.076,17.076,0,1,0,17.076,17.077A17.1,17.1,0,0,0,279.436,252.8Zm0,1.025a16.051,16.051,0,1,1-16.051,16.051A16.051,16.051,0,0,1,279.436,253.825Z" transform="translate(-114.123 -80.718)" fill="#d4923a" />
+                                                    </g>
+                                                </svg>
+                                            }
+                                            {
+                                                !isFirstUnclaimedReward(dailyLoginTasks, idx) && !task.rewardClaimed &&
+                                                <img src={lock} alt="" />
+                                            }
+                                        </>
+
+
                                     }
-                                    {
-                                        !isFirstUnclaimedReward(dailyLoginTasks, idx) && !task.rewardClaimed &&
-                                        <img src={lock} alt="" />
-                                    }
+
                                 </div>
                                 <p className={`text-white text-sm text-center font-semibold rounded-full px-4 ${task.rewardClaimed && 'bg-[#E2E2E2]'} ${!task.rewardClaimed && 'bg-[#3F015F] bg-opacity-50'}`}>{
                                     <>
