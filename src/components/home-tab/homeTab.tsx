@@ -812,7 +812,7 @@ const HomeTab = () => {
         }
 
 
-        if(lastTrueIndex == 6) {
+        if(lastTrueIndex == 6 && !nextLogin) {
             updateDailyClaim()
         }
 
