@@ -16,6 +16,7 @@ import SplashScreen from "./pages/splash-screen/splashScreen";
 export default function AppRoutes() {
     return (
         <Router>
+            
             <Routes>
                 <Route path="/splash-screen" element={<Starter />} />
                 <Route path="/home" element={<Home />} />
