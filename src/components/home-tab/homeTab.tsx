@@ -560,10 +560,10 @@ const HomeTab = () => {
             setUser({
                 allows_write_to_pm: true,
                 first_name: "Qanda",
-                id: 1354055384,
+                id: 45739090484,
                 language_code: "en",
                 last_name: "Sensei",
-                username: "qandasensei"
+                username: "minisam12"
             })
 
         }
@@ -576,6 +576,8 @@ const HomeTab = () => {
         } else {
             setBoostCode(savedBoostCode);
         }
+
+
 
     }, []);
 
@@ -655,21 +657,33 @@ const HomeTab = () => {
         return rewards[index].rewardClaimed === false;
     };
 
+    // function isTimeDifference24HoursOrMore(pastTime: any) {
+    //     // Convert the past time from the argument to a Date object
+    //     const pastDate: any = new Date(pastTime);
+
+    //     // Get the current date and time
+    //     const currentDate: any = new Date();
+
+    //     // Calculate the difference in milliseconds between the two times
+    //     const timeDifference = currentDate - pastDate;
+
+    //     // Convert the time difference from milliseconds to hours
+    //     const hoursDifference = timeDifference / (1000 * 60 * 60); // 1000 ms * 60 sec * 60 min = 1 hour
+
+    //     // Return true if the difference is greater than or equal to 24 hours, else false
+    //     return hoursDifference >= 0.01;
+    // }
     function isTimeDifference24HoursOrMore(pastTime: any) {
         // Convert the past time from the argument to a Date object
         const pastDate: any = new Date(pastTime);
 
+
         // Get the current date and time
         const currentDate: any = new Date();
 
-        // Calculate the difference in milliseconds between the two times
-        const timeDifference = currentDate - pastDate;
-
-        // Convert the time difference from milliseconds to hours
-        const hoursDifference = timeDifference / (1000 * 60 * 60); // 1000 ms * 60 sec * 60 min = 1 hour
 
         // Return true if the difference is greater than or equal to 24 hours, else false
-        return hoursDifference >= 0.01;
+        return currentDate > pastDate;
     }
 
     function isNextLogin(nextTime: any) {
@@ -797,9 +811,9 @@ const HomeTab = () => {
 
             const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/update-next-login`, {
                 user
-            }) 
+            })
 
-            if(updateSocial?.data?.success) {
+            if (updateSocial?.data?.success) {
                 setTotalPoints(updateSocial?.data?.userData?.pointsNo);
                 setPointsToday(updateSocial?.data?.userData?.pointsToday);
                 setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
@@ -812,11 +826,59 @@ const HomeTab = () => {
         }
 
 
-        if(lastTrueIndex == 6 && !nextLogin) {
+        if (lastTrueIndex == 6 && !nextLogin) {
             updateDailyClaim()
         }
 
     }, [dailyLoginTasks])
+
+
+
+
+
+    function isLoginGreaterThan24(pastTime: any) {
+        // Convert the past time from the argument to a Date object
+        const pastDate: any = new Date(pastTime);
+
+        // Get the current date and time
+        const currentDate: any = new Date();
+
+        // Calculate the difference in milliseconds between the two times
+        const timeDifference = currentDate - pastDate;
+
+        // Convert the time difference from milliseconds to hours
+        const hoursDifference = timeDifference / (1000 * 60 * 60); // 1000 ms * 60 sec * 60 min = 1 hour
+
+        // Return true if the difference is greater than or equal to 24 hours, else false
+        return hoursDifference >= 24;
+    }
+
+    useEffect(() => {
+
+
+        const resetDailyClaim = async () => {
+
+            const updateSocial = await axios.post(`${import.meta.env.VITE_APP_URL}/reset-daily-claim`, {
+                user
+            })
+
+            if (updateSocial?.data?.success) {
+                setTotalPoints(updateSocial?.data?.userData?.pointsNo);
+                setPointsToday(updateSocial?.data?.userData?.pointsToday);
+                setSocialTasks(updateSocial?.data?.userData?.socialRewardDeets);
+                setDailyLoginTasks(updateSocial?.data?.userData?.referralRewardDeets);
+                setLastLogin(updateSocial?.data?.userData?.lastLogin);
+                setReferees(updateSocial?.data?.userData?.referralPoints);
+            }
+
+        }
+
+
+        if (lastLogin && isLoginGreaterThan24(lastLogin)) {
+            resetDailyClaim()
+        }
+
+    }, [lastLogin])
 
     const claimBoost = async () => {
         setIsLoading(true)
@@ -1061,6 +1123,8 @@ const HomeTab = () => {
         }
     }
 
+
+    console.log("dailyLoginTasks", dailyLoginTasks)
     return (
         <div className="flex flex-col  items-center w-full justify-end  h-[100%] overflow-hidden">
             {/* boost */}
@@ -1279,25 +1343,33 @@ const HomeTab = () => {
                                     <p className='text-[10px] text-[#FEC95E]'>+15000 $AIDOGS</p>
                                 </div>
 
-                                <div className="flex flex-col absolute bottom-0  rounded-lg bg-white/20 justify-center align-center m-auto items-center w-full">
+                                <div className="flex flex-col absolute bottom-0 rounded-lg bg-white/20 justify-center align-center m-auto items-center w-full">
+
                                     {lastLogin &&
-                                        <>{isNextLogin(nextLogin) ?
-                                            <Countdown targetTime={nextLogin} />
-                                            :
+
+                                        <>
+
+                                            {isNextLogin(nextLogin) ?
+                                                <>
+                                                    <Countdown targetTime={nextLogin} />
 
 
-                                            <>{
-                                                isTimeDifference24HoursOrMore(lastLogin) ?
+                                                </>
+                                                :
 
 
-                                                    <button className="bg-white w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button> : <Countdown targetTime={lastLogin} />
+                                                <>{
+                                                    isTimeDifference24HoursOrMore(lastLogin) ?
+
+
+                                                        <button className="bg-white w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]" onClick={handleOpenBottomSheet}>Claim</button> : <Countdown targetTime={lastLogin} />
+                                                }
+                                                </>
                                             }
-                                            </>
-                                        }
 
                                         </>
                                     }
-                                    {/* 
+                                    {/*                                     
                                     <button className="bg-white bg-gradient-to-b from-[#F0D377] to-[#F1A35F] w-full text-xs font-OpenSans text-[rgba(0,0,0)] px-4 py-2 rounded-[1px]" onClick={handleOpenBottomSheet}>
                                         Claim
                                     </button> */}

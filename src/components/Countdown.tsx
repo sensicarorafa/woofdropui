@@ -3,18 +3,34 @@ import { useState, useEffect, FC } from 'react';
 const Countdown:FC<any> = ({ targetTime }) => {
   const calculateTimeLeft = () => {
     const now = new Date();
-    const targetDate = new Date(targetTime);
-    const difference = targetDate.getTime() + (24 * 60 * 60 * 1000) - now.getTime(); // 24 hours from the target time
+    // const targetDate = new Date(targetTime);
+    // const difference = targetDate.getTime() + (24 * 60 * 60 * 1000) - now.getTime(); // 24 hours from the target time
+    
+    //new changes
+    let newTargetDate = new Date(targetTime);
+    newTargetDate.setDate(now.getDate() + 1);  // Move to the next day
+    newTargetDate.setHours(0, 0, 0, 0);
+    const newDifference = newTargetDate.getTime() - now.getTime(); // time difference
 
-    if (difference > 0) {
-      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((difference / (1000 * 60)) % 60);
-      const seconds = Math.floor((difference / 1000) % 60);
+
+    if (newDifference > 0) {
+      const hours = Math.floor((newDifference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((newDifference / (1000 * 60)) % 60);
+      const seconds = Math.floor((newDifference / 1000) % 60);
 
       return { hours, minutes, seconds };
     } else {
       return { hours: 0, minutes: 0, seconds: 0 };
     }
+    // if (difference > 0) {
+    //   const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+    //   const minutes = Math.floor((difference / (1000 * 60)) % 60);
+    //   const seconds = Math.floor((difference / 1000) % 60);
+
+    //   return { hours, minutes, seconds };
+    // } else {
+    //   return { hours: 0, minutes: 0, seconds: 0 };
+    // }
   };
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
