@@ -87,9 +87,10 @@ const HomeTab = () => {
     const [userRank, setUserRank] = useState(getUserCookiesBoostParsed ? getUserCookiesBoostParsed?.data?.userData?.boostActivated : false);
 
     //daily claim data
-    const pointsForDay = [10, 15, 20, 25, 30, 35, 40];
+  
     const [activeDay, setActiveDay] = useState<number>(0);
 
+    const pointsForDay = [250, 500, 1000, 1500, 2000, 2500, 3000];
 
 
 
