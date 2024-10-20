@@ -11,9 +11,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+ 
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@tonconnect/ui-react": "^2.0.9",
+
     "axios": "^1.7.5",
+    "buffer": "^6.0.3",
     "express": "^4.19.2",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
@@ -24,7 +27,9 @@
     "react-router-dom": "^6.24.1",
     "react-swipeable": "^7.0.1",
     "react-toastify": "^10.0.5",
-    "swiper": "^11.1.9"
+    "swiper": "^11.1.9",
+    "tonweb": "^0.0.66",
+    "vite-plugin-node-polyfills": "^0.22.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
