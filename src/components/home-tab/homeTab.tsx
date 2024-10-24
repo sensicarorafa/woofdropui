@@ -8,18 +8,27 @@ import TonWeb from 'tonweb';
 import { useEffect, useState } from "react";
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import { useUser } from '../../context/userContext';
 
 
 
 
 const HomeTab = () => {
     // Cache sessionStorage values
+    const { theUser, handleSetUser } = useUser();
+    const getUserCookiesParsed = theUser;
 
-    const getUserCookies = sessionStorage.getItem('authUserLoggedInAI');
-    const getUserCookiesParsed = JSON.parse(getUserCookies as string);
 
     const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.pointsNo : 200000);
     const [referralCode, setReferralCode] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralCode : '');
+
+    const [wallet, setWallet] = useState(
+        ''
+    );
+    let [isWalletValid, setIsWalletValid] = useState<boolean>(
+        false
+    );
+    const [taskCompleted, setTaskCompleted] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.taskCompleted : false);
 
 
     const [engageMissionTwitter, setEngageMissionTwitter] = useState(
@@ -136,6 +145,8 @@ const HomeTab = () => {
             const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, { user })
             if (getUserData?.data?.userData) {
                 setTotalPoints(getUserData?.data?.userData?.pointsNo);
+            setTaskCompleted(getUserData?.data?.userData?.taskCompleted);
+
                 sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(getUserData))
             }
         
@@ -155,14 +166,6 @@ const HomeTab = () => {
 
 
     // functions starts here
-
-    const [wallet, setWallet] = useState(
-        ''
-    );
-    let [isWalletValid, setIsWalletValid] = useState<boolean>(
-        false
-    );
-    const [taskCompleted, setTaskCompleted] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.taskCompleted : false);
 
 
 
@@ -196,10 +199,41 @@ const HomeTab = () => {
         }
     }, [wallet])
 
+    const claimTask = async (wallet:any) => {
+       
+
+        const updateTask = await axios.post(`${import.meta.env.VITE_APP_URL}/update-task-status`, {
+            wallet,
+            user
+        })
+
+        if (updateTask?.data?.success && updateTask?.data?.success)  {
+            handleSetUser(updateTask)
+            toast("Added successfully", {
+                className: "",
+                duration: 799,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
+            });
+            setTotalPoints(updateTask?.data?.userData?.pointsNo);
+            setTaskCompleted(updateTask?.data?.userData?.taskCompleted);
+        
+        }
+    };
 
 
     const handleSubmitWallet = useCallback(() => {
         if (taskCompleted) {
+            toast("Task already completed!", {
+                className: "",
+                duration: 799,
+                style: {
+                    background: "#363636",
+                    color: "#fff",
+                },
+            });
 
         } else {
             if (!engageMissionTwitter || !engageMissionTg || !isWalletValid) {
@@ -212,8 +246,10 @@ const HomeTab = () => {
                     },
                 });
             } else {
+                if(wallet){
+                    claimTask(wallet)
 
-
+                }
             }
         }
 
@@ -335,11 +371,12 @@ const HomeTab = () => {
 
                     </div>
 
-                    <button className={`bg-[#05F84E] w-2/3 text-md font-OpenSans text-white w-full rounded-lg px-10 py-4 rounded-[1px]`}
+                    <button className={`bg-[#05F84E] w-2/3 text-md font-OpenSans text-white w-full rounded-lg px-10 py-4 rounded-[1px] `}
                         onClick={handleSubmitWallet}
+                        
 
                     >
-                        {taskCompleted ? <>Done</> : <>Submit</>}
+                        {taskCompleted ? <>Submit</> : <>Submit</>}
                     </button>
                 </div>
 
