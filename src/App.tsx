@@ -22,7 +22,7 @@ function App() {
                className: "",
                duration: 1000,
                style: {
-                 background: "#363636",
+                 background: "#000000",
                  color: "#fff",
                
                },

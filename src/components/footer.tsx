@@ -1,16 +1,17 @@
 import { NavLink } from "react-router-dom";
 
-import home from "../assets/img/home.png";
-import homeActive from "../assets/img/home-active.png";
-import handShakeActive from "../assets/img/handshake-active.png";
-import handShake from "../assets/img/handshake.png";
-import podium from "../assets/img/podium.png";
-import podiumActive from "../assets/img/podium-active.png";
-import missionActive from '../assets/img/mission.png'
+import woofDrop from '../assets/img/woofdrop.svg'
+import woofDropActive from '../assets/img/woofdropactive.svg'
+import woofNomics from '../assets/img/woofnomics.svg'
+import woofNomicsActive from '../assets/img/woofnomicsactive.svg'
+import woofrens from '../assets/img/woofrens.svg'
+import woofrensActive from '../assets/img/woofrensactive.svg'
+
+
 
 const Footer = () => {
     return (
-        <footer className="flex items-center justify-between h-[10vh] px-5 z-50 w-full bg-[#210133]">
+        <footer className="flex footer items-center justify-between h-[10vh] px-5 z-50 w-full bg-gradient-to-r from-[#ffffff75] from-4% via-black via-20% to-[#ffffff75] to-100%">
             <NavLink
                 to="/home"
                 className={({ isActive }) =>
@@ -22,14 +23,14 @@ const Footer = () => {
                 {({ isActive }) => (
                     <>
                         <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? homeActive : home} alt="" />
+                            <img className="w-full" src={isActive ? woofDropActive : woofDrop} alt="" />
                         </div>
-                        <p className="text-[2.2vh]">Home</p>
+                        <p className="text-[2.2vh]">Woofdrop</p>
                     </>
                 )}
             </NavLink>
             <NavLink
-                to="/leaderboard"
+                to="/woofnomics"
                 className={({ isActive }) =>
                     isActive
                     ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"
@@ -39,14 +40,14 @@ const Footer = () => {
                 {({ isActive }) => (
                     <>
                         <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? handShakeActive : handShake} alt="" />
+                            <img className="w-full" src={isActive ? woofNomicsActive : woofNomics} alt="" />
                         </div>
-                        <p className="text-[2.2vh]">Leaderboard</p>
+                        <p className="text-[2.2vh]">Woofnomics</p>
                     </>
                 )}
             </NavLink>
             <NavLink
-                to="/contest"
+                to="/woofrens"
                 className={({ isActive }) =>
                     isActive
                         ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"
@@ -56,29 +57,13 @@ const Footer = () => {
                 {({ isActive }) => (
                     <>
                         <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? missionActive : missionActive} alt="" />
+                            <img className="w-full" src={isActive ? woofrensActive : woofrens} alt="" />
                         </div>
-                        <p className="text-[2.2vh]">Missions</p>
+                        <p className="text-[2.2vh]">Woofrens</p>
                     </>
                 )}
             </NavLink>
-            <NavLink
-                to="/invites"
-                className={({ isActive }) =>
-                    isActive
-                        ? "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#FFFFFF]"
-                        : "flex flex-col gap-1 items-center justify-center py-3 px-2 text-[#A6A6A6]"
-                }
-            >
-                {({ isActive }) => (
-                    <>
-                        <div className="w-[3vh]">
-                            <img className="w-full" src={isActive ? podiumActive : podium} alt="" />
-                        </div>
-                        <p className="text-[2.2vh]">Frends</p>
-                    </>
-                )}
-            </NavLink>
+       
         </footer>
     );
 };

@@ -4,6 +4,33 @@
 
 
 @font-face {
+  font-family: 'Dubai Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Dubai Regular'), url('./assets/font/Dubai-Regular.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'LIBRARY 3 AM Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('LIBRARY 3 AM Regular'), url('./assets/font/Library 3 am.woff') format('woff');
+    }
+
+
+    .footer, .woofnomics,.woofrens {
+      font-family: 'Dubai Regular';
+    }
+    .header,.totalPoint, .library {
+      font-family: 'LIBRARY 3 AM Regular';
+    }
+ 
+
+
+
+
+
+/* @font-face {
   font-family: "Rockwell";
   src: url("./assets/font/ROCK.TTF");
 }
@@ -16,108 +43,10 @@
 @font-face {
   font-family: "Ravie";
   src: url("./assets/font/ravie.ttf");
-}
-
-.carousel-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.month-year-slider, .day-slider {
-  display: flex;
-  align-items: center;
-  justify-content: center !important;
-}
-
-.arrow {
-  margin: 0 10px;
-  cursor: pointer;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: background-color 0.3s;
-}
-
-.arrow:hover {
-  background-color: #060c1d;
-  color: #ffffff4d;
-}
-
-.date-display {
-  font-size: 18px;
-  color: #FFFFFF;
-  font-weight: bold;
-  /* margin: 0 20px; */
-  overflow: hidden;
-  width: 150px;
-  text-align: center;
-}
-
-.days-container {
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  overflow-x: auto;
-}
-
-.day-item {
-  padding: 0px 2px;
-  margin: 2px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  min-width: 35px;
-  text-align: center;
-  cursor: pointer;
-  background-color: transparent;
-  color: rgba(255, 255, 255,0.75);
-  font-size: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.day-item.selected {
-  background-color: #FEC95E;
-  color: #875A00;
-  font-weight: bold;
-}
-
-.day-item:hover {
-  background-color: #FEC95E;
-  color: #875A00;
-}
+} */
 
 
-/* Character page */
 
-.choose-charact-btn:hover p {
-  color: #FEC95E;
-}
-
-.choose-charact-btn:hover  .radio-btn-wrapper {
-  border-color: #FEC95E !important;
-}
-
-.choose-charact-btn:hover  .radio-btn-wrapper div {
-  background: #FEC95E;
-}
-
-.choose-charact-btn.active p {
-  color: #FEC95E;
-}
-
-.choose-charact-btn.active  .radio-btn-wrapper {
-  border-color: #FEC95E !important;
-}
-
-.choose-charact-btn.active  .radio-btn-wrapper div {
-  background: #FEC95E;
-}
-.swiper-pagination-bullet-active {
-  background-color: #fff !important;
-}
 
 .loader {
   width: 8px;
@@ -138,101 +67,22 @@
       transform: rotate(360deg);
   }
   } 
-/* 
-  .header {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    background: pink;
-  } */
-  
-  .header__curtain {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 200px;
-    background: #9ca3af;
-    /* animation: slide_down 0.2s linear; */
-    transform: translateY(0);
-    transition: transform 0.5s ease-in;
-    padding: 20px;
-  }
-  
-  .header__curtain.slide__up {
-    transform: translateY(100%);
-    transition: transform 0.5s ease-in;
-  }
-  .hide-header {
-    opacity: 0;
-    height: 0;
-    transition: all 0.3s ease-in;
-  }
-  .taskTitle:hover {
-    color:lightblue
-  }
-  .swiper-pagination {
-    pointer-events: none !important;
-  }
 
-  .modal_css {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 90vh;
-    background: #000000;
-    /* animation: slide_down 0.2s linear; */
-    transform: translateY(0);
-    transition: transform 0.5s ease-in;
-    padding: 30px;
-  }
-  .list-row {
-    list-style-type: disc;
-  }
+
   li::marker {
     color: #F19D5C;
   }
   input {
     color: white;
+    font-family: 'Dubai Regular';
+
   }
   ::placeholder {
-    color: white !important;
-    font-style: italic;
-    font-size: 10px;
+    color: rgba(255, 255, 255, 0.31) !important;
+    font-size: 14px;
+
   }
+  .homeTab {
+    font-family: 'Dubai Regular';
 
-  .file-input {
-    display: none;
-  }
-
-  /* Custom button styling */
-  .custom-file-upload {
-    display: inline-block;
-    padding: 10px 20px;
-    /* background-color: #3498db; */
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-
-  /* Styling for the file name display */
-  .file-name {
-    margin-left: 10px;
-    font-family: Arial, sans-serif;
-  }
-
-
-    
-  .swiper-slide  {
-    display: flex !important;
-    justify-content: center !important;
-  }
-
-  .bg-cover {
-    background: url(./assets/img/hamsterbanner.png);
-    background-size: cover;
-    opacity: 0.8;
   }

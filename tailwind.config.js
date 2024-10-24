@@ -13,7 +13,8 @@ export default {
         Poppins: ['Poppins', 'sans-serif'],
         Rockwell: ["Rockwell", "sans-serif"],
         Rockwell_Bold: ["Rockwell-Bold", "sans-serif"],
-        Ravie: ["Ravie", "sans-serif"]
+        Ravie: ["Ravie", "sans-serif"],
+      
       },
       screens: {
         'small-mobile': '320px',      // 360 by 640
