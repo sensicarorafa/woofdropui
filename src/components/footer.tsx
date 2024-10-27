@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 import woofDrop from '../assets/img/woofdrop.svg'
-import woofDropActive from '../assets/img/woofdropactive.svg'
+import woofDropActive from '../assets/img/woofdropActive.svg'
 import woofNomics from '../assets/img/woofnomics.svg'
 import woofNomicsActive from '../assets/img/woofnomicsactive.svg'
 import woofrens from '../assets/img/woofrens.svg'
