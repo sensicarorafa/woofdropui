@@ -1,11 +1,9 @@
-import HomeTab from "../../components/home-tab/homeTab";
-
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import WoofInvite from "../../assets/img/woofinvite.png"
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useUser } from "../../context/userContext";
+import { useUser } from "../../context/UserContext";
 import axios from "axios";
 
 

@@ -1,5 +1,3 @@
-import HomeTab from "../../components/home-tab/homeTab";
-
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import WoofNomicsBoard from "../../assets/img/woofnomicsboard.png"

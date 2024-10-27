@@ -14,6 +14,7 @@ declare namespace Telegram {
       user: InitDataUser;
       auth_date: number;
       hash: string;
+      start_param: any;
     }
   
     interface WebApp {

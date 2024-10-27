@@ -8,7 +8,7 @@ import TonWeb from 'tonweb';
 import { useEffect, useState } from "react";
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
-import { useUser } from '../../context/userContext';
+import { useUser } from '../../context/UserContext';
 
 
 
@@ -89,12 +89,11 @@ const HomeTab = () => {
             text = `Claimed 7,000 $AIDOGS as a CEO on Hamster Kombat!🐹%0D%0A%0D%0AIf you're a Hamster CEO, grab your free 7k $AIDOGS bonus using my Boost Key "HMSTR-"%0D%0A%0D%0ANew to AiDogs? join and start earning👇%0D%0A%0D%0A${referralLink}%0D%0A%0D%0A%23Hamster_Kombat %23hamster $HMSTR`;
 
         }
+        setReferralCode(getUserCookiesParsed?.data?.userData?.referralCode)
         return encodeURIComponent(text);
     }, [referralCode]);
 
     console.log("encodedTextMission", encodedTextMission)
-
-    const urlMissionTweet = `https://twitter.com/intent/tweet?text=${encodedTextMission}`;
 
 
 

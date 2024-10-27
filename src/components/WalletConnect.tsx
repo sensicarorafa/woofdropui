@@ -33,11 +33,11 @@ const TonWalletDemo: React.FC = () => {
   }, [tonConnectUI]);
 
   // Handle disconnecting the wallet
-  const disconnectWallet = () => {
+  /*const disconnectWallet = () => {
     tonConnectUI.disconnect();
     setIsConnected(false);
     setWalletInfo(null);
-  };
+  };*/
 
 
 
