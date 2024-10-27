@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, /*useMemo*/ } from 'react';
+import { useCallback, useMemo, /*useMemo*/ } from 'react';
 
 
 import WoofCoin from "../../assets/img/woofcoin.png";
@@ -219,7 +219,7 @@ const HomeTab = () => {
             });
             setTotalPoints(updateTask?.data?.userData?.pointsNo);
             setTaskCompleted(updateTask?.data?.userData?.taskCompleted);
-        
+            setWallet('');
         }
     };
 

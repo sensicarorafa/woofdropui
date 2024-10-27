@@ -1,6 +1,4 @@
 import HomeTab from "../../components/home-tab/homeTab";
-import logoBig from "../../assets/img/logobig.png";
-import TonWalletDemo from "../../components/WalletConnect";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 

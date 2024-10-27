@@ -4,7 +4,7 @@ import { useState, useEffect, FC } from 'react';
 const getTimeUntilNextMidnight = () => {
   const now: any = new Date();
   const nextMidnight: any = new Date();
-  nextMidnight.setHours(24, 0, 0, 0);
+  nextMidnight.setHours(336, 0, 0, 0);
   return nextMidnight - now;
 };
 
