@@ -17,9 +17,9 @@ const HomeTab = () => {
     // Cache sessionStorage values
     const { theUser, handleSetUser } = useUser();
     const getUserCookiesParsed = theUser;
+    console.log({getUserCookiesParsed})
 
-
-    const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.pointsNo : 200000);
+    const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.pointsNo : 0);
     const [referralCode, setReferralCode] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralCode : '');
 
     const [wallet, setWallet] = useState(
@@ -277,8 +277,7 @@ const HomeTab = () => {
 
             <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
                 <div className="flex py-5 my-4  justify-center align-center m-auto items-center w-80">
-
-                    <div className=" w-[20%] small-mobile:w-[10%] mobile:w-[15%]">
+                    <div className="w-[20%] small-mobile:w-[10%] mobile:w-[15%]">
                         <img className="w-full" src={WoofCoin} alt="" />
                     </div>
                     <p className="text-[#FFFFFF] pl-2 text-4xl totalPoint font-bold">{totalPoints.toLocaleString()}</p>
@@ -393,10 +392,6 @@ const HomeTab = () => {
                         {taskCompleted ? <>Submit</> : <>Submit</>}
                     </button>
                 </div>
-
-
-
-
             </div>
 
 
