@@ -223,7 +223,7 @@ const HomeTab = () => {
     };
 
 
-    const handleSubmitWallet = useCallback(() => {
+    const handleSubmitWallet = useCallback(async () => {
         if (taskCompleted) {
             toast("Task already completed!", {
                 className: "",
@@ -246,8 +246,23 @@ const HomeTab = () => {
                 });
             } else {
                 if(wallet){
-                    claimTask(wallet)
+                    const userInChannel = await axios.post(`${import.meta.env.VITE_APP_URL}/confirm-tg-channel`, {userId: user?.id});
 
+                    const confirmation = userInChannel.data.confirmation;
+                    console.log({confirmation})
+
+                    if (confirmation) {
+                        claimTask(wallet)
+                    } else {
+                        toast("Not eligible yet, please make sure you join our Telegram channel before trying to claim", {
+                            className: "",
+                            duration: 799,
+                            style: {
+                                background: "#363636",
+                                color: "#fff",
+                            },
+                        });
+                    }
                 }
             }
         }
