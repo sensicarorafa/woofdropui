@@ -344,7 +344,7 @@ const HomeTab = () => {
 
                                     <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg px-8 mt-7 py-2 rounded-[1px]`}
                                         onClick={() => {
-                                            window.open('https://t.me/aidogs_community', '_blank');
+                                            window.open('https://t.me/wfdemo', '_blank');
                                             setTimeout(() => {
                                                 setEngageMissionTg(true)
                                             }, 5000)
@@ -360,7 +360,7 @@ const HomeTab = () => {
 
                                     <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg mt-7 px-8 py-2 rounded-[1px]`}
                                         onClick={() => {
-                                            window.open('https://t.me/aidogs_community', '_blank');
+                                            window.open('https://t.me/wfdemo', '_blank');
                                             setTimeout(() => {
                                                 setEngageMissionTg(true)
                                             }, 5000)
