@@ -14,48 +14,23 @@ import { useUser } from '../../context/UserContext';
 
 
 const HomeTab = () => {
-    // Cache sessionStorage values
     const { theUser, handleSetUser } = useUser();
     const getUserCookiesParsed = theUser;
     console.log({getUserCookiesParsed})
 
     const [totalPoints, setTotalPoints] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.pointsNo : 0);
     const [referralCode, setReferralCode] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.referralCode : '');
+    const [openStatusModal, setOpenStatusModal] = useState(false);
 
-    const [wallet, setWallet] = useState(
-        ''
-    );
-    let [isWalletValid, setIsWalletValid] = useState<boolean>(
-        false
-    );
+    const [wallet, setWallet] = useState('');
+    let [isWalletValid, setIsWalletValid] = useState<boolean>(false);
     const [taskCompleted, setTaskCompleted] = useState(getUserCookiesParsed ? getUserCookiesParsed?.data?.userData?.taskCompleted : false);
 
 
-    const [engageMissionTwitter, setEngageMissionTwitter] = useState(
-        () => {
-
-            const saved = sessionStorage.getItem('engageMissionTwitter')
-            return saved !== null ? JSON.parse(saved) : false;
-        });
-    const [engageMissionTg, setEngageMissionTg] = useState(
-        () => {
-
-            const saved = sessionStorage.getItem('engageMissionTg')
-            return saved !== null ? JSON.parse(saved) : false;
-        });
-
-
-
-
-
-
-    useEffect(() => {
-        sessionStorage.setItem('engageMissionTwitter', JSON.stringify(engageMissionTwitter));
-    }, [engageMissionTwitter]);
-
-    useEffect(() => {
-        sessionStorage.setItem('engageMissionTg', JSON.stringify(engageMissionTg));
-    }, [engageMissionTg]);
+    const [engageMissionTwitter, setEngageMissionTwitter] = useState(false);
+    const [engageMissionTg, setEngageMissionTg] = useState(false);
+    const [engageMissionTweet, setEngageMissionTweet] = useState(false);
+    const [engageMissionRepost, setEngageMissionRepost] = useState(false);
 
     function getDeviceType() {
         // @ts-ignore
@@ -95,15 +70,7 @@ const HomeTab = () => {
 
     console.log("encodedTextMission", encodedTextMission)
 
-
-
-
-
-
-
     const [user, setUser] = useState<Telegram.InitDataUser | null>(null);
-
-
 
     useEffect(() => {
         // Ensure the Telegram Web Apps SDK is ready
@@ -124,19 +91,13 @@ const HomeTab = () => {
             console.log('No user information available.');
             setUser({
                 allows_write_to_pm: true,
-          first_name: "Qanda",
-          id: 1354055384,
-          language_code: "en",
-          last_name: "Sensei",
-          username: "qandasensei"
+                first_name: "Qanda",
+                id: 1354055384,
+                language_code: "en",
+                last_name: "Sensei",
+                username: "qandasensei"
             })
-
         }
-
-
-
-
-
     }, []);
 
     useEffect(() => {
@@ -144,7 +105,7 @@ const HomeTab = () => {
             const getUserData = await axios.post(`${import.meta.env.VITE_APP_URL}/get-user-data`, { user })
             if (getUserData?.data?.userData) {
                 setTotalPoints(getUserData?.data?.userData?.pointsNo);
-            setTaskCompleted(getUserData?.data?.userData?.taskCompleted);
+                setTaskCompleted(getUserData?.data?.userData?.taskCompleted);
 
                 sessionStorage.setItem('authUserLoggedInAI', JSON.stringify(getUserData))
             }
@@ -198,6 +159,15 @@ const HomeTab = () => {
         }
     }, [wallet])
 
+    useEffect(() => {
+        if (taskCompleted) {
+            setEngageMissionRepost(true);
+            setEngageMissionTg(true);
+            setEngageMissionTweet(true);
+            setEngageMissionTwitter(true);
+        }
+    }, [taskCompleted]);
+
     const claimTask = async (wallet:any) => {
        
 
@@ -219,6 +189,7 @@ const HomeTab = () => {
             setTotalPoints(updateTask?.data?.userData?.pointsNo);
             setTaskCompleted(updateTask?.data?.userData?.taskCompleted);
             setWallet('');
+            setOpenStatusModal(false);
         }
     };
 
@@ -235,7 +206,7 @@ const HomeTab = () => {
             });
 
         } else {
-            if (!engageMissionTwitter || !engageMissionTg || !isWalletValid) {
+            if (!engageMissionTwitter || !engageMissionTg || !engageMissionRepost || !engageMissionTweet || !isWalletValid) {
                 toast("Complete all task to proceed!", {
                     className: "",
                     duration: 799,
@@ -267,48 +238,60 @@ const HomeTab = () => {
             }
         }
 
-    }, [engageMissionTwitter, engageMissionTg, isWalletValid, taskCompleted]);
+    }, [engageMissionTwitter, engageMissionTg, engageMissionRepost, engageMissionTweet, isWalletValid, taskCompleted]);
 
+    const handleFirstStage = () => {
+        if (!engageMissionTwitter || !engageMissionTg || !isWalletValid) {
+            toast("Complete all task to proceed!", {
+                className: "",
+                duration: 799,
+                style: {
+                    background: "#363636",
+                    color: "#fff",
+                },
+            });
+        } else {
+            setOpenStatusModal(true)
+        }
+    }
 
+    const referralLink = `${import.meta.env.VITE_TEST_BOT_URL}?start=${referralCode}`;
+    const encodedText = useMemo(() => {
+        const text = `Are you a Telegram OG??\r\n\nJoin me on AIDOGS and be a part of the dog revolution.\r\n\nEarn 2,500 $AIDOGS when you signup.\r\n\nStart here: ${referralLink} \r\n\n #DOGS #Crypto #AIDOGS`;
+        return encodeURIComponent(text);
+    }, [referralLink]);
 
+    const url = `https://twitter.com/intent/tweet?text=${encodedText}`;
 
     return (
-        <div className="flex flex-col homeTab   items-center w-full justify-end  h-[100%] overflow-hidden">
-
-            <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
-                <div className="flex py-5 my-4  justify-center align-center m-auto items-center w-80">
-                    <div className="w-[20%] small-mobile:w-[10%] mobile:w-[15%]">
-                        <img className="w-full" src={WoofCoin} alt="" />
+        <>
+            {openStatusModal && 
+            <div className='absolute m-auto bg-[#000000] bg-opacity-95 flex items-center h-[90vh] w-full z-[100] overflow-y-scroll'>
+                <div className='flex m-auto flex-col justify-center bg-[#80808059] h-auto w-[90%] rounded-lg'>
+                    <div className="flex justify-end">
+                        <p className='w-auto cursor-pointer px-4 text-white' onClick={() => setOpenStatusModal(false)}>Close</p>
                     </div>
-                    <p className="text-[#FFFFFF] pl-2 text-4xl totalPoint font-bold">{totalPoints.toLocaleString()}</p>
-                </div>
 
-                <div className="flex flex-col py-5 my-4  justify-center align-center m-auto items-center w-[80%]">
+                    <div className="flex flex-col py-5 my-4 justify-center align-center m-auto items-center w-[80%] gap-3">
+                        <div className="w-full flex">
+                            <div className='flex justify-between w-full'>
+                                <div className='text-white'>Send Tweet</div>
+                                {(!engageMissionTweet) &&
 
-                    <div className="relative w-[100%] small-mobile:w-[100%] mobile:w-[100%]">
-                        <img className="w-full" src={WoofBoard} alt="" />
-
-                        <div
-                            className='absolute flex items-center top-[60px] left-20 text-white justify-between w-[60%] md:top-[45px]'
-                        >
-                            <div className='flex flex-col'>
-                                <div>Follow X Account</div>
-                                {!engageMissionTwitter &&
-
-                                    <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans  rounded-lg px-8 mt-7 py-2 rounded-[1px]`}
+                                    <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans  rounded-lg px-2 py-2 rounded-[1px]`}
                                         onClick={() => {
-                                            window.open('https://x.com/aidogscomm', '_blank');
+                                            window.open(url, '_blank');
                                             setTimeout(() => {
-                                                setEngageMissionTwitter(true)
+                                                setEngageMissionTweet(true)
                                             }, 5000)
                                         }}
                                     >
-                                        {taskCompleted ? <>Done</> : <>Follow</>}
+                                        Start
                                     </button>
                                 }
-                                {engageMissionTwitter &&
+                                {(engageMissionTweet) &&
 
-                                    <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg px-8 mt-7 py-2 rounded-[1px]`}
+                                    <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg px-2 py-2 rounded-[1px]`}
                                         onClick={() => {
                                             window.open('https://x.com/aidogscomm', '_blank');
 
@@ -323,46 +306,32 @@ const HomeTab = () => {
                                 }
 
                             </div>
-                            <div className='bg-white  rounded-full p-2 mb-3'>
-                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" viewBox="0 0 24 24">
-                                    <path d="M 2.8671875 3 L 9.7363281 12.818359 L 2.734375 21 L 5.3808594 21 L 10.919922 14.509766 L 15.460938 21 L 21.371094 21 L 14.173828 10.697266 L 20.744141 3 L 18.138672 3 L 12.996094 9.0097656 L 8.7988281 3 L 2.8671875 3 z"></path>
-                                </svg>
-                            </div>
                         </div>
-                    </div>
-                    <div className="relative w-[100%] small-mobile:w-[100%] mobile:w-[100%] mt-5 ">
-                        <img className="w-full" src={WoofBoard} alt="" />
-
-                        <div
-                            className='absolute flex items-center top-[70px] left-20 text-white justify-between w-[60%]'
-                        >
-                            <div className='flex flex-col'>
-                                <div>Join Telegram</div>
+                        <div className="w-full flex">
+                            <div className='flex justify-between w-full'>
+                                <div className='text-white'>Repost Tweet</div>
 
                                 {
-                                    !engageMissionTg &&
+                                    (!engageMissionRepost) &&
 
-                                    <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg px-8 mt-7 py-2 rounded-[1px]`}
+                                    <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg px-2 py-2 rounded-[1px]`}
                                         onClick={() => {
-                                            window.open('https://t.me/wfdemo', '_blank');
+                                            window.open('https://x.com/aidogscomm', '_blank');
                                             setTimeout(() => {
-                                                setEngageMissionTg(true)
+                                                setEngageMissionRepost(true)
                                             }, 5000)
                                         }}
-                                    >
-
-                                        {taskCompleted ? <>Done</> : <>Join</>}
-                                    </button>
+                                    >Repost</button>
                                 }
 
                                 {
-                                    engageMissionTg &&
+                                    (engageMissionRepost) &&
 
-                                    <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg mt-7 px-8 py-2 rounded-[1px]`}
+                                    <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg px-2 py-2 rounded-[1px]`}
                                         onClick={() => {
-                                            window.open('https://t.me/wfdemo', '_blank');
+                                            window.open('https://x.com/aidogscomm', '_blank');
                                             setTimeout(() => {
-                                                setEngageMissionTg(true)
+                                                setEngageMissionRepost(true)
                                             }, 5000)
                                         }}
                                     >
@@ -372,30 +341,119 @@ const HomeTab = () => {
 
 
                             </div>
-                            <div className='bg-white  rounded-full p-2 mb-3'>
-                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" viewBox="0 0 50 50">
-                                    <path d="M46.137,6.552c-0.75-0.636-1.928-0.727-3.146-0.238l-0.002,0C41.708,6.828,6.728,21.832,5.304,22.445	c-0.259,0.09-2.521,0.934-2.288,2.814c0.208,1.695,2.026,2.397,2.248,2.478l8.893,3.045c0.59,1.964,2.765,9.21,3.246,10.758	c0.3,0.965,0.789,2.233,1.646,2.494c0.752,0.29,1.5,0.025,1.984-0.355l5.437-5.043l8.777,6.845l0.209,0.125	c0.596,0.264,1.167,0.396,1.712,0.396c0.421,0,0.825-0.079,1.211-0.237c1.315-0.54,1.841-1.793,1.896-1.935l6.556-34.077	C47.231,7.933,46.675,7.007,46.137,6.552z M22,32l-3,8l-3-10l23-17L22,32z"></path>
-                                </svg>
-                            </div>
+                        </div>
+                        <div className="w-full flex">
+                            <button className={`bg-[#05F84E] text-md font-OpenSans text-white w-full rounded-lg px-10 py-4 rounded-[1px] `} onClick={handleSubmitWallet}>
+                                Submit
+                            </button>
                         </div>
                     </div>
-                    <div className='py-5 w-full'>
-                        <input type="text" className=" px-4 bg-[#8080802e] outline-none py-2 my-3 border-[1px] border-r-transparent border-t-transparent border-white text-center w-full bg-transparent " placeholder={`Submit Ton wallet for WOOF Airdrop`} onChange={(e) => handleWallet(e)} />
-
-                    </div>
-
-                    <button className={`bg-[#05F84E] w-2/3 text-md font-OpenSans text-white w-full rounded-lg px-10 py-4 rounded-[1px] `}
-                        onClick={handleSubmitWallet}
-                        
-
-                    >
-                        {taskCompleted ? <>Submit</> : <>Submit</>}
-                    </button>
                 </div>
             </div>
+            }
+            <div className="flex flex-col homeTab   items-center w-full justify-end  h-[100%] overflow-hidden">
+                <div className="flex flex-col  w-full overflow-y-auto h-[100%]">
+                    <div className="flex py-5 my-4  justify-center align-center m-auto items-center w-80">
+                        <div className="w-[20%] small-mobile:w-[10%] mobile:w-[15%]">
+                            <img className="w-full" src={WoofCoin} alt="" />
+                        </div>
+                        <p className="text-[#FFFFFF] pl-2 text-4xl totalPoint font-bold">{totalPoints.toLocaleString()}</p>
+                    </div>
+
+                    <div className="flex flex-col py-5 my-4  justify-center align-center m-auto items-center w-[80%]">
+
+                        <div className="relative w-[100%] small-mobile:w-[100%] mobile:w-[100%]">
+                            <img className="w-full" src={WoofBoard} alt="" />
+
+                            <div
+                                className='absolute flex items-center top-[60px] left-20 text-white justify-between w-[60%] md:top-[45px]'
+                            >
+                                <div className='flex flex-col'>
+                                    <div>Follow X Account</div>
+                                    {(!engageMissionTwitter) &&
+
+                                        <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans  rounded-lg px-8 mt-7 py-2 rounded-[1px]`}
+                                            onClick={() => {
+                                                window.open('https://x.com/aidogscomm', '_blank');
+                                                setTimeout(() => {
+                                                    setEngageMissionTwitter(true)
+                                                }, 5000)
+                                            }}
+                                        >
+                                            Follow
+                                        </button>
+                                    }
+                                    {(engageMissionTwitter) &&
+                                        <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg px-8 mt-7 py-2 rounded-[1px]`} disabled>
+                                            Done
+                                        </button>
+                                    }
+
+                                </div>
+                                <div className='bg-white  rounded-full p-2 mb-3'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" viewBox="0 0 24 24">
+                                        <path d="M 2.8671875 3 L 9.7363281 12.818359 L 2.734375 21 L 5.3808594 21 L 10.919922 14.509766 L 15.460938 21 L 21.371094 21 L 14.173828 10.697266 L 20.744141 3 L 18.138672 3 L 12.996094 9.0097656 L 8.7988281 3 L 2.8671875 3 z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="relative w-[100%] small-mobile:w-[100%] mobile:w-[100%] mt-5 ">
+                            <img className="w-full" src={WoofBoard} alt="" />
+
+                            <div
+                                className='absolute flex items-center top-[70px] left-20 text-white justify-between w-[60%]'
+                            >
+                                <div className='flex flex-col'>
+                                    <div>Join Telegram</div>
+
+                                    {
+                                        (!engageMissionTg) &&
+
+                                        <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg px-8 mt-7 py-2 rounded-[1px]`}
+                                            onClick={() => {
+                                                window.open('https://t.me/wfdemo', '_blank');
+                                                setTimeout(() => {
+                                                    setEngageMissionTg(true)
+                                                }, 5000)
+                                            }}
+                                        >
+                                            Join
+                                        </button>
+                                    }
+
+                                    {
+                                        (engageMissionTg) &&
+
+                                        <button className={`bg-transparent border-white border-[1px] text-white  text-xs font-OpenSans rounded-lg mt-7 px-8 py-2 rounded-[1px]`} disabled>
+                                            Done
+                                        </button>
+                                    }
 
 
-        </div>
+                                </div>
+                                <div className='bg-white  rounded-full p-2 mb-3'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" viewBox="0 0 50 50">
+                                        <path d="M46.137,6.552c-0.75-0.636-1.928-0.727-3.146-0.238l-0.002,0C41.708,6.828,6.728,21.832,5.304,22.445	c-0.259,0.09-2.521,0.934-2.288,2.814c0.208,1.695,2.026,2.397,2.248,2.478l8.893,3.045c0.59,1.964,2.765,9.21,3.246,10.758	c0.3,0.965,0.789,2.233,1.646,2.494c0.752,0.29,1.5,0.025,1.984-0.355l5.437-5.043l8.777,6.845l0.209,0.125	c0.596,0.264,1.167,0.396,1.712,0.396c0.421,0,0.825-0.079,1.211-0.237c1.315-0.54,1.841-1.793,1.896-1.935l6.556-34.077	C47.231,7.933,46.675,7.007,46.137,6.552z M22,32l-3,8l-3-10l23-17L22,32z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        {
+                            !taskCompleted &&
+                            <>
+                                <div className='py-5 w-full'>
+                                    <input type="text" className=" px-4 bg-[#8080802e] outline-none py-2 my-3 border-[1px] border-r-transparent border-t-transparent border-white text-center w-full bg-transparent " placeholder={`Submit Ton wallet for WOOF Airdrop`} onChange={(e) => handleWallet(e)} />
+                                </div>
+
+                                <button className={`bg-[#05F84E] w-2/3 text-md font-OpenSans text-white w-full rounded-lg px-10 py-4 rounded-[1px] `} onClick={handleFirstStage}>Proceed</button>
+                            </>
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+        </>
     );
 };
 
